@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой дневник - Школа 28</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f9fafb;
+            color: #1f2937;
+        }
+        
+        /* Шапка */
+        .header {
+            background: white;
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .user-info h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .user-info p {
+            font-size: 14px;
+            color: #6b7280;
+        }
+        .logout-btn {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            color: #374151;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .logout-btn:hover {
+            background: #e5e7eb;
+        }
+        
+        /* Навигация */
+        .nav {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            gap: 8px;
+            padding: 0 20px;
+        }
+        .nav-btn {
+            padding: 12px 24px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b7280;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-btn:hover {
+            background: #f9fafb;
+        }
+        .nav-btn.active {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+        
+        /* Контент */
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Карточки */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid #e5e7eb;
+        }
+        .subject-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .subject-name {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .teacher {
+            font-size: 14px;
+            color: #6b7280;
+            background: #f3f4f6;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        .marks {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .mark {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .mark.bad {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .mark.good {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        /* Загрузка */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6b7280;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #4f46e5;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Сообщения */
+        .message {
+            border-left: 4px solid #f59e0b;
+            padding-left: 16px;
+        }
+        .message-date {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 4px;
+        }
+        .message-text {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            .nav {
+                overflow-x: auto;
+                padding-bottom: 8px;
+            }
+            .nav-btn {
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <div class="header">
+        <div class="header-content">
+            <div class="user-info">
+                <h1 id="studentName">Загрузка...</h1>
+                <p><i class="fas fa-school"></i> Школа №28, Киров</p>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Выйти
+            </button>
+        </div>
+    </div>
+    
+    <!-- Навигация -->
+    <div class="nav">
+        <button class="nav-btn active" onclick="showTab('marks')">
+            <i class="fas fa-star"></i> Оценки
+        </button>
+        <button class="nav-btn" onclick="showTab('subjects')">
+            <i class="fas fa-book"></i> Предметы
+        </button>
+        <button class="nav-btn" onclick="showTab('messages')">
+            <i class="fas fa-comment"></i> Сообщения
+        </button>
+    </div>
+    
+    <!-- Контент -->
+    <div class="content">
+        <!-- Оценки -->
+        <div id="marksTab" class="tab-content active">
+            <h2 style="margin-bottom: 20px; font-size: 24px;">Мои оценки</h2>
+            <div id="marksContent" class="loading">
+                <div class="spinner"></div>
+                Загрузка оценок...
+            </div>
+        </div>
+        
+        <!-- Предметы -->
+        <div id="subjectsTab" class="tab-content">
+            <h2 style="margin-bottom: 20px; font-size: 24px;">Мои предметы</h2>
+            <div id="subjectsContent" class="loading">
+                <div class="spinner"></div>
+                Загрузка предметов...
+            </div>
+        </div>
+        
+        <!-- Сообщения -->
+        <div id="messagesTab" class="tab-content">
+            <h2 style="margin-bottom: 20px; font-size: 24px;">Сообщения от учителей</h2>
+            <div id="messagesContent" class="loading">
+                <div class="spinner"></div>
+                Загрузка сообщений...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Проверяем авторизацию
+        window.onload = function() {
+            const username = localStorage.getItem('username');
+            if (!username) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            document.getElementById('studentName').textContent = username;
+            loadData();
+        };
+        
+        // Навигация
+        function showTab(tabName) {
+            // Скрываем все вкладки
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Убираем активность у всех кнопок
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Показываем выбранную вкладку
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            // Активируем кнопку
+            event.target.classList.add('active');
+            
+            // Загружаем данные если нужно
+            if (tabName === 'marks' && !window.marksLoaded) {
+                loadMarks();
+            } else if (tabName === 'subjects' && !window.subjectsLoaded) {
+                loadSubjects();
+            } else if (tabName === 'messages' && !window.messagesLoaded) {
+                loadMessages();
+            }
+        }
+        
+        // Загрузка данных
+        async function loadData() {
+            await Promise.all([
+                loadMarks(),
+                loadSubjects(),
+                loadMessages()
+            ]);
+        }
+        
+        // ЗАГРУЗКА ОЦЕНОК (РЕАЛЬНАЯ)
+        async function loadMarks() {
+            const username = localStorage.getItem('username');
+            const password = localStorage.getItem('password');
+            
+            try {
+                // Используем CORS прокси для обхода ограничений
+                const marksData = await fetchAversData('GET_STUDENT_MARKS', {
+                    student: 4477, // Это нужно будет получать динамически
+                    uchYear: 2025,
+                    cls: 1000
+                });
+                
+                displayMarks(marksData);
+                window.marksLoaded = true;
+                
+            } catch (error) {
+                console.error('Ошибка загрузки оценок:', error);
+                document.getElementById('marksContent').innerHTML = 
+                    '<div class="card">Ошибка загрузки оценок</div>';
+            }
+        }
+        
+        // ЗАГРУЗКА ПРЕДМЕТОВ (РЕАЛЬНАЯ)
+        async function loadSubjects() {
+            try {
+                const subjectsData = await fetchAversData('GET_STUDENT_SUBJECTS', {
+                    student: 4477,
+                    uchYear: 2025,
+                    cls: 1000
+                });
+                
+                displaySubjects(subjectsData);
+                window.subjectsLoaded = true;
+                
+            } catch (error) {
+                console.error('Ошибка загрузки предметов:', error);
+                document.getElementById('subjectsContent').innerHTML = 
+                    '<div class="card">Ошибка загрузки предметов</div>';
+            }
+        }
+        
+        // ЗАГРУЗКА СООБЩЕНИЙ (РЕАЛЬНАЯ)
+        async function loadMessages() {
+            try {
+                const messagesData = await fetchAversData('GET_STUDENT_MESSAGES', {
+                    student: 4477
+                });
+                
+                displayMessages(messagesData);
+                window.messagesLoaded = true;
+                
+            } catch (error) {
+                console.error('Ошибка загрузки сообщений:', error);
+                document.getElementById('messagesContent').innerHTML = 
+                    '<div class="card">Ошибка загрузки сообщений</div>';
+            }
+        }
+        
+        // ОТОБРАЖЕНИЕ ОЦЕНОК
+        function displayMarks(data) {
+            const container = document.getElementById('marksContent');
+            
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div class="card">Нет оценок</div>';
+                return;
+            }
+            
+            let html = '';
+            data.forEach(item => {
+                // Парсим оценки из HTML
+                const marksHtml = item.marks_154 || item.marks_262 || '';
+                const cleanMarks = marksHtml
+                    .replace(/<[^>]*>/g, '')
+                    .replace(/&nbsp;/g, ' ')
+                    .trim()
+                    .split(/\s+/)
+                    .filter(m => m && m !== '(3.98)' && m !== '(3.50)');
+                
+                html += `
+                    <div class="card">
+                        <div class="subject-header">
+                            <div class="subject-name">${item.subject || 'Предмет'}</div>
+                            <div class="teacher">${item.teacher || 'Учитель'}</div>
+                        </div>
+                        <div class="marks">
+                            ${cleanMarks.map(mark => {
+                                const num = parseInt(mark);
+                                let className = 'mark';
+                                if (num === 5) className += ' good';
+                                else if (num <= 2) className += ' bad';
+                                return `<span class="${className}">${mark}</span>`;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // ОТОБРАЖЕНИЕ ПРЕДМЕТОВ
+        function displaySubjects(data) {
+            const container = document.getElementById('subjectsContent');
+            
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div class="card">Нет предметов</div>';
+                return;
+            }
+            
+            let html = '<div class="card">';
+            data.forEach((subject, index) => {
+                if (Array.isArray(subject) && subject.length > 1) {
+                    html += `<div style="padding: 8px 0; border-bottom: ${index < data.length - 1 ? '1px solid #e5e7eb' : 'none'}">
+                        <strong>${subject[1]}</strong>
+                        <span style="color: #6b7280; font-size: 14px; margin-left: 10px;">ID: ${subject[0]}</span>
+                    </div>`;
+                }
+            });
+            html += '</div>';
+            
+            container.innerHTML = html;
+        }
+        
+        // ОТОБРАЖЕНИЕ СООБЩЕНИЙ
+        function displayMessages(data) {
+            const container = document.getElementById('messagesContent');
+            
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div class="card">Нет сообщений</div>';
+                return;
+            }
+            
+            let html = '';
+            data.forEach(msg => {
+                const date = new Date(msg.dateWhen).toLocaleDateString('ru-RU');
+                html += `
+                    <div class="card message">
+                        <div class="message-date">${date}</div>
+                        <div class="message-text">${msg.message || 'Сообщение'}</div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // ОБЩАЯ ФУНКЦИЯ ДЛЯ ЗАПРОСОВ К АИАС
+        async function fetchAversData(action, params) {
+            const username = localStorage.getItem('username');
+            const password = localStorage.getItem('password');
+            
+            // Используем публичный CORS прокси
+            const proxyUrl = 'https://api.allorigins.win/raw?url=';
+            const targetUrl = `https://journal.school28-kirov.ru/act/?action=${action}`;
+            
+            // Создаем FormData
+            const formData = new URLSearchParams();
+            for (const key in params) {
+                formData.append(key, params[key]);
+            }
+            
+            const response = await fetch(proxyUrl + encodeURIComponent(targetUrl), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'User-Agent': 'Mozilla/5.0'
+                },
+                body: formData.toString()
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            return await response.json();
+        }
+        
+        // Выход
+        function logout() {
+            localStorage.removeItem('username');
+            localStorage.removeItem('password');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
