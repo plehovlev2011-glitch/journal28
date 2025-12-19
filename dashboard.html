@@ -1,453 +1,170 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Дашборд - Школа 28</title>
+    <title>Мой дневник</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: monospace;
-            padding: 20px;
-            background: #f0f0f0;
-            color: #333;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        h1, h2, h3 {
-            margin: 20px 0 10px 0;
-            color: #2c3e50;
-        }
-        .card {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        .error {
-            background: #ffebee;
-            border: 1px solid #ffcdd2;
-            color: #c62828;
-        }
-        .success {
-            background: #e8f5e9;
-            border: 1px solid #c8e6c9;
-        }
-        button {
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
+        body { font-family: Arial; padding: 20px; }
+        button { 
+            padding: 10px 15px; 
+            margin: 5px; 
+            background: #2196F3; 
+            color: white; 
+            border: none; 
             cursor: pointer;
-            margin: 5px;
-            font-family: monospace;
         }
-        button:hover {
-            background: #2980b9;
+        .card { 
+            background: white; 
+            border: 1px solid #ddd; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 5px;
         }
-        .loading {
-            color: #7f8c8d;
-            font-style: italic;
-        }
-        .debug {
-            background: #f9f9f9;
-            border-left: 3px solid #95a5a6;
-            padding: 10px;
-            margin: 10px 0;
-            font-size: 12px;
-        }
-        .marks {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 10px;
-        }
-        .mark {
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #ecf0f1;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-        .mark.good { background: #2ecc71; color: white; }
-        .mark.bad { background: #e74c3c; color: white; }
+        .loading { color: gray; font-style: italic; }
+        .error { color: red; }
+        .success { color: green; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>📊 ДАШБОРД (отладочный режим)</h1>
-        
-        <!-- Инфо пользователя -->
-        <div class="card">
-            <h3>👤 Информация:</h3>
-            <div id="userInfo" class="loading">Загрузка...</div>
-        </div>
-        
-        <!-- Управление -->
-        <div class="card">
-            <h3>⚙️ Управление:</h3>
-            <button onclick="loadMarks()">Загрузить оценки</button>
-            <button onclick="loadSubjects()">Загрузить предметы</button>
-            <button onclick="loadMessages()">Загрузить сообщения</button>
-            <button onclick="testProxy()">Тест прокси</button>
-            <button onclick="logout()" style="background: #e74c3c;">Выйти</button>
-        </div>
-        
-        <!-- Отладочная информация -->
-        <div class="card">
-            <h3>🐛 Отладка:</h3>
-            <div id="debugInfo" class="debug">
-                Консоль открыта? Нажми F12
-            </div>
-            <button onclick="showLocalStorage()">Показать localStorage</button>
-            <button onclick="clearAll()">Очистить всё</button>
-        </div>
-        
-        <!-- Оценки -->
-        <div class="card">
-            <h3>📈 Оценки:</h3>
-            <div id="marksContent" class="loading">
-                Нажми "Загрузить оценки"
-            </div>
-        </div>
-        
-        <!-- Предметы -->
-        <div class="card">
-            <h3>📚 Предметы:</h3>
-            <div id="subjectsContent" class="loading">
-                Нажми "Загрузить предметы"
-            </div>
-        </div>
-        
-        <!-- Сообщения -->
-        <div class="card">
-            <h3>💬 Сообщения:</h3>
-            <div id="messagesContent" class="loading">
-                Нажми "Загрузить сообщения"
-            </div>
-        </div>
-        
-        <!-- Сырые данные -->
-        <div class="card">
-            <h3>📄 Сырые данные (последний запрос):</h3>
-            <div id="rawData" class="debug">
-                Здесь будут сырые данные ответа
-            </div>
-        </div>
+    <h1>📚 Мой дневник</h1>
+    
+    <div id="userInfo" class="card">
+        Загрузка информации...
+    </div>
+    
+    <div>
+        <button onclick="loadMarks()">ЗАГРУЗИТЬ ОЦЕНКИ</button>
+        <button onclick="loadSubjects()">ЗАГРУЗИТЬ ПРЕДМЕТЫ</button>
+        <button onclick="logout()">ВЫЙТИ</button>
+    </div>
+    
+    <div id="marksContent" class="card">
+        Оценки появятся здесь
+    </div>
+    
+    <div id="subjectsContent" class="card">
+        Предметы появятся здесь
     </div>
 
     <script>
-        // ==================== ПЕРЕМЕННЫЕ ====================
-        let studentId = null;
-        let classId = null;
-        let username = null;
-        
-        // ==================== ЗАГРУЗКА СТРАНИЦЫ ====================
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Дашборд загружен');
-            updateDebug('Страница загружена');
-            
-            // Получаем данные из localStorage
-            studentId = localStorage.getItem('studentId');
-            classId = localStorage.getItem('classId');
-            username = localStorage.getItem('username');
-            
-            console.log('📋 Данные из localStorage:', { studentId, classId, username });
+        // Проверяем, вошли ли мы
+        window.onload = function() {
+            const studentId = localStorage.getItem('studentId');
+            const username = localStorage.getItem('username');
             
             if (!studentId || !username) {
-                updateDebug('❌ Нет данных, редирект на логин');
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 1000);
+                alert("Сначала войдите в систему!");
+                window.location.href = 'login.html';
                 return;
             }
             
-            // Показываем информацию
-            updateUserInfo();
-            updateDebug('✅ Данные загружены');
-        });
-        
-        // ==================== ОБНОВЛЕНИЕ ИНФО ====================
-        function updateUserInfo() {
-            const info = `
-                Ученик: <strong>${username || 'Неизвестно'}</strong><br>
-                ID ученика: <strong>${studentId || 'Нет'}</strong><br>
-                Класс: <strong>${classId || 'Неизвестно'}</strong><br>
-                Время: ${new Date().toLocaleTimeString()}
+            document.getElementById('userInfo').innerHTML = `
+                Ученик: <strong>${username}</strong><br>
+                ID: <strong>${studentId}</strong><br>
+                Класс: <strong>${localStorage.getItem('classId') || '1000'}</strong>
             `;
-            document.getElementById('userInfo').innerHTML = info;
-        }
+        };
         
-        // ==================== API ЗАПРОСЫ ====================
-        async function fetchAvers(action, params = {}) {
-            console.group(`📤 API запрос: ${action}`);
-            console.log('Параметры:', params);
-            
-            try {
-                // Формируем запрос
-                const requestData = {
-                    action: action,
-                    student: parseInt(studentId) || 0,
-                    uchYear: 2025,
-                    cls: parseInt(classId) || 0,
-                    ...params
-                };
-                
-                console.log('Полный запрос:', requestData);
-                
-                // Отправляем
-                const response = await fetch('/api/proxy', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(requestData)
-                });
-                
-                console.log('Статус ответа:', response.status);
-                
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`HTTP ${response.status}: ${errorText}`);
-                }
-                
-                const data = await response.json();
-                console.log('Ответ от прокси:', data);
-                
-                // Сохраняем сырые данные
-                document.getElementById('rawData').textContent = 
-                    JSON.stringify(data, null, 2).substring(0, 1000) + '...';
-                
-                console.groupEnd();
-                return data.data || data;
-                
-            } catch (error) {
-                console.error('❌ Ошибка API:', error);
-                console.groupEnd();
-                
-                document.getElementById('rawData').textContent = 
-                    `Ошибка: ${error.message}`;
-                
-                throw error;
-            }
-        }
-        
-        // ==================== ЗАГРУЗКА ОЦЕНОК ====================
         async function loadMarks() {
-            updateDebug('🔄 Загрузка оценок...');
             const container = document.getElementById('marksContent');
-            container.innerHTML = '<span class="loading">Загрузка...</span>';
+            container.innerHTML = '<span class="loading">Загрузка оценок...</span>';
             
             try {
-                const marks = await fetchAvers('GET_STUDENT_MARKS');
-                console.log('📊 Оценки получены:', marks);
+                const studentId = localStorage.getItem('studentId');
+                const classId = localStorage.getItem('classId');
                 
-                if (!marks || marks.length === 0) {
-                    container.innerHTML = '<div class="error">Нет оценок</div>';
-                    return;
-                }
-                
-                // Отображаем оценки
-                let html = '';
-                marks.forEach((item, index) => {
-                    // Извлекаем оценки
-                    const marksHtml = item.marks_154 || item.marks_262 || '';
-                    const cleanMarks = extractMarks(marksHtml);
-                    
-                    html += `
-                        <div style="margin-bottom: 15px; padding: 10px; border-bottom: 1px solid #eee;">
-                            <strong>${index + 1}. ${item.subject || 'Предмет'}</strong><br>
-                            <small>Учитель: ${item.teacher || 'Не указан'}</small>
-                            <div class="marks">
-                                ${cleanMarks.map(mark => {
-                                    const num = parseFloat(mark);
-                                    let className = 'mark';
-                                    if (!isNaN(num)) {
-                                        if (num >= 4.5) className += ' good';
-                                        else if (num <= 2.5) className += ' bad';
-                                    }
-                                    return `<span class="${className}">${mark}</span>`;
-                                }).join('')}
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                container.innerHTML = html;
-                updateDebug('✅ Оценки загружены');
-                
-            } catch (error) {
-                console.error('Ошибка загрузки оценок:', error);
-                container.innerHTML = `<div class="error">Ошибка: ${error.message}</div>`;
-                updateDebug(`❌ Ошибка оценок: ${error.message}`);
-            }
-        }
-        
-        // ==================== ЗАГРУЗКА ПРЕДМЕТОВ ====================
-        async function loadSubjects() {
-            updateDebug('🔄 Загрузка предметов...');
-            const container = document.getElementById('subjectsContent');
-            container.innerHTML = '<span class="loading">Загрузка...</span>';
-            
-            try {
-                const subjects = await fetchAvers('GET_STUDENT_SUBJECTS');
-                console.log('📚 Предметы получены:', subjects);
-                
-                if (!subjects || subjects.length === 0) {
-                    container.innerHTML = '<div class="error">Нет предметов</div>';
-                    return;
-                }
-                
-                // Отображаем предметы
-                let html = '<ul>';
-                subjects.forEach(subject => {
-                    if (Array.isArray(subject) && subject[1]) {
-                        html += `<li><strong>${subject[1]}</strong> (ID: ${subject[0]})</li>`;
-                    }
-                });
-                html += '</ul>';
-                
-                container.innerHTML = html;
-                updateDebug('✅ Предметы загружены');
-                
-            } catch (error) {
-                console.error('Ошибка загрузки предметов:', error);
-                container.innerHTML = `<div class="error">Ошибка: ${error.message}</div>`;
-                updateDebug(`❌ Ошибка предметов: ${error.message}`);
-            }
-        }
-        
-        // ==================== ЗАГРУЗКА СООБЩЕНИЙ ====================
-        async function loadMessages() {
-            updateDebug('🔄 Загрузка сообщений...');
-            const container = document.getElementById('messagesContent');
-            container.innerHTML = '<span class="loading">Загрузка...</span>';
-            
-            try {
-                const messages = await fetchAvers('GET_STUDENT_MESSAGES');
-                console.log('💬 Сообщения получены:', messages);
-                
-                if (!messages || messages.length === 0) {
-                    container.innerHTML = '<div class="success">Нет сообщений</div>';
-                    return;
-                }
-                
-                // Отображаем сообщения
-                let html = '';
-                messages.forEach(msg => {
-                    const date = msg.dateWhen ? new Date(msg.dateWhen).toLocaleDateString('ru-RU') : 'Неизвестно';
-                    html += `
-                        <div style="margin-bottom: 10px; padding: 10px; background: #f9f9f9;">
-                            <strong>${date}</strong><br>
-                            ${msg.message || 'Сообщение'}
-                        </div>
-                    `;
-                });
-                
-                container.innerHTML = html;
-                updateDebug('✅ Сообщения загружены');
-                
-            } catch (error) {
-                console.error('Ошибка загрузки сообщений:', error);
-                container.innerHTML = `<div class="error">Ошибка: ${error.message}</div>`;
-                updateDebug(`❌ Ошибка сообщений: ${error.message}`);
-            }
-        }
-        
-        // ==================== ТЕСТ ПРОКСИ ====================
-        async function testProxy() {
-            updateDebug('🧪 Тест прокси...');
-            
-            try {
+                // Запрос к API
                 const response = await fetch('/api/proxy', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        action: 'ping',
-                        test: 'hello'
+                        action: 'GET_STUDENT_MARKS',
+                        student: parseInt(studentId),
+                        uchYear: 2025,
+                        cls: parseInt(classId)
                     })
                 });
                 
                 const data = await response.json();
-                console.log('Тест прокси:', data);
                 
-                updateDebug(`✅ Прокси работает: ${response.status}`);
-                alert(`Прокси работает! Статус: ${response.status}`);
+                if (!data.success) {
+                    container.innerHTML = `<span class="error">Ошибка: ${data.error}</span>`;
+                    return;
+                }
+                
+                // Отображаем оценки
+                const marks = data.data || [];
+                
+                if (marks.length === 0) {
+                    container.innerHTML = "Нет оценок";
+                    return;
+                }
+                
+                let html = "<h3>Оценки:</h3>";
+                marks.forEach(item => {
+                    html += `<div><strong>${item.subject || 'Предмет'}</strong>: ${item.marks_154 || item.marks_262 || 'нет оценок'}</div>`;
+                });
+                
+                container.innerHTML = html;
                 
             } catch (error) {
-                console.error('Тест прокси провалился:', error);
-                updateDebug(`❌ Прокси не работает: ${error.message}`);
-                alert('Прокси не работает: ' + error.message);
+                container.innerHTML = `<span class="error">Ошибка: ${error.message}</span>`;
             }
         }
         
-        // ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
-        function extractMarks(htmlString) {
-            if (!htmlString) return [];
+        async function loadSubjects() {
+            const container = document.getElementById('subjectsContent');
+            container.innerHTML = '<span class="loading">Загрузка предметов...</span>';
             
-            return htmlString
-                .replace(/<[^>]*>/g, '')
-                .replace(/&nbsp;/g, ' ')
-                .replace(/\([^)]*\)/g, '')
-                .trim()
-                .split(/\s+/)
-                .filter(m => m && m.length < 4 && m !== '...')
-                .map(m => m.replace(/[^0-9./УБН]/g, ''));
-        }
-        
-        function updateDebug(message) {
-            const now = new Date().toLocaleTimeString();
-            const debugDiv = document.getElementById('debugInfo');
-            debugDiv.innerHTML = `[${now}] ${message}<br>` + debugDiv.innerHTML;
-            console.log(`🐛 ${message}`);
-        }
-        
-        function showLocalStorage() {
-            const data = {
-                studentId: localStorage.getItem('studentId'),
-                classId: localStorage.getItem('classId'),
-                username: localStorage.getItem('username'),
-                all: Object.keys(localStorage).map(key => `${key}: ${localStorage.getItem(key)}`)
-            };
-            
-            alert('localStorage:\n' + JSON.stringify(data, null, 2));
-            updateDebug('Показан localStorage');
-        }
-        
-        function clearAll() {
-            if (confirm('Очистить ВСЁ? Данные для входа будут удалены.')) {
-                localStorage.clear();
-                updateDebug('🧹 Всё очищено');
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 500);
+            try {
+                const studentId = localStorage.getItem('studentId');
+                const classId = localStorage.getItem('classId');
+                
+                // Запрос к API
+                const response = await fetch('/api/proxy', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'GET_STUDENT_SUBJECTS',
+                        student: parseInt(studentId),
+                        uchYear: 2025,
+                        cls: parseInt(classId)
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!data.success) {
+                    container.innerHTML = `<span class="error">Ошибка: ${data.error}</span>`;
+                    return;
+                }
+                
+                // Отображаем предметы
+                const subjects = data.data || [];
+                
+                if (subjects.length === 0) {
+                    container.innerHTML = "Нет предметов";
+                    return;
+                }
+                
+                let html = "<h3>Предметы:</h3>";
+                subjects.forEach(subject => {
+                    if (Array.isArray(subject) && subject[1]) {
+                        html += `<div>${subject[1]}</div>`;
+                    }
+                });
+                
+                container.innerHTML = html;
+                
+            } catch (error) {
+                container.innerHTML = `<span class="error">Ошибка: ${error.message}</span>`;
             }
         }
         
         function logout() {
-            if (confirm('Выйти из аккаунта?')) {
-                localStorage.clear();
-                updateDebug('👋 Выход выполнен');
-                window.location.href = 'login.html';
-            }
+            localStorage.clear();
+            window.location.href = 'login.html';
         }
-        
-        // ==================== ГЛОБАЛЬНЫЙ ЭКСПОРТ ====================
-        window.loadMarks = loadMarks;
-        window.loadSubjects = loadSubjects;
-        window.loadMessages = loadMessages;
-        window.testProxy = testProxy;
-        window.showLocalStorage = showLocalStorage;
-        window.clearAll = clearAll;
-        window.logout = logout;
     </script>
 </body>
 </html>
