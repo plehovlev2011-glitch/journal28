@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Тест login.js</title>
+    <style>
+        body { font-family: monospace; padding: 20px; }
+        input, button { margin: 10px; padding: 10px; }
+        #result { margin-top: 20px; padding: 15px; background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h1>Тест API /api/login</h1>
+    <input type="text" id="lastName" placeholder="Фамилия" value="Плехов">
+    <button onclick="testLogin()">Тестировать</button>
+    <div id="result">Результат появится здесь...</div>
+
+    <script>
+        async function testLogin() {
+            const lastName = document.getElementById('lastName').value;
+            const resultDiv = document.getElementById('result');
+            
+            resultDiv.innerHTML = 'Тестируем...';
+            
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        lastName: lastName,
+                        password: 'test' // пароль пока не используется
+                    })
+                });
+                
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <strong>Статус:</strong> ${response.status}<br>
+                    <strong>Успех:</strong> ${data.success}<br>
+                    <strong>StudentId:</strong> ${data.studentId}<br>
+                    <strong>ClassId:</strong> ${data.classId}<br>
+                    <strong>Сообщение:</strong> ${data.message}<br>
+                    <strong>Демо-режим:</strong> ${data.isDemo ? 'Да' : 'Нет'}
+                    ${data.warning ? `<br><strong>Внимание:</strong> ${data.warning}` : ''}
+                `;
+                
+                console.log('Результат теста:', data);
+                
+            } catch (error) {
+                resultDiv.innerHTML = `Ошибка: ${error.message}`;
+                console.error('Ошибка теста:', error);
+            }
+        }
+    </script>
+</body>
+</html>
