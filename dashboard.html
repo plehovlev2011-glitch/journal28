@@ -39,20 +39,21 @@
     </div>
     
     <div id="marksContent" class="card">
-        Оценки появятся здесь
+        Нажми "ЗАГРУЗИТЬ ОЦЕНКИ"
     </div>
     
     <div id="subjectsContent" class="card">
-        Предметы появятся здесь
+        Нажми "ЗАГРУЗИТЬ ПРЕДМЕТЫ"
     </div>
 
     <script>
-        // Проверяем, вошли ли мы
+        // Проверяем вход
         window.onload = function() {
             const studentId = localStorage.getItem('studentId');
             const username = localStorage.getItem('username');
+            const cookies = localStorage.getItem('cookies');
             
-            if (!studentId || !username) {
+            if (!studentId || !username || !cookies) {
                 alert("Сначала войдите в систему!");
                 window.location.href = 'login.html';
                 return;
@@ -61,7 +62,8 @@
             document.getElementById('userInfo').innerHTML = `
                 Ученик: <strong>${username}</strong><br>
                 ID: <strong>${studentId}</strong><br>
-                Класс: <strong>${localStorage.getItem('classId') || '1000'}</strong>
+                Класс: <strong>${localStorage.getItem('classId') || '1000'}</strong><br>
+                Куки: <strong>${cookies ? 'Есть' : 'Нет'}</strong>
             `;
         };
         
@@ -72,8 +74,11 @@
             try {
                 const studentId = localStorage.getItem('studentId');
                 const classId = localStorage.getItem('classId');
+                const cookies = localStorage.getItem('cookies');
                 
-                // Запрос к API
+                console.log('Загружаю оценки с куками:', cookies ? 'Есть' : 'Нет');
+                
+                // Запрос с куками
                 const response = await fetch('/api/proxy', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -81,34 +86,39 @@
                         action: 'GET_STUDENT_MARKS',
                         student: parseInt(studentId),
                         uchYear: 2025,
-                        cls: parseInt(classId)
+                        cls: parseInt(classId),
+                        _cookies: cookies // ВАЖНО: отправляем куки
                     })
                 });
                 
                 const data = await response.json();
+                console.log('Ответ от API:', data);
                 
                 if (!data.success) {
-                    container.innerHTML = `<span class="error">Ошибка: ${data.error}</span>`;
+                    container.innerHTML = `<span class="error">❌ Ошибка: ${data.error || 'Неизвестная ошибка'}</span>`;
                     return;
                 }
                 
-                // Отображаем оценки
                 const marks = data.data || [];
+                console.log('Получено оценок:', marks.length);
                 
                 if (marks.length === 0) {
-                    container.innerHTML = "Нет оценок";
+                    container.innerHTML = '<span class="error">❌ Нет оценок или ошибка авторизации</span>';
                     return;
                 }
                 
-                let html = "<h3>Оценки:</h3>";
+                // Показываем оценки
+                let html = "<h3>📊 Оценки:</h3>";
                 marks.forEach(item => {
-                    html += `<div><strong>${item.subject || 'Предмет'}</strong>: ${item.marks_154 || item.marks_262 || 'нет оценок'}</div>`;
+                    const marksText = item.marks_154 || item.marks_262 || 'нет оценок';
+                    html += `<div><strong>${item.subject || 'Предмет'}</strong>: ${marksText}</div>`;
                 });
                 
                 container.innerHTML = html;
                 
             } catch (error) {
-                container.innerHTML = `<span class="error">Ошибка: ${error.message}</span>`;
+                console.error('Ошибка загрузки оценок:', error);
+                container.innerHTML = `<span class="error">❌ Ошибка: ${error.message}</span>`;
             }
         }
         
@@ -119,8 +129,11 @@
             try {
                 const studentId = localStorage.getItem('studentId');
                 const classId = localStorage.getItem('classId');
+                const cookies = localStorage.getItem('cookies');
                 
-                // Запрос к API
+                console.log('Загружаю предметы с куками:', cookies ? 'Есть' : 'Нет');
+                
+                // Запрос с куками
                 const response = await fetch('/api/proxy', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -128,26 +141,29 @@
                         action: 'GET_STUDENT_SUBJECTS',
                         student: parseInt(studentId),
                         uchYear: 2025,
-                        cls: parseInt(classId)
+                        cls: parseInt(classId),
+                        _cookies: cookies // ВАЖНО: отправляем куки
                     })
                 });
                 
                 const data = await response.json();
+                console.log('Ответ от API:', data);
                 
                 if (!data.success) {
-                    container.innerHTML = `<span class="error">Ошибка: ${data.error}</span>`;
+                    container.innerHTML = `<span class="error">❌ Ошибка: ${data.error || 'Неизвестная ошибка'}</span>`;
                     return;
                 }
                 
-                // Отображаем предметы
                 const subjects = data.data || [];
+                console.log('Получено предметов:', subjects.length);
                 
                 if (subjects.length === 0) {
-                    container.innerHTML = "Нет предметов";
+                    container.innerHTML = '<span class="error">❌ Нет предметов или ошибка авторизации</span>';
                     return;
                 }
                 
-                let html = "<h3>Предметы:</h3>";
+                // Показываем предметы
+                let html = "<h3>📚 Предметы:</h3>";
                 subjects.forEach(subject => {
                     if (Array.isArray(subject) && subject[1]) {
                         html += `<div>${subject[1]}</div>`;
@@ -157,7 +173,8 @@
                 container.innerHTML = html;
                 
             } catch (error) {
-                container.innerHTML = `<span class="error">Ошибка: ${error.message}</span>`;
+                console.error('Ошибка загрузки предметов:', error);
+                container.innerHTML = `<span class="error">❌ Ошибка: ${error.message}</span>`;
             }
         }
         
@@ -165,6 +182,19 @@
             localStorage.clear();
             window.location.href = 'login.html';
         }
+        
+        // Открываем консоль по Ctrl+Shift+I
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                console.log('Открываю консоль для отладки...');
+                console.log('localStorage:', {
+                    studentId: localStorage.getItem('studentId'),
+                    classId: localStorage.getItem('classId'),
+                    username: localStorage.getItem('username'),
+                    cookies: localStorage.getItem('cookies') ? 'Есть' : 'Нет'
+                });
+            }
+        });
     </script>
 </body>
 </html>
