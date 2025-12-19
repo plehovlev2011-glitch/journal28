@@ -1,20 +1,14 @@
-// api/proxy.js - ПРОСТОЙ РАБОЧИЙ
+// api/proxy.js - РАБОЧИЙ С КУКАМИ
 export default async function handler(req, res) {
-  // Разрешаем всё
+  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', '*');
   res.setHeader('Access-Control-Allow-Headers', '*');
   
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-  
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Только POST' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Только POST' });
   
   try {
-    // Читаем запрос
     let body = '';
     for await (const chunk of req) {
       body += chunk;
@@ -22,7 +16,13 @@ export default async function handler(req, res) {
     
     const { action, ...params } = JSON.parse(body);
     
-    // Формируем запрос к АИАС
+    console.log('📡 Запрос к АИАС:', action);
+    
+    // ВАЖНО: получаем куки из запроса
+    const cookies = params._cookies || '';
+    delete params._cookies; // убираем из параметров запроса
+    
+    // Формируем запрос
     const formData = new URLSearchParams();
     formData.append('action', action);
     
@@ -32,19 +32,23 @@ export default async function handler(req, res) {
       }
     }
     
-    // Отправляем в АИАС
+    console.log('Отправляем в АИАС с куками:', cookies ? 'Есть' : 'Нет');
+    
+    // Отправляем с куками
     const response = await fetch('https://journal.school28-kirov.ru/act/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'User-Agent': 'Mozilla/5.0'
+        'User-Agent': 'Mozilla/5.0',
+        'Cookie': cookies // ВАЖНО: отправляем куки!
       },
       body: formData.toString()
     });
     
     const text = await response.text();
+    console.log('Ответ АИАС длина:', text.length);
     
-    // Пробуем парсить JSON
+    // Пробуем парсить
     let data;
     try {
       data = JSON.parse(text);
@@ -52,13 +56,14 @@ export default async function handler(req, res) {
       data = text;
     }
     
-    // Возвращаем ответ
+    // Возвращаем
     res.status(200).json({
       success: true,
       data: data
     });
     
   } catch (error) {
+    console.error('Ошибка прокси:', error);
     res.status(500).json({
       success: false,
       error: error.message
