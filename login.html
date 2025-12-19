@@ -1,50 +1,203 @@
-async function login() {
-    const loginInput = document.getElementById('login').value;
-    const password = document.getElementById('password').value;
-    const errorDiv = document.getElementById('error');
-    const btn = document.getElementById('loginBtn');
-    
-    errorDiv.style.display = 'none';
-    
-    if (!loginInput || !password) {
-        errorDiv.textContent = 'Введите логин и пароль';
-        errorDiv.style.display = 'block';
-        return;
-    }
-    
-    // Показываем загрузку
-    btn.innerHTML = '🔐 Вход...';
-    btn.disabled = true;
-    
-    try {
-        console.log('🚀 Начинаем вход для:', loginInput);
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в дневник</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .login-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .error {
+            color: #d32f2f;
+            margin-top: 10px;
+            padding: 10px;
+            background: #ffebee;
+            border-radius: 6px;
+            display: none;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #1976d2;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4caf50;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>Вход в электронный дневник</h2>
         
-        // ВАЖНО: Используем ОБЯЗАТЕЛЬНО ТВОЙ ID 4477
-        // Система АИАС работает только с ID, а не с именем
+        <div class="info">
+            <strong>Школа №28, Киров</strong><br>
+            Введите фамилию и пароль от старого дневника
+        </div>
         
-        // Сохраняем данные ПРАВИЛЬНО
-        localStorage.setItem('studentId', '4477'); // ТВОЙ ID!
-        localStorage.setItem('classId', '1000');
-        localStorage.setItem('username', loginInput);
+        <input type="text" id="lastName" placeholder="Фамилия" value="Плехов">
+        <input type="password" id="password" placeholder="Пароль">
         
-        console.log('💾 Сохранено в localStorage:', {
-            studentId: localStorage.getItem('studentId'),
-            classId: localStorage.getItem('classId'),
-            username: localStorage.getItem('username')
+        <button onclick="login()" id="loginBtn">Войти</button>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Поиск данных ученика...</p>
+        </div>
+        
+        <div id="error" class="error"></div>
+    </div>
+
+    <script>
+        async function login() {
+            const lastName = document.getElementById('lastName').value.trim();
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('error');
+            const loadingDiv = document.getElementById('loading');
+            const btn = document.getElementById('loginBtn');
+            
+            // Сброс ошибок
+            errorDiv.style.display = 'none';
+            errorDiv.textContent = '';
+            
+            // Валидация
+            if (!lastName) {
+                showError('Введите фамилию');
+                return;
+            }
+            if (!password) {
+                showError('Введите пароль');
+                return;
+            }
+            
+            // Показываем загрузку
+            btn.style.display = 'none';
+            loadingDiv.style.display = 'block';
+            
+            try {
+                console.log('🔍 Ищем ID для фамилии:', lastName);
+                
+                // 1. Ищем ID ученика
+                const idResponse = await fetch('/api/getStudentId', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        lastName: lastName,
+                        password: password
+                    })
+                });
+                
+                const idData = await idResponse.json();
+                console.log('Ответ поиска ID:', idData);
+                
+                if (!idData.success) {
+                    throw new Error(idData.error || 'Не удалось найти данные ученика');
+                }
+                
+                // 2. Сохраняем найденные данные
+                localStorage.setItem('studentId', idData.studentId);
+                localStorage.setItem('classId', idData.classId || '1000');
+                localStorage.setItem('username', lastName);
+                localStorage.setItem('authTime', Date.now());
+                
+                console.log('💾 Сохранено:', {
+                    studentId: localStorage.getItem('studentId'),
+                    classId: localStorage.getItem('classId'),
+                    username: localStorage.getItem('username')
+                });
+                
+                // 3. Переходим в дневник
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 500);
+                
+            } catch (error) {
+                console.error('❌ Ошибка входа:', error);
+                showError(error.message);
+                btn.style.display = 'block';
+                loadingDiv.style.display = 'none';
+            }
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+        
+        // Enter для входа
+        document.getElementById('password').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') login();
         });
         
-        // Ждем немного чтобы localStorage записался
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
-        // Переходим сразу на дашборд
-        console.log('➡️ Переход на dashboard.html');
-        window.location.href = 'dashboard.html';
-        
-    } catch (error) {
-        console.error('❌ Ошибка входа:', error);
-        errorDiv.textContent = error.message;
-        errorDiv.style.display = 'block';
-        btn.innerHTML = 'Войти';
-        btn.disabled = false;
-    }
-}
+        // Фокус на поле пароля после ввода фамилии
+        document.getElementById('lastName').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('password').focus();
+            }
+        });
+    </script>
+</body>
+</html>
