@@ -1,133 +1,92 @@
-// api/proxy.js - ИСПРАВЛЕННАЯ ВЕРСИЯ
+// api/proxy.js - МАКСИМАЛЬНО ПРОСТОЙ
 export default async function handler(req, res) {
-  console.log('=== PROXY CALLED ===');
-  console.log('Method:', req.method);
-  console.log('URL:', req.url);
+  console.log('📡 ПРОКСИ: Получен запрос');
   
-  // CORS
+  // Разрешаем всё
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Methods', '*');
+  res.setHeader('Access-Control-Allow-Headers', '*');
   
-  // OPTIONS запрос
   if (req.method === 'OPTIONS') {
-    console.log('Handling OPTIONS');
+    console.log('📡 OPTIONS запрос');
     return res.status(200).end();
   }
   
-  // Только POST
   if (req.method !== 'POST') {
-    console.log('Wrong method:', req.method);
-    return res.status(405).json({ error: 'Only POST allowed' });
+    console.log('📡 Не POST метод:', req.method);
+    return res.status(405).json({ error: 'Только POST' });
   }
   
   try {
     // Получаем тело запроса
-    let body;
-    try {
-      body = await new Promise((resolve, reject) => {
-        let data = '';
-        req.on('data', chunk => data += chunk);
-        req.on('end', () => resolve(data));
-        req.on('error', reject);
-      });
-      
-      console.log('Raw body:', body);
-      
-      if (!body) {
-        return res.status(400).json({ error: 'Empty body' });
-      }
-      
-      body = JSON.parse(body);
-      console.log('Parsed body:', body);
-      
-    } catch (parseError) {
-      console.error('Parse error:', parseError.message);
-      return res.status(400).json({ error: 'Invalid JSON' });
+    let body = '';
+    for await (const chunk of req) {
+      body += chunk;
     }
     
-    const { action, ...params } = body;
+    console.log('📡 Тело запроса:', body);
     
-    if (!action) {
-      return res.status(400).json({ error: 'Action required' });
+    if (!body) {
+      return res.status(400).json({ error: 'Пустой запрос' });
     }
     
-    console.log('Action:', action);
-    console.log('Params:', params);
+    const { action, ...params } = JSON.parse(body);
     
-    // Формируем данные для АИАС
+    console.log('📡 Действие:', action);
+    console.log('📡 Параметры:', params);
+    
+    // Формируем запрос к АИАС
     const formData = new URLSearchParams();
     formData.append('action', action);
     
-    // ДОБАВЛЯЕМ ВСЕ ПАРАМЕТРЫ КАК СТРОКИ
+    // Все параметры как строки
     for (const [key, value] of Object.entries(params)) {
       if (value !== undefined && value !== null) {
         formData.append(key, String(value));
       }
     }
     
-    const formString = formData.toString();
-    console.log('Form data for АИАС:', formString);
+    console.log('📡 Отправляем в АИАС:', formData.toString());
     
     // Запрос к АИАС
-    console.log('Making request to АИАС...');
-    const startTime = Date.now();
-    
     const aversResponse = await fetch('https://journal.school28-kirov.ru/act/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        'Accept': '*/*',
-        'Origin': 'https://journal.school28-kirov.ru',
-        'Referer': 'https://journal.school28-kirov.ru/'
+        'User-Agent': 'Mozilla/5.0',
+        'Accept': '*/*'
       },
-      body: formString,
-      // Увеличиваем таймауты
-      signal: AbortSignal.timeout(30000)
-    }).catch(err => {
-      console.error('Fetch error:', err.message);
-      throw new Error(`Network error: ${err.message}`);
+      body: formData.toString()
     });
     
-    const endTime = Date.now();
-    console.log(`АИАС response in ${endTime - startTime}ms`);
-    console.log('Status:', aversResponse.status);
-    console.log('Status text:', aversResponse.statusText);
+    console.log('📡 Ответ АИАС статус:', aversResponse.status);
     
-    // Получаем ответ
     const responseText = await aversResponse.text();
-    console.log('Response length:', responseText.length);
-    console.log('First 500 chars:', responseText.substring(0, 500));
+    console.log('📡 Ответ АИАС длина:', responseText.length);
     
-    // Пробуем парсить как JSON
+    // Пробуем парсить JSON
     let responseData;
     try {
       responseData = JSON.parse(responseText);
-      console.log('Parsed as JSON');
+      console.log('📡 Ответ JSON успешно распарсен');
     } catch {
-      // Если не JSON, возвращаем как есть
       responseData = responseText;
-      console.log('Not JSON, returning as text');
+      console.log('📡 Ответ не JSON, возвращаем как текст');
     }
     
     // Возвращаем ответ
-    res.status(aversResponse.status).json({
-      success: aversResponse.ok,
-      status: aversResponse.status,
+    res.status(200).json({
+      success: true,
       data: responseData,
-      fromProxy: true
+      action: action
     });
     
   } catch (error) {
-    console.error('PROXY FATAL ERROR:', error);
-    console.error('Stack:', error.stack);
-    
+    console.error('📡 ОШИБКА ПРОКСИ:', error.message);
     res.status(500).json({
-      error: 'Proxy failed',
-      message: error.message,
-      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
-      timestamp: new Date().toISOString()
+      success: false,
+      error: error.message,
+      stack: error.stack
     });
   }
 }
