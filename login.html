@@ -27,6 +27,8 @@
             border-radius: 5px;
             text-align: left;
         }
+        .error { color: red; }
+        .success { color: green; }
     </style>
 </head>
 <body>
@@ -34,47 +36,53 @@
     <h3>Школа №28, Киров</h3>
     
     <input type="text" id="lastName" placeholder="Фамилия" value="Плехов">
+    <input type="password" id="password" placeholder="Пароль">
     <button onclick="login()">ВОЙТИ</button>
     
-    <div id="result">Введи фамилию и нажми ВОЙТИ</div>
+    <div id="result">Введи фамилию и пароль от старого дневника</div>
 
     <script>
         async function login() {
             const lastName = document.getElementById('lastName').value;
+            const password = document.getElementById('password').value;
             const resultDiv = document.getElementById('result');
             
-            if (!lastName) {
-                resultDiv.innerHTML = "Введи фамилию";
+            if (!lastName || !password) {
+                resultDiv.innerHTML = '<span class="error">Введи фамилию и пароль</span>';
                 return;
             }
             
-            resultDiv.innerHTML = "Ищем ID...";
+            resultDiv.innerHTML = "Вход в систему...";
             
             try {
-                // 1. Ищем ID по фамилии
+                // 1. Входим в АИАС и получаем куки
                 const response = await fetch('/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ lastName: lastName })
+                    body: JSON.stringify({ 
+                        lastName: lastName,
+                        password: password 
+                    })
                 });
                 
                 const data = await response.json();
                 
                 if (!data.success) {
-                    resultDiv.innerHTML = "Ошибка: " + (data.error || "Неизвестная ошибка");
+                    resultDiv.innerHTML = `<span class="error">❌ Ошибка: ${data.error}</span>`;
                     return;
                 }
                 
-                // 2. Сохраняем данные
+                // 2. Сохраняем ВСЁ
                 localStorage.setItem('studentId', data.studentId);
                 localStorage.setItem('classId', data.classId);
                 localStorage.setItem('username', lastName);
+                localStorage.setItem('cookies', data.cookies); // ВАЖНО: куки!
                 
                 resultDiv.innerHTML = `
-                    ✅ Успешно!<br><br>
+                    <span class="success">✅ Успешный вход!</span><br><br>
                     Фамилия: <strong>${lastName}</strong><br>
                     ID ученика: <strong>${data.studentId}</strong><br>
-                    Класс: <strong>${data.classId}</strong><br><br>
+                    Куки получены: <strong>${data.cookies ? 'Да' : 'Нет'}</strong><br><br>
                     <button onclick="goToDashboard()" 
                             style="background: #2196F3; padding: 10px 20px;">
                         ПЕРЕЙТИ В ДНЕВНИК
@@ -82,7 +90,7 @@
                 `;
                 
             } catch (error) {
-                resultDiv.innerHTML = "Ошибка: " + error.message;
+                resultDiv.innerHTML = `<span class="error">❌ Ошибка: ${error.message}</span>`;
             }
         }
         
@@ -91,7 +99,7 @@
         }
         
         // Enter для входа
-        document.getElementById('lastName').addEventListener('keypress', function(e) {
+        document.getElementById('password').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') login();
         });
     </script>
