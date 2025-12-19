@@ -3,70 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Электронный дневник - Школа 28</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Дневник Школы 28</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7ec 100%);
-            min-height: 100vh;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 0;
             display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 20px;
+            align-items: center;
+            min-height: 100vh;
         }
-        .container {
-            text-align: center;
+        .card {
             background: white;
-            padding: 60px 40px;
-            border-radius: 24px;
-            max-width: 500px;
-            width: 100%;
-            border: 1px solid #e5e7eb;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         h1 {
-            color: #1f2937;
-            font-size: 32px;
-            margin-bottom: 16px;
-            font-weight: 700;
-        }
-        p {
-            color: #6b7280;
-            font-size: 16px;
-            margin-bottom: 32px;
-            line-height: 1.6;
+            color: #1a237e;
+            margin-bottom: 20px;
         }
         .btn {
             display: inline-block;
-            background: #4f46e5;
+            background: #303f9f;
             color: white;
+            padding: 12px 24px;
             text-decoration: none;
-            padding: 16px 32px;
-            border-radius: 12px;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 16px;
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-        .btn:hover {
-            background: #4338ca;
-            transform: translateY(-2px);
-        }
-        .logo {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #4f46e5;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">📚</div>
-        <h1>Новый электронный дневник</h1>
-        <p>Современный интерфейс для электронного журнала АИАС АВЕРС Школы №28 г. Кирова</p>
-        <a href="login.html" class="btn">Войти в дневник</a>
+    <div class="card">
+        <h1>📚 Электронный дневник</h1>
+        <p>Школа №28 г. Кирова</p>
+        <a href="login.html" class="btn">Войти</a>
     </div>
 </body>
 </html>
