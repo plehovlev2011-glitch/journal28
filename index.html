@@ -29,7 +29,7 @@
             background-color: #fff;
             height: 44px;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             padding: 0 16px;
             font-size: 17px;
@@ -45,7 +45,7 @@
             font-weight: 700;
         }
         
-        /* Навигационные вкладки */
+        /* Навигационные вкладки с улучшенными анимациями */
         .tab-bar {
             position: fixed;
             bottom: 0;
@@ -73,15 +73,26 @@
             font-size: 12px;
             flex: 1;
             height: 100%;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center;
         }
         
         .tab-item.active {
             color: #007aff;
         }
         
+        .tab-item:active {
+            transform: scale(0.85);
+        }
+        
         .tab-icon {
             font-size: 22px;
             margin-bottom: 4px;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .tab-item:active .tab-icon {
+            transform: scale(1.2);
         }
         
         /* Контент страниц */
@@ -115,65 +126,82 @@
             font-size: 16px;
         }
         
-        /* Стили для сводки */
-        .summary-card {
+        /* Стили для сводки (лента новостей) */
+        .news-feed {
             background-color: #fff;
             margin: 12px 16px;
             border-radius: 12px;
-            padding: 16px;
+            overflow: hidden;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
         
-        .summary-card h2 {
-            font-size: 20px;
-            margin-bottom: 12px;
-        }
-        
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
+        .news-item {
+            padding: 16px;
             border-bottom: 1px solid #f2f2f7;
         }
         
-        .summary-item:last-child {
+        .news-item:last-child {
             border-bottom: none;
         }
         
-        .summary-label {
+        .news-date {
+            font-size: 14px;
             color: #8e8e93;
+            margin-bottom: 8px;
         }
         
-        .summary-value {
-            font-weight: 600;
+        .news-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #007aff;
         }
         
-        /* Стили для списка абонентов */
-        .contact-list {
+        .news-content {
+            font-size: 16px;
+            line-height: 1.4;
+        }
+        
+        /* Стили для списка чатов */
+        .chats-list {
             background-color: #fff;
             margin: 12px 16px;
             border-radius: 12px;
             overflow: hidden;
         }
         
-        .contact-item {
+        .chat-item {
             display: flex;
             align-items: center;
             padding: 16px;
             border-bottom: 1px solid #f2f2f7;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
         }
         
-        .contact-item:active {
+        .chat-item:active {
             background-color: #f2f2f7;
+            transform: scale(0.995);
         }
         
-        .contact-item:last-child {
+        .chat-item:last-child {
             border-bottom: none;
         }
         
-        .contact-avatar {
+        .chat-item.pinned::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 4px;
+            background-color: #007aff;
+            border-radius: 50%;
+        }
+        
+        .chat-avatar {
             width: 50px;
             height: 50px;
             border-radius: 50%;
@@ -185,21 +213,209 @@
             font-size: 20px;
             font-weight: 600;
             margin-right: 16px;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        .contact-info {
+        .chat-item:active .chat-avatar {
+            transform: scale(1.1);
+        }
+        
+        .chat-info {
             flex: 1;
         }
         
-        .contact-name {
+        .chat-name {
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 4px;
         }
         
-        .contact-email {
+        .chat-last-message {
             color: #8e8e93;
             font-size: 14px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 250px;
+        }
+        
+        .chat-time {
+            color: #8e8e93;
+            font-size: 13px;
+            margin-left: 8px;
+        }
+        
+        .chat-unread {
+            background-color: #007aff;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        /* Стили для окна чата */
+        .chat-window {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #f2f2f7;
+            z-index: 2000;
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .chat-window.active {
+            transform: translateX(0);
+        }
+        
+        .chat-header {
+            background-color: #fff;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #c6c6c8;
+        }
+        
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .chat-header-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #007aff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+        
+        .chat-header-name {
+            font-size: 17px;
+            font-weight: 600;
+        }
+        
+        .chat-header-status {
+            font-size: 13px;
+            color: #8e8e93;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message-bubble {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin-bottom: 8px;
+            font-size: 16px;
+            line-height: 1.4;
+            position: relative;
+            word-wrap: break-word;
+            animation: messageAppear 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes messageAppear {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message-incoming {
+            background-color: #e5e5ea;
+            color: #000;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message-outgoing {
+            background-color: #007aff;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message-time {
+            font-size: 11px;
+            color: #8e8e93;
+            margin-top: 4px;
+            text-align: right;
+        }
+        
+        .message-incoming .message-time {
+            color: #8e8e93;
+        }
+        
+        .message-outgoing .message-time {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .chat-actions {
+            background-color: #fff;
+            padding: 12px 16px;
+            border-top: 1px solid #c6c6c8;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .btn {
+            background-color: #007aff;
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            width: calc(100% - 32px);
+            margin: 0 auto;
+            text-align: center;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .btn:active {
+            opacity: 0.8;
+            transform: scale(0.98);
+        }
+        
+        .btn-back {
+            background: none;
+            border: none;
+            font-size: 17px;
+            color: #007aff;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .btn-back:active {
+            background-color: rgba(0, 122, 255, 0.1);
+            transform: scale(0.95);
         }
         
         /* Стили для тарифа */
@@ -257,90 +473,69 @@
             font-size: 18px;
         }
         
-        /* Стили для карточки абонента */
-        .contact-card {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+        .other-tariffs {
             background-color: #fff;
-            z-index: 2000;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            overflow-y: auto;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        
-        .contact-card.active {
-            transform: translateX(0);
-        }
-        
-        .contact-card-header {
-            background-color: #f2f2f7;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .contact-card-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: #007aff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 32px;
-            font-weight: 600;
-            margin: 0 auto 16px;
-        }
-        
-        .contact-card-name {
-            text-align: center;
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        
-        .contact-card-email {
-            text-align: center;
-            color: #8e8e93;
-            margin-bottom: 24px;
-        }
-        
-        .btn {
-            background-color: #007aff;
-            color: white;
-            border: none;
-            padding: 16px 24px;
+            margin: 12px 16px;
             border-radius: 12px;
-            font-size: 17px;
+            padding: 16px;
+        }
+        
+        .other-tariffs h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+        
+        .tariff-option {
+            padding: 16px;
+            border-bottom: 1px solid #f2f2f7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .tariff-option:active {
+            background-color: #f2f2f7;
+            transform: scale(0.995);
+        }
+        
+        .tariff-option:last-child {
+            border-bottom: none;
+        }
+        
+        .tariff-option-name {
             font-weight: 600;
-            cursor: pointer;
-            display: block;
-            width: calc(100% - 32px);
-            margin: 16px;
-            text-align: center;
-            transition: opacity 0.2s;
+            font-size: 18px;
         }
         
-        .btn:active {
-            opacity: 0.8;
-        }
-        
-        .btn-back {
-            background: none;
-            border: none;
-            font-size: 17px;
+        .tariff-option-price {
             color: #007aff;
-            cursor: pointer;
+            font-weight: 600;
         }
         
-        /* Стили для окна написания письма */
+        .support-actions {
+            display: flex;
+            gap: 12px;
+            margin: 12px 16px;
+        }
+        
+        .support-btn {
+            flex: 1;
+            background-color: #fff;
+            border: 1px solid #c6c6c8;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .support-btn:active {
+            background-color: #f2f2f7;
+            transform: scale(0.98);
+        }
+        
+        /* Стили для окна написания письма (улучшенный редактор) */
         .message-composer {
             position: fixed;
             top: 0;
@@ -350,7 +545,7 @@
             background-color: #fff;
             z-index: 3000;
             transform: translateX(100%);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             flex-direction: column;
             max-width: 500px;
@@ -367,6 +562,7 @@
             justify-content: space-between;
             padding: 12px 16px;
             border-bottom: 1px solid #c6c6c8;
+            background-color: #f2f2f7;
         }
         
         .composer-header h2 {
@@ -374,164 +570,447 @@
             font-weight: 600;
         }
         
+        .composer-toolbar {
+            display: flex;
+            padding: 8px 16px;
+            background-color: #f2f2f7;
+            border-bottom: 1px solid #c6c6c8;
+            overflow-x: auto;
+        }
+        
+        .toolbar-btn {
+            background: none;
+            border: none;
+            padding: 8px 12px;
+            font-size: 18px;
+            color: #007aff;
+            cursor: pointer;
+            border-radius: 6px;
+            margin-right: 8px;
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            white-space: nowrap;
+        }
+        
+        .toolbar-btn:active {
+            background-color: rgba(0, 122, 255, 0.1);
+            transform: scale(0.95);
+        }
+        
+        .toolbar-btn.active {
+            background-color: rgba(0, 122, 255, 0.2);
+        }
+        
+        .emojis-panel {
+            display: none;
+            padding: 12px 16px;
+            background-color: #f2f2f7;
+            border-bottom: 1px solid #c6c6c8;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .emojis-panel.active {
+            display: flex;
+        }
+        
+        .emoji-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 6px;
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .emoji-btn:active {
+            background-color: rgba(0, 122, 255, 0.1);
+            transform: scale(1.2);
+        }
+        
         .composer-body {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message-editor {
+            flex: 1;
             padding: 16px;
-        }
-        
-        .message-input {
-            width: 100%;
-            height: 200px;
-            border: none;
             font-size: 17px;
+            line-height: 1.5;
+            border: none;
             resize: none;
-            padding: 8px;
-        }
-        
-        .message-input:focus {
             outline: none;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
         }
         
-        .message-history {
-            margin-top: 24px;
+        .composer-actions {
             padding: 16px;
             background-color: #f2f2f7;
+            border-top: 1px solid #c6c6c8;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            min-width: calc(50% - 6px);
+            padding: 16px;
             border-radius: 12px;
-            max-height: 300px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .action-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .action-btn-primary {
+            background-color: #007aff;
+            color: white;
+        }
+        
+        .action-btn-secondary {
+            background-color: #fff;
+            color: #007aff;
+            border: 1px solid #c6c6c8;
+        }
+        
+        .action-btn-danger {
+            background-color: #ff453a;
+            color: white;
+        }
+        
+        .action-btn-help {
+            background-color: #32d74b;
+            color: white;
+            width: 100%;
+        }
+        
+        .action-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Стили для контекстного меню */
+        .context-menu {
+            position: fixed;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            z-index: 4000;
+            overflow: hidden;
+            min-width: 200px;
+            animation: menuAppear 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes menuAppear {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .menu-item {
+            padding: 16px;
+            border-bottom: 1px solid #f2f2f7;
+            cursor: pointer;
+            transition: background-color 0.15s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .menu-item:active {
+            background-color: #f2f2f7;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-item i {
+            margin-right: 12px;
+            color: #007aff;
+            width: 20px;
+        }
+        
+        /* Модальные окна */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 5000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background-color: #fff;
+            border-radius: 14px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: modalAppear 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes modalAppear {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .modal-header {
+            padding: 20px 20px 10px;
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        .modal-content {
+            padding: 10px 20px 20px;
+            font-size: 17px;
+            color: #8e8e93;
+            text-align: center;
+            line-height: 1.4;
+        }
+        
+        .modal-actions {
+            display: flex;
+            border-top: 1px solid #c6c6c8;
+        }
+        
+        .modal-btn {
+            flex: 1;
+            padding: 16px;
+            background: none;
+            border: none;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.15s;
+        }
+        
+        .modal-btn:active {
+            background-color: #f2f2f7;
+        }
+        
+        .modal-btn-primary {
+            color: #007aff;
+        }
+        
+        .modal-btn-danger {
+            color: #ff453a;
+        }
+        
+        /* Секретное меню администратора */
+        .admin-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #fff;
+            z-index: 6000;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin: 0 auto;
             overflow-y: auto;
         }
         
-        .message-history h3 {
-            font-size: 17px;
-            margin-bottom: 12px;
-            color: #8e8e93;
+        .admin-overlay.active {
+            transform: translateY(0);
         }
         
-        .message-item {
-            background-color: #fff;
-            padding: 12px;
-            border-radius: 12px;
+        .admin-header {
+            background-color: #007aff;
+            color: white;
+            padding: 20px 16px;
+            text-align: center;
+        }
+        
+        .admin-header h2 {
+            font-size: 24px;
             margin-bottom: 8px;
-            border: 1px solid #e5e5ea;
         }
         
-        .message-date {
-            font-size: 13px;
-            color: #8e8e93;
-            margin-bottom: 4px;
+        .admin-content {
+            padding: 20px 16px;
+            flex: 1;
+        }
+        
+        .admin-section {
+            background-color: #f2f2f7;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .admin-section h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: #007aff;
+        }
+        
+        .admin-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #c6c6c8;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .admin-btn {
+            background-color: #007aff;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .admin-btn:active {
+            opacity: 0.8;
+            transform: scale(0.98);
+        }
+        
+        .admin-select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #c6c6c8;
+            font-size: 16px;
+            margin-bottom: 12px;
+            background-color: white;
         }
         
         /* Анимации */
+        .fade-in {
+            animation: fadeIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
         
-        .fade-in {
-            animation: fadeIn 0.3s ease;
-        }
-        
-        /* iOS специфичные стили */
+        /* iOS безопасные зоны */
         .ios-safe-area {
             padding-top: env(safe-area-inset-top);
             padding-bottom: env(safe-area-inset-bottom);
+        }
+        
+        /* Планировщик отправки */
+        .schedule-picker {
+            padding: 16px;
+            background-color: #fff;
+            border-radius: 12px;
+            margin: 12px 16px;
+        }
+        
+        .schedule-picker input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #c6c6c8;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        
+        /* Заглушка для контекстного меню объяснения */
+        .explanation {
+            background-color: #f2f2f7;
+            padding: 16px;
+            border-radius: 12px;
+            margin: 16px;
+            font-size: 15px;
+            color: #8e8e93;
+            line-height: 1.4;
+        }
+        
+        /* Улучшенные анимации для всех интерактивных элементов */
+        button, .chat-item, .tariff-option, .support-btn, .menu-item, .toolbar-btn {
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Анимация легкого отскока для всех нажатий */
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(0.95); }
+        }
+        
+        .bounce:active {
+            animation: bounce 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
     </style>
 </head>
 <body>
     <!-- Статус бар iOS -->
     <div class="status-bar ios-safe-area">
-        <div class="time" id="currentTime">9:41</div>
-        <div class="status-icons">
-            <i class="fas fa-signal"></i>
-            <i class="fas fa-wifi" style="margin-left: 5px;"></i>
-            <i class="fas fa-battery-full" style="margin-left: 5px;"></i>
-        </div>
+        <div class="time" id="currentTime">Текущее время: 14:30</div>
     </div>
     
-    <!-- Страница сводки -->
+    <!-- Страница сводки (лента новостей) -->
     <div id="summaryPage" class="page active">
         <div class="header">
             <h1>Сводка</h1>
-            <p>Обзор вашей почтовой активности</p>
+            <p>Новости и обновления</p>
         </div>
         
-        <div class="summary-card">
-            <h2>Статистика</h2>
-            <div class="summary-item">
-                <span class="summary-label">Отправлено писем</span>
-                <span class="summary-value" id="sentCount">0</span>
+        <div class="news-feed">
+            <div class="news-item">
+                <div class="news-date">5 января 2026</div>
+                <div class="news-title">Обслуживание горячей линии</div>
+                <div class="news-content">Горячая линия Международной почты будет закрыта на техническое обслуживание с 15 по 18 января 2026 года. Несмотря на это, все отделения и онлайн-сервисы продолжат работать в обычном режиме. Приносим извинения за временные неудобства.</div>
             </div>
-            <div class="summary-item">
-                <span class="summary-label">Получено писем</span>
-                <span class="summary-value">12</span>
+            
+            <div class="news-item">
+                <div class="news-date">31 декабря 2025</div>
+                <div class="news-title">Благодарность и поздравление</div>
+                <div class="news-content">Дорогие пользователи! Мы благодарим вас за то, что выбираете Международную почту. В 2025 году нашими услугами воспользовались более 104 миллионов человек по всему земному шару! От всей команды желаем вам счастливого Нового 2026 года! Пусть он принесет вам радость, успех и благополучие.</div>
             </div>
-            <div class="summary-item">
-                <span class="summary-label">Непрочитанных</span>
-                <span class="summary-value">3</span>
-            </div>
-        </div>
-        
-        <div class="summary-card">
-            <h2>Последняя активность</h2>
-            <div class="summary-item">
-                <span class="summary-label">Последнее отправление</span>
-                <span class="summary-value" id="lastSent">Нет данных</span>
-            </div>
-            <div class="summary-item">
-                <span class="summary-label">Активный тариф</span>
-                <span class="summary-value">Единый</span>
-            </div>
-            <div class="summary-item">
-                <span class="summary-label">Действует до</span>
-                <span class="summary-value">21 ноября 2027</span>
+            
+            <div class="news-item">
+                <div class="news-date">28 декабря 2025</div>
+                <div class="news-title">Расширение валют для оплаты</div>
+                <div class="news-content">Теперь вы можете оплачивать услуги Международной почты не только в гривнах, но и в 9 других валютах: долларах США, евро, британских фунтах, швейцарских франках, японских иенах, канадских долларах, австралийских долларах, китайских юанях и российских рублях.</div>
             </div>
         </div>
     </div>
     
-    <!-- Страница абонентов и писем -->
-    <div id="contactsPage" class="page">
+    <!-- Страница чатов -->
+    <div id="chatsPage" class="page">
         <div class="header">
-            <h1>Абоненты</h1>
-            <p>Список доступных контактов</p>
+            <h1>Чаты</h1>
+            <p>Ваши переписки</p>
         </div>
         
-        <div class="contact-list">
-            <div class="contact-item" data-contact="0">
-                <div class="contact-avatar">ПЛ</div>
-                <div class="contact-info">
-                    <div class="contact-name">Плехов Лев Александрович</div>
-                    <div class="contact-email">plehov@international-mail.ru</div>
-                </div>
-                <i class="fas fa-chevron-right" style="color: #c6c6c8;"></i>
-            </div>
-            
-            <div class="contact-item" data-contact="1">
-                <div class="contact-avatar">КР</div>
-                <div class="contact-info">
-                    <div class="contact-name">Криштиану Роналду Душ Сантуш Авейру</div>
-                    <div class="contact-email">ronaldo@international-mail.ru</div>
-                </div>
-                <i class="fas fa-chevron-right" style="color: #c6c6c8;"></i>
-            </div>
-            
-            <div class="contact-item" data-contact="2">
-                <div class="contact-avatar">ДР</div>
-                <div class="contact-info">
-                    <div class="contact-name">Джорджина Родригес</div>
-                    <div class="contact-email">rodriguez@international-mail.ru</div>
-                </div>
-                <i class="fas fa-chevron-right" style="color: #c6c6c8;"></i>
-            </div>
-            
-            <div class="contact-item" data-contact="3">
-                <div class="contact-avatar">КМ</div>
-                <div class="contact-info">
-                    <div class="contact-name">Криштиану-младший Роналду Душ Сантуш Авейру</div>
-                    <div class="contact-email">ronaldo.jr@international-mail.ru</div>
-                </div>
-                <i class="fas fa-chevron-right" style="color: #c6c6c8;"></i>
-            </div>
+        <div class="chats-list" id="chatsList">
+            <!-- Чаты будут загружены динамически -->
         </div>
     </div>
     
@@ -539,7 +1018,7 @@
     <div id="tariffPage" class="page">
         <div class="header">
             <h1>Тариф</h1>
-            <p>Информация о вашем тарифном плане</p>
+            <p>Управление тарифным планом</p>
         </div>
         
         <div class="tariff-card">
@@ -556,61 +1035,221 @@
             </ul>
         </div>
         
-        <div class="summary-card">
-            <h2>История платежей</h2>
-            <div class="summary-item">
-                <span class="summary-label">21.11.2024</span>
-                <span class="summary-value">+3 года продления</span>
+        <div class="other-tariffs">
+            <h2>Другие тарифы</h2>
+            <div class="tariff-option">
+                <div class="tariff-option-name">Базовый</div>
+                <div class="tariff-option-price">499 ₽/мес</div>
             </div>
-            <div class="summary-item">
-                <span class="summary-label">15.10.2023</span>
-                <span class="summary-value">Активация тарифа</span>
+            <div class="tariff-option">
+                <div class="tariff-option-name">Расширенный</div>
+                <div class="tariff-option-price">899 ₽/мес</div>
             </div>
-        </div>
-    </div>
-    
-    <!-- Карточка абонента -->
-    <div id="contactCard" class="contact-card">
-        <div class="contact-card-header">
-            <button class="btn-back" id="backFromContact">
-                <i class="fas fa-chevron-left"></i> Назад
-            </button>
-            <div>Контакт</div>
-            <div style="width: 60px;"></div>
+            <div class="tariff-option">
+                <div class="tariff-option-name">Бизнес</div>
+                <div class="tariff-option-price">1 499 ₽/мес</div>
+            </div>
+            <div class="tariff-option">
+                <div class="tariff-option-name">Премиум</div>
+                <div class="tariff-option-price">2 499 ₽/мес</div>
+            </div>
         </div>
         
-        <div class="fade-in" id="contactCardContent">
-            <div class="contact-card-avatar" id="contactAvatar">ПЛ</div>
-            <div class="contact-card-name" id="contactFullName">Плехов Лев Александрович</div>
-            <div class="contact-card-email" id="contactEmail">plehov@international-mail.ru</div>
-            
-            <button class="btn" id="writeMessageBtn">
-                <i class="fas fa-pen" style="margin-right: 8px;"></i> Написать письмо
-            </button>
-            
-            <div class="message-history" id="contactMessageHistory">
-                <h3>История переписки</h3>
-                <div id="messagesList"></div>
+        <div class="support-actions">
+            <div class="support-btn">
+                <i class="fas fa-exchange-alt"></i> Сменить тариф
+            </div>
+            <div class="support-btn">
+                <i class="fas fa-phone"></i> Позвонить в поддержку
+            </div>
+        </div>
+        
+        <div class="support-actions">
+            <div class="support-btn">
+                <i class="fas fa-question-circle"></i> FAQ
+            </div>
+            <div class="support-btn">
+                <i class="fas fa-file-contract"></i> Документы
             </div>
         </div>
     </div>
     
-    <!-- Окно написания письма -->
+    <!-- Окно чата -->
+    <div id="chatWindow" class="chat-window">
+        <div class="chat-header">
+            <button class="btn-back" id="backFromChat">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="chat-header-info">
+                <div class="chat-header-avatar" id="chatHeaderAvatar">ПЛ</div>
+                <div>
+                    <div class="chat-header-name" id="chatHeaderName">Плехов Лев Александрович</div>
+                    <div class="chat-header-status" id="chatHeaderStatus">был(а) в сети 5 минут назад</div>
+                </div>
+            </div>
+            <div style="width: 44px;"></div>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <!-- Сообщения будут загружены динамически -->
+        </div>
+        
+        <div class="chat-actions">
+            <button class="btn" id="writeMessageFromChatBtn">
+                <i class="fas fa-pen" style="margin-right: 8px;"></i> Написать сообщение
+            </button>
+        </div>
+    </div>
+    
+    <!-- Окно написания письма (продвинутый редактор) -->
     <div id="messageComposer" class="message-composer">
         <div class="composer-header">
             <button class="btn-back" id="backFromComposer">
                 <i class="fas fa-chevron-left"></i>
             </button>
             <h2 id="composerTitle">Новое письмо</h2>
-            <button class="btn-back" id="sendMessageBtn">Отправить</button>
+            <div style="width: 44px;"></div>
+        </div>
+        
+        <div class="composer-toolbar">
+            <button class="toolbar-btn" id="boldBtn" title="Жирный"><b>B</b></button>
+            <button class="toolbar-btn" id="italicBtn" title="Курсив"><i>I</i></button>
+            <button class="toolbar-btn" id="underlineBtn" title="Подчеркнутый"><u>U</u></button>
+            <button class="toolbar-btn" id="emojisBtn" title="Смайлы">😊</button>
+            <button class="toolbar-btn" id="spellCheckBtn" title="Проверка орфографии"><i class="fas fa-spell-check"></i></button>
+            <button class="toolbar-btn" id="helpBtn" title="Советы по написанию"><i class="fas fa-lightbulb"></i></button>
+        </div>
+        
+        <div class="emojis-panel" id="emojisPanel">
+            <button class="emoji-btn">😊</button>
+            <button class="emoji-btn">😂</button>
+            <button class="emoji-btn">😍</button>
+            <button class="emoji-btn">😎</button>
+            <button class="emoji-btn">👍</button>
+            <button class="emoji-btn">👋</button>
+            <button class="emoji-btn">🎉</button>
+            <button class="emoji-btn">❤️</button>
+            <button class="emoji-btn">🙏</button>
+            <button class="emoji-btn">😉</button>
         </div>
         
         <div class="composer-body">
-            <div style="margin-bottom: 16px; color: #8e8e93;">
-                Кому: <span id="recipientName">Плехов Лев Александрович</span> &lt;<span id="recipientEmail">plehov@international-mail.ru</span>&gt;
+            <div style="padding: 16px 16px 0; font-weight: 600; font-size: 17px;">
+                Кому: <span id="recipientName">Плехов Лев Александрович</span>
             </div>
             
-            <textarea class="message-input" id="messageText" placeholder="Введите текст письма..."></textarea>
+            <textarea class="message-editor" id="messageEditor" placeholder="Начните писать ваше письмо здесь..."></textarea>
+        </div>
+        
+        <div class="composer-actions">
+            <button class="action-btn action-btn-help" id="aiHelpBtn">
+                <i class="fas fa-robot"></i> Я могу помочь!
+            </button>
+            <button class="action-btn action-btn-primary" id="sendMessageBtn">
+                <i class="fas fa-paper-plane"></i> Отправить!
+            </button>
+            <button class="action-btn action-btn-secondary" id="scheduleBtn">
+                <i class="fas fa-calendar-alt"></i> Запланировать отправку
+            </button>
+            <button class="action-btn action-btn-danger" id="deleteDraftBtn">
+                <i class="fas fa-trash"></i> Удалить
+            </button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для планирования отправки -->
+    <div class="modal-overlay" id="scheduleModal">
+        <div class="modal">
+            <div class="modal-header">Запланировать отправку</div>
+            <div class="modal-content">
+                <p>Выберите дату и время для отправки письма</p>
+                <div class="schedule-picker">
+                    <input type="datetime-local" id="scheduleDateTime" min="2026-01-05T00:00" value="2026-01-05T14:30">
+                    <p style="font-size: 14px; color: #8e8e93; margin-top: 8px;">Письмо будет отправлено автоматически в указанное время.</p>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn" id="cancelScheduleBtn">Отмена</button>
+                <button class="modal-btn modal-btn-primary" id="confirmScheduleBtn">Запланировать</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно подтверждения удаления -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal">
+            <div class="modal-header">Удалить письмо</div>
+            <div class="modal-content">
+                <p>Вы уверены, что хотите удалить это письмо? Это действие нельзя отменить.</p>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn" id="cancelDeleteBtn">Отмена</button>
+                <button class="modal-btn modal-btn-danger" id="confirmDeleteBtn">Удалить</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для объяснения функции "Игнорирование" -->
+    <div class="modal-overlay" id="ignoreModal">
+        <div class="modal">
+            <div class="modal-header">Функция "Игнорирование"</div>
+            <div class="modal-content">
+                <p>При включении этой функции вы не будете получать уведомления от этого пользователя, а его сообщения будут автоматически помечаться как прочитанные.</p>
+                <p>Это полезно, если вы не хотите общаться с человеком, но не хотите его блокировать полностью.</p>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" id="closeIgnoreModalBtn">Понятно</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Секретное меню администратора -->
+    <div class="admin-overlay" id="adminPanel">
+        <div class="admin-header">
+            <h2>Панель администратора</h2>
+            <p>Международная почта</p>
+        </div>
+        
+        <div class="admin-content">
+            <div class="admin-section">
+                <h3>Отправить сообщение от имени абонента</h3>
+                <select class="admin-select" id="adminContactSelect">
+                    <option value="0">Плехов Лев Александрович</option>
+                    <option value="1">Криштиану Роналду Душ Сантуш Авейру</option>
+                    <option value="2">Джорджина Родригес</option>
+                    <option value="3">Криштиану-младший Роналду Душ Сантуш Авейру</option>
+                </select>
+                <textarea class="admin-input" id="adminMessageText" placeholder="Текст сообщения..." rows="3"></textarea>
+                <button class="admin-btn" id="adminSendMessageBtn">Отправить как выбранный абонент</button>
+            </div>
+            
+            <div class="admin-section">
+                <h3>Изменить статус "был(а) в сети"</h3>
+                <select class="admin-select" id="adminStatusContactSelect">
+                    <option value="0">Плехов Лев Александрович</option>
+                    <option value="1">Криштиану Роналду Душ Сантуш Авейру</option>
+                    <option value="2">Джорджина Родригес</option>
+                    <option value="3">Криштиану-младший Роналду Душ Сантуш Авейру</option>
+                </select>
+                <input class="admin-input" id="adminStatusText" placeholder="Например: был(а) в сети 5 минут назад" value="был(а) в сети 5 минут назад">
+                <button class="admin-btn" id="adminSetStatusBtn">Установить статус</button>
+            </div>
+            
+            <div class="admin-section">
+                <h3>Изменить аватарку абонента</h3>
+                <select class="admin-select" id="adminAvatarContactSelect">
+                    <option value="0">Плехов Лев Александрович</option>
+                    <option value="1">Криштиану Роналду Душ Сантуш Авейру</option>
+                    <option value="2">Джорджина Родригес</option>
+                    <option value="3">Криштиану-младший Роналду Душ Сантуш Авейру</option>
+                </select>
+                <input class="admin-input" id="adminAvatarColor" type="color" value="#007aff">
+                <button class="admin-btn" id="adminSetAvatarBtn">Установить цвет аватарки</button>
+            </div>
+            
+            <div class="admin-section">
+                <button class="admin-btn" id="exitAdminBtn" style="background-color: #ff453a;">Выйти из панели администратора</button>
+            </div>
         </div>
     </div>
     
@@ -620,11 +1259,11 @@
             <div class="tab-icon"><i class="fas fa-chart-pie"></i></div>
             <div>Сводка</div>
         </a>
-        <a href="#" class="tab-item" data-tab="contactsPage">
-            <div class="tab-icon"><i class="fas fa-address-book"></i></div>
-            <div>Абоненты, письма</div>
+        <a href="#" class="tab-item" data-tab="chatsPage">
+            <div class="tab-icon"><i class="fas fa-comments"></i></div>
+            <div>Чаты</div>
         </a>
-        <a href="#" class="tab-item" data-tab="tariffPage">
+        <a href="#" class="tab-item" data-tab="tariffPage" id="tariffTab">
             <div class="tab-icon"><i class="fas fa-credit-card"></i></div>
             <div>Тариф</div>
         </a>
@@ -638,7 +1277,7 @@
                 const now = new Date();
                 const hours = now.getHours().toString().padStart(2, '0');
                 const minutes = now.getMinutes().toString().padStart(2, '0');
-                document.getElementById('currentTime').textContent = `${hours}:${minutes}`;
+                document.getElementById('currentTime').textContent = `Текущее время: ${hours}:${minutes}`;
             }
             
             updateTime();
@@ -655,38 +1294,66 @@
                 localStorage.setItem('mailMessages', JSON.stringify(initialMessages));
             }
             
-            // Обновление статистики на странице сводки
-            function updateStats() {
-                const messages = JSON.parse(localStorage.getItem('mailMessages'));
-                let totalSent = 0;
-                let lastSentDate = null;
-                
-                Object.values(messages).forEach(contactMessages => {
-                    totalSent += contactMessages.length;
-                    
-                    if (contactMessages.length > 0) {
-                        const lastMessage = contactMessages[contactMessages.length - 1];
-                        const messageDate = new Date(lastMessage.date);
-                        
-                        if (!lastSentDate || messageDate > lastSentDate) {
-                            lastSentDate = messageDate;
-                        }
-                    }
-                });
-                
-                document.getElementById('sentCount').textContent = totalSent;
-                
-                if (lastSentDate) {
-                    const formattedDate = lastSentDate.toLocaleDateString('ru-RU', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                    });
-                    document.getElementById('lastSent').textContent = formattedDate;
-                }
+            // Инициализация закрепленных чатов
+            if (!localStorage.getItem('pinnedChats')) {
+                localStorage.setItem('pinnedChats', JSON.stringify([]));
             }
             
-            updateStats();
+            // Инициализация статусов "был(а) в сети"
+            if (!localStorage.getItem('userStatuses')) {
+                const initialStatuses = {
+                    '0': 'был(а) в сети 5 минут назад',
+                    '1': 'был(а) в сети 2 часа назад',
+                    '2': 'был(а) в сети вчера',
+                    '3': 'был(а) в сети 3 дня назад'
+                };
+                localStorage.setItem('userStatuses', JSON.stringify(initialStatuses));
+            }
+            
+            // Инициализация цветов аватарок
+            if (!localStorage.getItem('avatarColors')) {
+                const initialColors = {
+                    '0': '#007aff',
+                    '1': '#32d74b',
+                    '2': '#ff453a',
+                    '3': '#ff9f0a'
+                };
+                localStorage.setItem('avatarColors', JSON.stringify(initialColors));
+            }
+            
+            // Инициализация игнорируемых пользователей
+            if (!localStorage.getItem('ignoredUsers')) {
+                localStorage.setItem('ignoredUsers', JSON.stringify([]));
+            }
+            
+            // Инициализация отключенных звуков
+            if (!localStorage.getItem('mutedChats')) {
+                localStorage.setItem('mutedChats', JSON.stringify([]));
+            }
+            
+            // Контакты данные
+            const contacts = [
+                {
+                    id: 0,
+                    name: 'Плехов Лев Александрович',
+                    initials: 'ПЛ'
+                },
+                {
+                    id: 1,
+                    name: 'Криштиану Роналду Душ Сантуш Авейру',
+                    initials: 'КР'
+                },
+                {
+                    id: 2,
+                    name: 'Джорджина Родригес',
+                    initials: 'ДР'
+                },
+                {
+                    id: 3,
+                    name: 'Криштиану-младший Роналду Душ Сантуш Авейру',
+                    initials: 'КМ'
+                }
+            ];
             
             // Переключение между вкладками
             const tabItems = document.querySelectorAll('.tab-item');
@@ -706,145 +1373,527 @@
                         page.classList.remove('active');
                         if (page.id === targetTab) {
                             page.classList.add('active');
+                            
+                            // При открытии страницы чатов обновить список
+                            if (targetTab === 'chatsPage') {
+                                loadChatsList();
+                            }
                         }
                     });
                 });
             });
             
-            // Контакты данные
-            const contacts = [
-                {
-                    id: 0,
-                    name: 'Плехов Лев Александрович',
-                    email: 'plehov@international-mail.ru',
-                    initials: 'ПЛ',
-                    color: '#007aff'
-                },
-                {
-                    id: 1,
-                    name: 'Криштиану Роналду Душ Сантуш Авейру',
-                    email: 'ronaldo@international-mail.ru',
-                    initials: 'КР',
-                    color: '#32d74b'
-                },
-                {
-                    id: 2,
-                    name: 'Джорджина Родригес',
-                    email: 'rodriguez@international-mail.ru',
-                    initials: 'ДР',
-                    color: '#ff453a'
-                },
-                {
-                    id: 3,
-                    name: 'Криштиану-младший Роналду Душ Сантуш Авейру',
-                    email: 'ronaldo.jr@international-mail.ru',
-                    initials: 'КМ',
-                    color: '#ff9f0a'
-                }
-            ];
-            
-            // Открытие карточки контакта
-            const contactItems = document.querySelectorAll('.contact-item');
-            const contactCard = document.getElementById('contactCard');
-            const backFromContactBtn = document.getElementById('backFromContact');
-            let currentContactId = null;
-            
-            contactItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const contactId = this.getAttribute('data-contact');
-                    currentContactId = parseInt(contactId);
-                    const contact = contacts[currentContactId];
+            // Загрузка списка чатов
+            function loadChatsList() {
+                const chatsList = document.getElementById('chatsList');
+                chatsList.innerHTML = '';
+                
+                const messages = JSON.parse(localStorage.getItem('mailMessages'));
+                const pinnedChats = JSON.parse(localStorage.getItem('pinnedChats'));
+                const avatarColors = JSON.parse(localStorage.getItem('avatarColors'));
+                
+                // Сначала отображаем закрепленные чаты
+                pinnedChats.forEach(contactId => {
+                    const contact = contacts[contactId];
+                    const contactMessages = messages[contactId];
+                    const lastMessage = contactMessages.length > 0 ? contactMessages[contactMessages.length - 1] : null;
                     
-                    // Заполнение данных контакта
-                    document.getElementById('contactAvatar').textContent = contact.initials;
-                    document.getElementById('contactAvatar').style.backgroundColor = contact.color;
-                    document.getElementById('contactFullName').textContent = contact.name;
-                    document.getElementById('contactEmail').textContent = contact.email;
+                    const chatItem = document.createElement('div');
+                    chatItem.className = 'chat-item pinned';
+                    chatItem.setAttribute('data-contact', contactId);
                     
-                    // Загрузка истории переписки
-                    loadMessageHistory(currentContactId);
+                    const lastMessageText = lastMessage ? 
+                        (lastMessage.sender === 'user' ? 'Вы: ' : '') + lastMessage.text.substring(0, 30) + (lastMessage.text.length > 30 ? '...' : '') : 
+                        'Нет сообщений';
                     
-                    // Показать карточку контакта
-                    contactCard.classList.add('active');
+                    const lastMessageTime = lastMessage ? formatMessageTime(lastMessage.date) : '';
+                    
+                    chatItem.innerHTML = `
+                        <div class="chat-avatar" style="background-color: ${avatarColors[contactId] || '#007aff'}">${contact.initials}</div>
+                        <div class="chat-info">
+                            <div class="chat-name">${contact.name}</div>
+                            <div class="chat-last-message">${lastMessageText}</div>
+                        </div>
+                        <div class="chat-time">${lastMessageTime}</div>
+                    `;
+                    
+                    chatsList.appendChild(chatItem);
                 });
+                
+                // Затем отображаем незакрепленные чаты
+                contacts.forEach((contact, index) => {
+                    if (pinnedChats.includes(index)) return; // Пропускаем уже добавленные закрепленные чаты
+                    
+                    const contactMessages = messages[index];
+                    const lastMessage = contactMessages.length > 0 ? contactMessages[contactMessages.length - 1] : null;
+                    
+                    const chatItem = document.createElement('div');
+                    chatItem.className = 'chat-item';
+                    chatItem.setAttribute('data-contact', index);
+                    
+                    const lastMessageText = lastMessage ? 
+                        (lastMessage.sender === 'user' ? 'Вы: ' : '') + lastMessage.text.substring(0, 30) + (lastMessage.text.length > 30 ? '...' : '') : 
+                        'Нет сообщений';
+                    
+                    const lastMessageTime = lastMessage ? formatMessageTime(lastMessage.date) : '';
+                    
+                    chatItem.innerHTML = `
+                        <div class="chat-avatar" style="background-color: ${avatarColors[index] || '#007aff'}">${contact.initials}</div>
+                        <div class="chat-info">
+                            <div class="chat-name">${contact.name}</div>
+                            <div class="chat-last-message">${lastMessageText}</div>
+                        </div>
+                        <div class="chat-time">${lastMessageTime}</div>
+                    `;
+                    
+                    chatsList.appendChild(chatItem);
+                });
+                
+                // Добавляем обработчики для чатов
+                document.querySelectorAll('.chat-item').forEach(item => {
+                    item.addEventListener('click', openChat);
+                    
+                    // Долгое нажатие для контекстного меню
+                    let pressTimer;
+                    item.addEventListener('touchstart', function(e) {
+                        pressTimer = setTimeout(() => {
+                            showContextMenu(e, parseInt(this.getAttribute('data-contact')));
+                        }, 800);
+                    });
+                    
+                    item.addEventListener('touchend', function() {
+                        clearTimeout(pressTimer);
+                    });
+                    
+                    item.addEventListener('touchmove', function() {
+                        clearTimeout(pressTimer);
+                    });
+                });
+            }
+            
+            // Форматирование времени для сообщений
+            function formatMessageTime(dateString) {
+                const date = new Date(dateString);
+                const now = new Date();
+                const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                const diffDays = Math.floor(diffMs / 86400000);
+                
+                if (diffMins < 60) {
+                    return `${diffMins} мин`;
+                } else if (diffHours < 24) {
+                    return `${diffHours} ч`;
+                } else if (diffDays < 7) {
+                    return `${diffDays} д`;
+                } else {
+                    return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
+                }
+            }
+            
+            // Открытие чата
+            let currentChatId = null;
+            const chatWindow = document.getElementById('chatWindow');
+            const backFromChatBtn = document.getElementById('backFromChat');
+            
+            function openChat() {
+                const contactId = parseInt(this.getAttribute('data-contact'));
+                currentChatId = contactId;
+                const contact = contacts[contactId];
+                
+                // Заполнение заголовка чата
+                const avatarColors = JSON.parse(localStorage.getItem('avatarColors'));
+                document.getElementById('chatHeaderAvatar').textContent = contact.initials;
+                document.getElementById('chatHeaderAvatar').style.backgroundColor = avatarColors[contactId] || '#007aff';
+                document.getElementById('chatHeaderName').textContent = contact.name;
+                
+                // Загрузка статуса "был(а) в сети"
+                const statuses = JSON.parse(localStorage.getItem('userStatuses'));
+                document.getElementById('chatHeaderStatus').textContent = statuses[contactId] || 'был(а) в сети недавно';
+                
+                // Загрузка сообщений
+                loadChatMessages(contactId);
+                
+                // Показать окно чата
+                chatWindow.classList.add('active');
+            }
+            
+            // Кнопка "Назад" в чате
+            backFromChatBtn.addEventListener('click', function() {
+                chatWindow.classList.remove('active');
+                currentChatId = null;
             });
             
-            // Кнопка "Назад" в карточке контакта
-            backFromContactBtn.addEventListener('click', function() {
-                contactCard.classList.remove('active');
-                currentContactId = null;
-            });
-            
-            // Загрузка истории переписки
-            function loadMessageHistory(contactId) {
-                const messagesList = document.getElementById('messagesList');
-                messagesList.innerHTML = '';
+            // Загрузка сообщений в чат
+            function loadChatMessages(contactId) {
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.innerHTML = '';
                 
                 const messages = JSON.parse(localStorage.getItem('mailMessages'));
                 const contactMessages = messages[contactId];
                 
                 if (contactMessages.length === 0) {
-                    messagesList.innerHTML = '<div class="message-item">История переписки пуста</div>';
+                    const emptyMessage = document.createElement('div');
+                    emptyMessage.className = 'message-bubble message-incoming';
+                    emptyMessage.textContent = 'Начните переписку, отправив первое сообщение';
+                    emptyMessage.style.alignSelf = 'center';
+                    emptyMessage.style.textAlign = 'center';
+                    emptyMessage.style.maxWidth = '90%';
+                    chatMessages.appendChild(emptyMessage);
                     return;
                 }
                 
                 contactMessages.forEach(msg => {
                     const messageDate = new Date(msg.date);
-                    const formattedDate = messageDate.toLocaleDateString('ru-RU', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
+                    const formattedTime = messageDate.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
                     
                     const messageElement = document.createElement('div');
-                    messageElement.className = 'message-item';
+                    messageElement.className = `message-bubble ${msg.sender === 'user' ? 'message-outgoing' : 'message-incoming'}`;
+                    
                     messageElement.innerHTML = `
-                        <div class="message-date">${formattedDate}</div>
                         <div>${msg.text}</div>
+                        <div class="message-time">${formattedTime}</div>
                     `;
                     
-                    messagesList.appendChild(messageElement);
+                    chatMessages.appendChild(messageElement);
                 });
                 
                 // Прокрутка к последнему сообщению
-                messagesList.scrollTop = messagesList.scrollHeight;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
             }
             
-            // Открытие окна написания письма
-            const writeMessageBtn = document.getElementById('writeMessageBtn');
+            // Контекстное меню для чатов
+            function showContextMenu(e, contactId) {
+                // Удаляем существующее меню, если есть
+                const existingMenu = document.querySelector('.context-menu');
+                if (existingMenu) {
+                    existingMenu.remove();
+                }
+                
+                // Создаем новое меню
+                const menu = document.createElement('div');
+                menu.className = 'context-menu';
+                
+                const pinnedChats = JSON.parse(localStorage.getItem('pinnedChats'));
+                const isPinned = pinnedChats.includes(contactId);
+                
+                const mutedChats = JSON.parse(localStorage.getItem('mutedChats'));
+                const isMuted = mutedChats.includes(contactId);
+                
+                const ignoredUsers = JSON.parse(localStorage.getItem('ignoredUsers'));
+                const isIgnored = ignoredUsers.includes(contactId);
+                
+                menu.innerHTML = `
+                    <div class="menu-item" id="pinChatItem">
+                        <i class="fas fa-thumbtack"></i>
+                        ${isPinned ? 'Открепить чат' : 'Закрепить чат'}
+                    </div>
+                    <div class="menu-item" id="muteChatItem">
+                        <i class="fas fa-bell${isMuted ? '-slash' : ''}"></i>
+                        ${isMuted ? 'Включить звук' : 'Отключить звук'}
+                    </div>
+                    <div class="menu-item" id="ignoreUserItem">
+                        <i class="fas fa-user${isIgnored ? '-check' : '-slash'}"></i>
+                        ${isIgnored ? 'Прекратить игнорирование' : 'Игнорирование'}
+                    </div>
+                    <div class="menu-item" id="clearChatItem">
+                        <i class="fas fa-trash"></i>
+                        Очистить историю
+                    </div>
+                `;
+                
+                // Позиционируем меню
+                const touch = e.touches ? e.touches[0] : e;
+                menu.style.left = Math.min(touch.clientX - 100, window.innerWidth - 220) + 'px';
+                menu.style.top = Math.min(touch.clientY - 10, window.innerHeight - 250) + 'px';
+                
+                document.body.appendChild(menu);
+                
+                // Обработчики для пунктов меню
+                document.getElementById('pinChatItem').addEventListener('click', function() {
+                    togglePinChat(contactId);
+                    menu.remove();
+                });
+                
+                document.getElementById('muteChatItem').addEventListener('click', function() {
+                    toggleMuteChat(contactId);
+                    menu.remove();
+                });
+                
+                document.getElementById('ignoreUserItem').addEventListener('click', function() {
+                    if (!isIgnored) {
+                        // Показываем объяснение функции
+                        document.getElementById('ignoreModal').classList.add('active');
+                        // После закрытия объяснения включаем игнорирование
+                        document.getElementById('closeIgnoreModalBtn').onclick = function() {
+                            document.getElementById('ignoreModal').classList.remove('active');
+                            toggleIgnoreUser(contactId);
+                        };
+                    } else {
+                        toggleIgnoreUser(contactId);
+                    }
+                    menu.remove();
+                });
+                
+                document.getElementById('clearChatItem').addEventListener('click', function() {
+                    if (confirm('Вы уверены, что хотите очистить историю переписки? Это действие нельзя отменить.')) {
+                        clearChatHistory(contactId);
+                    }
+                    menu.remove();
+                });
+                
+                // Закрытие меню при клике вне его
+                setTimeout(() => {
+                    const closeMenu = function(event) {
+                        if (!menu.contains(event.target)) {
+                            menu.remove();
+                            document.removeEventListener('click', closeMenu);
+                            document.removeEventListener('touchstart', closeMenu);
+                        }
+                    };
+                    
+                    document.addEventListener('click', closeMenu);
+                    document.addEventListener('touchstart', closeMenu);
+                }, 100);
+            }
+            
+            // Функции для контекстного меню
+            function togglePinChat(contactId) {
+                const pinnedChats = JSON.parse(localStorage.getItem('pinnedChats'));
+                const index = pinnedChats.indexOf(contactId);
+                
+                if (index === -1) {
+                    pinnedChats.push(contactId);
+                } else {
+                    pinnedChats.splice(index, 1);
+                }
+                
+                localStorage.setItem('pinnedChats', JSON.stringify(pinnedChats));
+                loadChatsList();
+            }
+            
+            function toggleMuteChat(contactId) {
+                const mutedChats = JSON.parse(localStorage.getItem('mutedChats'));
+                const index = mutedChats.indexOf(contactId);
+                
+                if (index === -1) {
+                    mutedChats.push(contactId);
+                } else {
+                    mutedChats.splice(index, 1);
+                }
+                
+                localStorage.setItem('mutedChats', JSON.stringify(mutedChats));
+            }
+            
+            function toggleIgnoreUser(contactId) {
+                const ignoredUsers = JSON.parse(localStorage.getItem('ignoredUsers'));
+                const index = ignoredUsers.indexOf(contactId);
+                
+                if (index === -1) {
+                    ignoredUsers.push(contactId);
+                } else {
+                    ignoredUsers.splice(index, 1);
+                }
+                
+                localStorage.setItem('ignoredUsers', JSON.stringify(ignoredUsers));
+            }
+            
+            function clearChatHistory(contactId) {
+                const messages = JSON.parse(localStorage.getItem('mailMessages'));
+                messages[contactId] = [];
+                localStorage.setItem('mailMessages', JSON.stringify(messages));
+                
+                if (currentChatId === contactId) {
+                    loadChatMessages(contactId);
+                }
+                
+                loadChatsList();
+            }
+            
+            // Открытие окна написания письма из чата
+            const writeMessageFromChatBtn = document.getElementById('writeMessageFromChatBtn');
             const messageComposer = document.getElementById('messageComposer');
             const backFromComposerBtn = document.getElementById('backFromComposer');
-            const sendMessageBtn = document.getElementById('sendMessageBtn');
             
-            writeMessageBtn.addEventListener('click', function() {
-                if (currentContactId === null) return;
+            writeMessageFromChatBtn.addEventListener('click', function() {
+                if (currentChatId === null) return;
                 
-                const contact = contacts[currentContactId];
+                openComposer(currentChatId);
+            });
+            
+            // Открытие окна написания письма
+            function openComposer(contactId) {
+                const contact = contacts[contactId];
                 
                 // Установка получателя
                 document.getElementById('recipientName').textContent = contact.name;
-                document.getElementById('recipientEmail').textContent = contact.email;
                 document.getElementById('composerTitle').textContent = `Письмо для ${contact.name.split(' ')[0]}`;
                 
-                // Очистка поля ввода
-                document.getElementById('messageText').value = '';
+                // Сброс состояния редактора
+                document.getElementById('messageEditor').value = '';
+                document.querySelectorAll('.toolbar-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById('emojisPanel').classList.remove('active');
+                
+                // Сохраняем текущий контакт для отправки
+                messageComposer.setAttribute('data-contact', contactId);
                 
                 // Показать окно написания
                 messageComposer.classList.add('active');
-            });
+            }
             
             // Кнопка "Назад" в окне написания письма
             backFromComposerBtn.addEventListener('click', function() {
                 messageComposer.classList.remove('active');
             });
             
-            // Отправка сообщения
-            sendMessageBtn.addEventListener('click', function() {
-                if (currentContactId === null) return;
+            // Панель смайлов
+            const emojisBtn = document.getElementById('emojisBtn');
+            const emojisPanel = document.getElementById('emojisPanel');
+            
+            emojisBtn.addEventListener('click', function() {
+                emojisPanel.classList.toggle('active');
+                this.classList.toggle('active');
+            });
+            
+            // Вставка смайла в текст
+            document.querySelectorAll('.emoji-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const editor = document.getElementById('messageEditor');
+                    const cursorPos = editor.selectionStart;
+                    const text = editor.value;
+                    const emoji = this.textContent;
+                    
+                    editor.value = text.substring(0, cursorPos) + emoji + text.substring(cursorPos);
+                    editor.focus();
+                    editor.selectionStart = cursorPos + emoji.length;
+                    editor.selectionEnd = cursorPos + emoji.length;
+                });
+            });
+            
+            // Кнопки форматирования текста
+            const boldBtn = document.getElementById('boldBtn');
+            const italicBtn = document.getElementById('italicBtn');
+            const underlineBtn = document.getElementById('underlineBtn');
+            
+            function wrapText(tag) {
+                const editor = document.getElementById('messageEditor');
+                const start = editor.selectionStart;
+                const end = editor.selectionEnd;
+                const selectedText = editor.value.substring(start, end);
                 
-                const messageText = document.getElementById('messageText').value.trim();
+                let wrapStart, wrapEnd;
+                
+                switch(tag) {
+                    case 'bold':
+                        wrapStart = '<b>';
+                        wrapEnd = '</b>';
+                        break;
+                    case 'italic':
+                        wrapStart = '<i>';
+                        wrapEnd = '</i>';
+                        break;
+                    case 'underline':
+                        wrapStart = '<u>';
+                        wrapEnd = '</u>';
+                        break;
+                    default:
+                        return;
+                }
+                
+                const newText = editor.value.substring(0, start) + wrapStart + selectedText + wrapEnd + editor.value.substring(end);
+                editor.value = newText;
+                
+                // Возвращаем фокус и выделение
+                editor.focus();
+                editor.selectionStart = start + wrapStart.length;
+                editor.selectionEnd = end + wrapStart.length;
+            }
+            
+            boldBtn.addEventListener('click', () => wrapText('bold'));
+            italicBtn.addEventListener('click', () => wrapText('italic'));
+            underlineBtn.addEventListener('click', () => wrapText('underline'));
+            
+            // Кнопка проверки орфографии
+            document.getElementById('spellCheckBtn').addEventListener('click', function() {
+                this.classList.toggle('active');
+                alert('Менеджер орфографии активирован. Ошибки будут подчеркнуты красным.');
+            });
+            
+            // Кнопка помощи
+            document.getElementById('helpBtn').addEventListener('click', function() {
+                this.classList.toggle('active');
+                alert('Менеджер письма активирован. Подсказки по улучшению текста будут показаны справа.');
+            });
+            
+            // Кнопка "Я могу помочь!"
+            document.getElementById('aiHelpBtn').addEventListener('click', function() {
+                const suggestions = [
+                    "Попробуйте начать письмо с приветствия.",
+                    "Убедитесь, что указали тему письма.",
+                    "Проверьте, правильно ли указан получатель.",
+                    "Добавьте подпись в конце письма.",
+                    "Перечитайте письмо перед отправкой."
+                ];
+                
+                const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
+                alert(`Совет: ${randomSuggestion}`);
+            });
+            
+            // Планирование отправки
+            const scheduleBtn = document.getElementById('scheduleBtn');
+            const scheduleModal = document.getElementById('scheduleModal');
+            const cancelScheduleBtn = document.getElementById('cancelScheduleBtn');
+            const confirmScheduleBtn = document.getElementById('confirmScheduleBtn');
+            
+            let scheduledDateTime = null;
+            
+            scheduleBtn.addEventListener('click', function() {
+                scheduleModal.classList.add('active');
+            });
+            
+            cancelScheduleBtn.addEventListener('click', function() {
+                scheduleModal.classList.remove('active');
+            });
+            
+            confirmScheduleBtn.addEventListener('click', function() {
+                const dateTimeInput = document.getElementById('scheduleDateTime').value;
+                scheduledDateTime = new Date(dateTimeInput);
+                
+                // Обновляем текст кнопки
+                scheduleBtn.innerHTML = `<i class="fas fa-calendar-alt"></i> Запланировано на ${scheduledDateTime.toLocaleDateString('ru-RU')}`;
+                
+                scheduleModal.classList.remove('active');
+                alert(`Письмо запланировано на отправку ${scheduledDateTime.toLocaleString('ru-RU')}`);
+            });
+            
+            // Удаление черновика
+            const deleteDraftBtn = document.getElementById('deleteDraftBtn');
+            const deleteModal = document.getElementById('deleteModal');
+            const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+            
+            deleteDraftBtn.addEventListener('click', function() {
+                deleteModal.classList.add('active');
+            });
+            
+            cancelDeleteBtn.addEventListener('click', function() {
+                deleteModal.classList.remove('active');
+            });
+            
+            confirmDeleteBtn.addEventListener('click', function() {
+                document.getElementById('messageEditor').value = '';
+                deleteModal.classList.remove('active');
+                alert('Черновик удален');
+            });
+            
+            // Отправка сообщения
+            const sendMessageBtn = document.getElementById('sendMessageBtn');
+            
+            sendMessageBtn.addEventListener('click', function() {
+                const contactId = parseInt(messageComposer.getAttribute('data-contact'));
+                if (isNaN(contactId)) return;
+                
+                const messageText = document.getElementById('messageEditor').value.trim();
                 
                 if (!messageText) {
                     alert('Введите текст письма');
@@ -856,18 +1905,27 @@
                 
                 const newMessage = {
                     text: messageText,
-                    date: new Date().toISOString()
+                    date: scheduledDateTime ? scheduledDateTime.toISOString() : new Date().toISOString(),
+                    sender: 'user'
                 };
                 
-                messages[currentContactId].push(newMessage);
+                messages[contactId].push(newMessage);
                 localStorage.setItem('mailMessages', JSON.stringify(messages));
                 
-                // Обновление статистики
-                updateStats();
+                // Сброс планировщика
+                scheduledDateTime = null;
+                scheduleBtn.innerHTML = `<i class="fas fa-calendar-alt"></i> Запланировать отправку`;
                 
-                // Закрытие окна написания и возврат к истории
+                // Закрытие окна написания и возврат к чату
                 messageComposer.classList.remove('active');
-                loadMessageHistory(currentContactId);
+                
+                // Обновление чата, если он открыт
+                if (currentChatId === contactId) {
+                    loadChatMessages(contactId);
+                }
+                
+                // Обновление списка чатов
+                loadChatsList();
                 
                 // Показать уведомление об отправке
                 showNotification('Письмо успешно отправлено');
@@ -901,8 +1959,126 @@
                 }, 3000);
             }
             
-            // Имитация iOS поведения (нажатия)
-            const clickableElements = document.querySelectorAll('.contact-item, .btn, .tab-item, .btn-back');
+            // Секретное меню администратора
+            const adminPanel = document.getElementById('adminPanel');
+            let tariffClickCount = 0;
+            let lastTariffClickTime = 0;
+            
+            document.getElementById('tariffTab').addEventListener('click', function() {
+                const now = Date.now();
+                
+                // Сбрасываем счетчик, если прошло больше 3 секунд с последнего клика
+                if (now - lastTariffClickTime > 3000) {
+                    tariffClickCount = 0;
+                }
+                
+                lastTariffClickTime = now;
+                tariffClickCount++;
+                
+                // Если кликнули 10 раз подряд
+                if (tariffClickCount === 10) {
+                    tariffClickCount = 0;
+                    
+                    // Запрашиваем пин-код
+                    const pinCode = prompt('Введите пин-код для доступа к панели администратора:');
+                    
+                    if (pinCode === '84152') {
+                        // Открываем панель администратора
+                        adminPanel.classList.add('active');
+                    } else {
+                        alert('Неверный пин-код');
+                    }
+                }
+            });
+            
+            // Закрытие панели администратора
+            document.getElementById('exitAdminBtn').addEventListener('click', function() {
+                adminPanel.classList.remove('active');
+            });
+            
+            // Отправка сообщения от имени абонента
+            document.getElementById('adminSendMessageBtn').addEventListener('click', function() {
+                const contactId = parseInt(document.getElementById('adminContactSelect').value);
+                const messageText = document.getElementById('adminMessageText').value.trim();
+                
+                if (!messageText) {
+                    alert('Введите текст сообщения');
+                    return;
+                }
+                
+                const messages = JSON.parse(localStorage.getItem('mailMessages'));
+                
+                const newMessage = {
+                    text: messageText,
+                    date: new Date().toISOString(),
+                    sender: 'contact' // Важно: отправитель - контакт, а не пользователь
+                };
+                
+                messages[contactId].push(newMessage);
+                localStorage.setItem('mailMessages', JSON.stringify(messages));
+                
+                // Очищаем поле ввода
+                document.getElementById('adminMessageText').value = '';
+                
+                // Обновляем списки, если они открыты
+                if (currentChatId === contactId) {
+                    loadChatMessages(contactId);
+                }
+                
+                loadChatsList();
+                
+                alert(`Сообщение отправлено от имени ${contacts[contactId].name}`);
+            });
+            
+            // Установка статуса "был(а) в сети"
+            document.getElementById('adminSetStatusBtn').addEventListener('click', function() {
+                const contactId = parseInt(document.getElementById('adminStatusContactSelect').value);
+                const statusText = document.getElementById('adminStatusText').value.trim();
+                
+                if (!statusText) {
+                    alert('Введите текст статуса');
+                    return;
+                }
+                
+                const statuses = JSON.parse(localStorage.getItem('userStatuses'));
+                statuses[contactId] = statusText;
+                localStorage.setItem('userStatuses', JSON.stringify(statuses));
+                
+                // Обновляем в интерфейсе, если чат открыт
+                if (currentChatId === contactId) {
+                    document.getElementById('chatHeaderStatus').textContent = statusText;
+                }
+                
+                alert(`Статус для ${contacts[contactId].name} установлен: ${statusText}`);
+            });
+            
+            // Установка цвета аватарки
+            document.getElementById('adminSetAvatarBtn').addEventListener('click', function() {
+                const contactId = parseInt(document.getElementById('adminAvatarContactSelect').value);
+                const color = document.getElementById('adminAvatarColor').value;
+                
+                const avatarColors = JSON.parse(localStorage.getItem('avatarColors'));
+                avatarColors[contactId] = color;
+                localStorage.setItem('avatarColors', JSON.stringify(avatarColors));
+                
+                // Обновляем в интерфейсе
+                loadChatsList();
+                
+                // Если чат открыт, обновляем аватар в заголовке
+                if (currentChatId === contactId) {
+                    document.getElementById('chatHeaderAvatar').style.backgroundColor = color;
+                }
+                
+                alert(`Цвет аватарки для ${contacts[contactId].name} изменен`);
+            });
+            
+            // Закрытие модального окна объяснения
+            document.getElementById('closeIgnoreModalBtn').addEventListener('click', function() {
+                document.getElementById('ignoreModal').classList.remove('active');
+            });
+            
+            // Имитация iOS поведения (нажатия) для всех интерактивных элементов
+            const clickableElements = document.querySelectorAll('button, .chat-item, .tariff-option, .support-btn, .menu-item, .toolbar-btn, .emoji-btn');
             clickableElements.forEach(el => {
                 el.addEventListener('touchstart', function() {
                     this.style.opacity = '0.7';
@@ -911,51 +2087,14 @@
                 el.addEventListener('touchend', function() {
                     this.style.opacity = '1';
                 });
+                
+                el.addEventListener('touchcancel', function() {
+                    this.style.opacity = '1';
+                });
             });
             
-            // Добавление начальных сообщений для демонстрации
-            setTimeout(() => {
-                const messages = JSON.parse(localStorage.getItem('mailMessages'));
-                let hasInitialMessages = false;
-                
-                // Проверяем, есть ли уже сообщения
-                Object.values(messages).forEach(contactMessages => {
-                    if (contactMessages.length > 0) {
-                        hasInitialMessages = true;
-                    }
-                });
-                
-                // Если сообщений нет, добавляем демонстрационные
-                if (!hasInitialMessages) {
-                    const demoMessages = [
-                        {
-                            contactId: 0,
-                            text: 'Здравствуйте, Лев Александрович! Напоминаю о нашем совещании в четверг.',
-                            date: new Date(Date.now() - 86400000 * 2).toISOString()
-                        },
-                        {
-                            contactId: 1,
-                            text: 'Привет, Криштиану! Как дела? Готов к новой тренировке?',
-                            date: new Date(Date.now() - 86400000).toISOString()
-                        },
-                        {
-                            contactId: 1,
-                            text: 'Все отлично! Готов показать лучший результат!',
-                            date: new Date().toISOString()
-                        }
-                    ];
-                    
-                    demoMessages.forEach(msg => {
-                        messages[msg.contactId].push({
-                            text: msg.text,
-                            date: msg.date
-                        });
-                    });
-                    
-                    localStorage.setItem('mailMessages', JSON.stringify(messages));
-                    updateStats();
-                }
-            }, 1000);
+            // Загружаем список чатов при загрузке страницы
+            loadChatsList();
         });
     </script>
 </body>
