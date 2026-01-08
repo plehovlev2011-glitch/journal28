@@ -202,7 +202,7 @@
         .recommended-contact {
             display: flex;
             align-items: center;
-            padding: 12px;
+            padding: 16px;
             border-radius: 10px;
             background-color: #f8f9fa;
             margin-bottom: 10px;
@@ -217,20 +217,6 @@
         
         .recommended-contact:last-child {
             margin-bottom: 0;
-        }
-        
-        .contact-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #007aff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            margin-right: 12px;
         }
         
         .contact-name {
@@ -881,6 +867,18 @@
             font-size: 22px;
             font-weight: 700;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .modal-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .modal-icon.warning {
+            color: #ff3b30;
         }
         
         .modal-content {
@@ -926,7 +924,25 @@
         }
         
         .modal-btn-danger {
-            color: #ff453a;
+            color: #ff3b30;
+        }
+        
+        /* Модальное окно блокировки отправки */
+        .block-modal .modal-content {
+            color: #ff3b30;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .block-modal .modal-details {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 16px;
+            font-size: 15px;
+            color: #8e8e93;
+            text-align: left;
+            line-height: 1.4;
         }
         
         /* Секретное меню администратора */
@@ -1165,15 +1181,12 @@
         <div class="recommended-contacts">
             <h2>Кому бы вы хотели написать?</h2>
             <div class="recommended-contact" data-contact="1">
-                <div class="contact-icon">КР</div>
                 <div class="contact-name">Криштиану Роналду Душ Сантуш Авейру</div>
             </div>
             <div class="recommended-contact" data-contact="2">
-                <div class="contact-icon">ДР</div>
                 <div class="contact-name">Джорджина Родригес</div>
             </div>
             <div class="recommended-contact" data-contact="3">
-                <div class="contact-icon">КМ</div>
                 <div class="contact-name">Криштиану-младший Роналду Душ Сантуш Авейру</div>
             </div>
         </div>
@@ -1193,1140 +1206,1195 @@
                 <div class="tariff-summary-value">21 ноября 2027</div>
             </div>
         </div>
+    <div class="news-feed">
+        <div class="news-item">
+            <div class="news-date">5 января 2026</div>
+            <div class="news-title">Обслуживание горячей линии</div>
+            <div class="news-content">Горячая линия Международной почты будет закрыта на техническое обслуживание с 15 по 18 января 2026 года. Несмотря на это, все отделения и онлайн-сервисы продолжат работать в обычном режиме. Приносим извинения за временные неудобства.</div>
+        </div>
         
-        <div class="news-feed">
-            <div class="news-item">
-                <div class="news-date">5 января 2026</div>
-                <div class="news-title">Обслуживание горячей линии</div>
-                <div class="news-content">Горячая линия Международной почты будет закрыта на техническое обслуживание с 15 по 18 января 2026 года. Несмотря на это, все отделения и онлайн-сервисы продолжат работать в обычном режиме. Приносим извинения за временные неудобства.</div>
-            </div>
-            
-            <div class="news-item">
-                <div class="news-date">31 декабря 2025</div>
-                <div class="news-title">Благодарность и поздравление</div>
-                <div class="news-content">Дорогие пользователи! Мы благодарим вас за то, что выбираете Международную почту. В 2025 году нашими услугами воспользовались более 104 миллионов человек по всему земному шару! От всей команды желаем вам счастливого Нового 2026 года! Пусть он принесет вам радость, успех и благополучие.</div>
-            </div>
-            
-            <div class="news-item">
-                <div class="news-date">28 декабря 2025</div>
-                <div class="news-title">Расширение валют для оплаты</div>
-                <div class="news-content">Теперь вы можете оплачивать услуги Международной почты не только в гривнах, но и в 9 других валютах: долларах США, евро, британских фунтах, швейцарских франках, японских иенах, канадских долларах, австралийских долларах, китайских юанях и российских рублях.</div>
-            </div>
+        <div class="news-item">
+            <div class="news-date">31 декабря 2025</div>
+            <div class="news-title">Благодарность и поздравление</div>
+            <div class="news-content">Дорогие пользователи! Мы благодарим вас за то, что выбираете Международную почту. В 2025 году нашими услугами воспользовались более 104 миллионов человек по всему земному шару! От всей команды желаем вам счастливого Нового 2026 года! Пусть он принесет вам радость, успех и благополучие.</div>
+        </div>
+        
+        <div class="news-item">
+            <div class="news-date">28 декабря 2025</div>
+            <div class="news-title">Расширение валют для оплаты</div>
+            <div class="news-content">Теперь вы можете оплачивать услуги Международной почты не только в гривнах, но и в 9 других валютах: долларах США, евро, британских фунтах, швейцарских франках, японских иенах, канадских долларах, австралийских долларах, китайских юанях и российских рублях.</div>
         </div>
     </div>
-    
-    <!-- Страница переписок -->
-    <div id="chatsPage" class="page">
-        <div class="header">
-            <h1>Переписки</h1>
-            <p>Ваши сообщения</p>
-        </div>
-        
-        <div class="chats-list" id="chatsList">
-            <!-- Переписки будут загружены динамически -->
-        </div>
-    </div>
-    
-    <!-- Страница тарифа -->
-    <div id="tariffPage" class="page">
-        <div class="header">
-            <h1>Тариф</h1>
-            <p>Управление тарифным планом</p>
-        </div>
-        
-        <div class="tariff-card">
-            <div class="tariff-name">Единый</div>
-            <div class="tariff-status">АКТИВЕН</div>
-            <div class="tariff-date">Пополнен до 21 ноября 2027 года</div>
-            
-            <ul class="tariff-features">
-                <li><i class="fas fa-globe"></i> Международная отправка без ограничений</li>
-                <li><i class="fas fa-envelope"></i> Неограниченное количество писем</li>
-                <li><i class="fas fa-paperclip"></i> Вложения до 100 МБ</li>
-                <li><i class="fas fa-shield-alt"></i> Приоритетная доставка</li>
-                <li><i class="fas fa-headset"></i> Круглосуточная поддержка</li>
-            </ul>
-        </div>
-        
-        <div class="other-tariffs">
-            <h2>Другие тарифы</h2>
-            <div class="tariff-option" data-tariff="basic">
-                <div class="tariff-option-name">Базовый</div>
-                <div class="tariff-option-price">499 ₽/мес</div>
-            </div>
-            <div class="tariff-option" data-tariff="extended">
-                <div class="tariff-option-name">Расширенный</div>
-                <div class="tariff-option-price">899 ₽/мес</div>
-            </div>
-            <div class="tariff-option" data-tariff="business">
-                <div class="tariff-option-name">Бизнес</div>
-                <div class="tariff-option-price">1 499 ₽/мес</div>
-            </div>
-            <div class="tariff-option" data-tariff="premium">
-                <div class="tariff-option-name">Премиум</div>
-                <div class="tariff-option-price">2 499 ₽/мес</div>
-            </div>
-        </div>
-        
-        <div class="support-actions">
-            <div class="support-btn" id="changeTariffBtn">
-                <i class="fas fa-exchange-alt"></i> Сменить тариф
-            </div>
-            <div class="support-btn" id="callSupportBtn">
-                <i class="fas fa-phone"></i> Позвонить в поддержку
-            </div>
-        </div>
-        
-        <div class="support-actions">
-            <div class="support-btn" id="faqBtn">
-                <i class="fas fa-question-circle"></i> FAQ
-            </div>
-            <div class="support-btn" id="documentsBtn">
-                <i class="fas fa-file-contract"></i> Документы
-            </div>
-        </div>
-    </div>
-    
-    <!-- Страница семьи -->
-    <div id="familyPage" class="page">
-        <div class="header">
-            <h1>Семья</h1>
-            <p>Управление семейным доступом</p>
-        </div>
-        
-        <div class="family-section">
-            <h2>Привязанные члены семьи</h2>
-            <div class="family-member">
-                <div class="family-member-icon">ПЛ</div>
-                <div class="family-member-info">
-                    <div class="family-member-name">Плехов Лев Александрович</div>
-                    <div class="family-member-role">Тариф оплачивает Плехов Лев Александрович</div>
-                </div>
-                <div class="family-member-status">Активен</div>
-            </div>
-            <div class="family-member">
-                <div class="family-member-icon">ПО</div>
-                <div class="family-member-info">
-                    <div class="family-member-name">Плехова Ольга Ивановна</div>
-                    <div class="family-member-role">Владелец аккаунта</div>
-                </div>
-                <div class="family-member-status">Вы</div>
-            </div>
-        </div>
-        
-        <div class="family-info">
-            <p>Плехов Лев Александрович является личным менеджером Плеховой Ольги Ивановны.</p>
-            <p>Он отвечает за оплату тарифа и управление услугами Международной почты для вашей семьи.</p>
-            <p>Все письма и переписки доступны обоим членам семьи для просмотра и управления.</p>
-        </div>
-    </div>
-    
-    <!-- Окно переписки -->
-    <div id="chatWindow" class="chat-window">
-        <div class="chat-header">
-            <button class="btn-back" id="backFromChat">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <div class="chat-header-info">
-                <div class="chat-header-icon" id="chatHeaderIcon">ПЛ</div>
-                <div>
-                    <div class="chat-header-name" id="chatHeaderName">Плехов Лев Александрович</div>
-                    <div class="chat-header-status" id="chatHeaderStatus">был(а) в сети 5 минут назад</div>
-                </div>
-            </div>
-            <div style="width: 44px;"></div>
-        </div>
-        
-        <div class="chat-messages" id="chatMessages">
-            <!-- Сообщения будут загружены динамически -->
-        </div>
-        
-        <div class="chat-actions">
-            <button class="btn" id="writeMessageFromChatBtn">
-                <i class="fas fa-pen" style="margin-right: 8px;"></i> Написать сообщение
-            </button>
-        </div>
-    </div>
-    
-    <!-- Окно написания сообщения (упрощенный редактор) -->
-    <div id="messageComposer" class="message-composer">
-        <div class="composer-header">
-            <button class="btn-back" id="backFromComposer">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <h2 id="composerTitle">Новое сообщение</h2>
-            <div style="width: 44px;"></div>
-        </div>
-        
-        <div class="composer-toolbar">
-            <button class="toolbar-btn" id="emojisBtn" title="Смайлы">😊</button>
-        </div>
-        
-        <div class="emojis-panel" id="emojisPanel">
-            <button class="emoji-btn">😊</button>
-            <button class="emoji-btn">😂</button>
-            <button class="emoji-btn">😍</button>
-            <button class="emoji-btn">😎</button>
-            <button class="emoji-btn">👍</button>
-            <button class="emoji-btn">👋</button>
-            <button class="emoji-btn">🎉</button>
-            <button class="emoji-btn">❤️</button>
-            <button class="emoji-btn">🙏</button>
-            <button class="emoji-btn">😉</button>
-        </div>
-        
-        <div class="composer-body">
-            <div style="padding: 16px 16px 0; font-weight: 600; font-size: 17px;">
-                Кому: <span id="recipientName">Плехов Лев Александрович</span>
-            </div>
-            
-            <textarea class="message-editor" id="messageEditor" placeholder="Коснитесь здесь, чтобы начать ввод сообщения"></textarea>
-        </div>
-        
-        <div class="composer-actions">
-            <button class="action-btn action-btn-secondary" id="scheduleBtn">
-                <i class="fas fa-clock"></i> Отправить позже
-            </button>
-            <button class="action-btn action-btn-primary" id="sendMessageBtn">
-                <i class="fas fa-paper-plane"></i> Отправить
-            </button>
-            <button class="action-btn action-btn-danger" id="cancelMessageBtn">
-                <i class="fas fa-times"></i> Отмена
-            </button>
-        </div>
-    </div>
-    
-    <!-- Модальное окно для планирования отправки -->
-    <div class="modal-overlay" id="scheduleModal">
-        <div class="modal">
-            <div class="modal-header">Запланировать отправку</div>
-            <div class="modal-content">
-                <p>Выберите дату и время для отправки сообщения</p>
-                <div class="schedule-picker">
-                    <input type="datetime-local" id="scheduleDateTime" min="2026-01-05T00:00" value="2026-01-05T14:30">
-                    <p style="font-size: 14px; color: #8e8e93; margin-top: 8px;">Сообщение будет отправлено автоматически в указанное время.</p>
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn" id="cancelScheduleBtn">Отмена</button>
-                <button class="modal-btn modal-btn-primary" id="confirmScheduleBtn">Запланировать</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Модальное окно подтверждения удаления -->
-    <div class="modal-overlay" id="deleteModal">
-        <div class="modal">
-            <div class="modal-header">Удалить сообщение</div>
-            <div class="modal-content">
-                <p>Вы уверены, что хотите удалить это сообщение? Это действие нельзя отменить.</p>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn" id="cancelDeleteBtn">Отмена</button>
-                <button class="modal-btn modal-btn-danger" id="confirmDeleteBtn">Удалить</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Модальное окно для объяснения функции "Игнорирование" -->
-    <div class="modal-overlay" id="ignoreModal">
-        <div class="modal">
-            <div class="modal-header">Функция "Игнорирование"</div>
-            <div class="modal-content">
-                <p>При включении этой функции вы не будете получать уведомления от этого пользователя, а его сообщения будут автоматически помечаться как прочитанные.</p>
-                <p>Это полезно, если вы не хотите общаться с человеком, но не хотите его блокировать полностью.</p>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn modal-btn-primary" id="closeIgnoreModalBtn">Понятно</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Модальное окно для смены тарифа -->
-    <div class="modal-overlay" id="changeTariffModal">
-        <div class="modal">
-            <div class="modal-header">Смена тарифа</div>
-            <div class="modal-content">
-                <p>Вы действительно хотите сменить тарифный план?</p>
-                <p id="selectedTariffInfo" style="margin-top: 10px; font-weight: 600;"></p>
-                <p style="font-size: 14px; color: #ff3b30; margin-top: 10px;">Внимание: смена тарифа вступит в силу с начала следующего расчетного периода.</p>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn" id="cancelChangeTariffBtn">Отмена</button>
-                <button class="modal-btn modal-btn-primary" id="confirmChangeTariffBtn">Сменить тариф</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Модальное окно ввода пин-кода -->
-    <div class="modal-overlay" id="pinCodeModal">
-        <div class="modal">
-            <div class="modal-header">Введите пин-код</div>
-            <div class="modal-content">
-                <p>Для доступа к панели администратора введите пин-код:</p>
-                <input type="password" class="modal-input" id="pinCodeInput" maxlength="5" placeholder="Введите 5 цифр">
-                <p id="pinCodeError" style="color: #ff3b30; font-size: 14px; margin-top: 10px; display: none;">Неверный пин-код</p>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn" id="cancelPinCodeBtn">Отмена</button>
-                <button class="modal-btn modal-btn-primary" id="confirmPinCodeBtn">Подтвердить</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Секретное меню администратора -->
-    <div class="admin-overlay" id="adminPanel">
-        <div class="admin-header">
-            <h2>Панель администратора</h2>
-            <p>Международная почта</p>
-        </div>
-        
-        <div class="admin-content">
-            <div class="admin-section">
-                <h3>Отправить сообщение от имени абонента</h3>
-                <select class="admin-select" id="adminContactSelect">
-                    <option value="0">Плехов Лев Александрович</option>
-                    <option value="1">Криштиану Роналду Душ Сантуш Авейру</option>
-                    <option value="2">Джорджина Родригес</option>
-                    <option value="3">Криштиану-младший Роналду Душ Сантуш Авейру</option>
-                </select>
-                <textarea class="admin-input" id="adminMessageText" placeholder="Текст сообщения..." rows="3"></textarea>
-                <button class="admin-btn" id="adminSendMessageBtn">Отправить как выбранный абонент</button>
-            </div>
-            
-            <div class="admin-section">
-                <h3>Изменить статус "был(а) в сети"</h3>
-                <select class="admin-select" id="adminStatusContactSelect">
-                    <option value="0">Плехов Лев Александрович</option>
-                    <option value="1">Криштиану Роналду Душ Сантуш Авейру</option>
-                    <option value="2">Джорджина Родригес</option>
-                    <option value="3">Криштиану-младший Роналду Душ Сантуш Авейру</option>
-                </select>
-                <input class="admin-input" id="adminStatusText" placeholder="Например: был(а) в сети 5 минут назад" value="был(а) в сети 5 минут назад">
-                <button class="admin-btn" id="adminSetStatusBtn">Установить статус</button>
-            </div>
-            
-            <div class="admin-section">
-                <button class="admin-btn" id="exitAdminBtn" style="background-color: #ff3b30;">Выйти из панели администратора</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Навигационные вкладки -->
-    <div class="tab-bar ios-safe-area">
-        <a href="#" class="tab-item active" data-tab="summaryPage">
-            <div class="tab-icon"><i class="fas fa-chart-pie"></i></div>
-            <div>Сводка</div>
-        </a>
-        <a href="#" class="tab-item" data-tab="chatsPage">
-            <div class="tab-icon"><i class="fas fa-comments"></i></div>
-            <div>Переписки</div>
-        </a>
-        <a href="#" class="tab-item" data-tab="familyPage">
-            <div class="tab-icon"><i class="fas fa-users"></i></div>
-            <div>Семья</div>
-        </a>
-        <a href="#" class="tab-item" data-tab="tariffPage" id="tariffTab">
-            <div class="tab-icon"><i class="fas fa-credit-card"></i></div>
-            <div>Тариф</div>
-        </a>
-    </div>
+</div>
 
-    <script>
-        // Инициализация приложения
-        document.addEventListener('DOMContentLoaded', function() {
-            // Обновление времени в статус баре
-            function updateTime() {
-                const now = new Date();
-                const hours = now.getHours().toString().padStart(2, '0');
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                document.getElementById('currentTime').textContent = `Текущее время: ${hours}:${minutes}`;
+<!-- Страница переписок -->
+<div id="chatsPage" class="page">
+    <div class="header">
+        <h1>Переписки</h1>
+        <p>Ваши сообщения</p>
+    </div>
+    
+    <div class="chats-list" id="chatsList">
+        <!-- Переписки будут загружены динамически -->
+    </div>
+</div>
+
+<!-- Страница тарифа -->
+<div id="tariffPage" class="page">
+    <div class="header">
+        <h1>Тариф</h1>
+        <p>Управление тарифным планом</p>
+    </div>
+    
+    <div class="tariff-card">
+        <div class="tariff-name">Единый</div>
+        <div class="tariff-status">АКТИВЕН</div>
+        <div class="tariff-date">Пополнен до 21 ноября 2027 года</div>
+        
+        <ul class="tariff-features">
+            <li><i class="fas fa-globe"></i> Международная отправка без ограничений</li>
+            <li><i class="fas fa-envelope"></i> Неограниченное количество писем</li>
+            <li><i class="fas fa-paperclip"></i> Вложения до 100 МБ</li>
+            <li><i class="fas fa-shield-alt"></i> Приоритетная доставка</li>
+            <li><i class="fas fa-headset"></i> Круглосуточная поддержка</li>
+        </ul>
+    </div>
+    
+    <div class="other-tariffs">
+        <h2>Другие тарифы</h2>
+        <div class="tariff-option" data-tariff="basic">
+            <div class="tariff-option-name">Базовый</div>
+            <div class="tariff-option-price">499 ₽/мес</div>
+        </div>
+        <div class="tariff-option" data-tariff="extended">
+            <div class="tariff-option-name">Расширенный</div>
+            <div class="tariff-option-price">899 ₽/мес</div>
+        </div>
+        <div class="tariff-option" data-tariff="business">
+            <div class="tariff-option-name">Бизнес</div>
+            <div class="tariff-option-price">1 499 ₽/мес</div>
+        </div>
+        <div class="tariff-option" data-tariff="premium">
+            <div class="tariff-option-name">Премиум</div>
+            <div class="tariff-option-price">2 499 ₽/мес</div>
+        </div>
+    </div>
+    
+    <div class="support-actions">
+        <div class="support-btn" id="changeTariffBtn">
+            <i class="fas fa-exchange-alt"></i> Сменить тариф
+        </div>
+        <div class="support-btn" id="callSupportBtn">
+            <i class="fas fa-phone"></i> Позвонить в поддержку
+        </div>
+    </div>
+    
+    <div class="support-actions">
+        <div class="support-btn" id="faqBtn">
+            <i class="fas fa-question-circle"></i> FAQ
+        </div>
+        <div class="support-btn" id="documentsBtn">
+            <i class="fas fa-file-contract"></i> Документы
+        </div>
+    </div>
+</div>
+
+<!-- Страница семьи -->
+<div id="familyPage" class="page">
+    <div class="header">
+        <h1>Семья</h1>
+        <p>Управление семейным доступом</p>
+    </div>
+    
+    <div class="family-section">
+        <h2>Привязанные члены семьи</h2>
+        <div class="family-member">
+            <div class="family-member-icon">ПЛ</div>
+            <div class="family-member-info">
+                <div class="family-member-name">Плехов Лев Александрович</div>
+                <div class="family-member-role">Тариф оплачивает Плехов Лев Александрович</div>
+            </div>
+            <div class="family-member-status">Активен</div>
+        </div>
+        <div class="family-member">
+            <div class="family-member-icon">ПО</div>
+            <div class="family-member-info">
+                <div class="family-member-name">Плехова Ольга Ивановна</div>
+                <div class="family-member-role">Владелец аккаунта</div>
+            </div>
+            <div class="family-member-status">Вы</div>
+        </div>
+    </div>
+    
+    <div class="family-info">
+        <p>Плехов Лев Александрович является личным менеджером Плеховой Ольги Ивановны.</p>
+        <p>Он отвечает за оплату тарифа и управление услугами Международной почты для вашей семьи.</p>
+        <p>Все письма и переписки доступны обоим членам семьи для просмотра и управления.</p>
+    </div>
+</div>
+
+<!-- Окно переписки -->
+<div id="chatWindow" class="chat-window">
+    <div class="chat-header">
+        <button class="btn-back" id="backFromChat">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="chat-header-info">
+            <div class="chat-header-icon" id="chatHeaderIcon">ПЛ</div>
+            <div>
+                <div class="chat-header-name" id="chatHeaderName">Плехов Лев Александрович</div>
+                <div class="chat-header-status" id="chatHeaderStatus">был(а) в сети 5 минут назад</div>
+            </div>
+        </div>
+        <div style="width: 44px;"></div>
+    </div>
+    
+    <div class="chat-messages" id="chatMessages">
+        <!-- Сообщения будут загружены динамически -->
+    </div>
+    
+    <div class="chat-actions">
+        <button class="btn" id="writeMessageFromChatBtn">
+            <i class="fas fa-pen" style="margin-right: 8px;"></i> Написать сообщение
+        </button>
+    </div>
+</div>
+
+<!-- Окно написания сообщения (упрощенный редактор) -->
+<div id="messageComposer" class="message-composer">
+    <div class="composer-header">
+        <button class="btn-back" id="backFromComposer">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <h2 id="composerTitle">Новое сообщение</h2>
+        <div style="width: 44px;"></div>
+    </div>
+    
+    <div class="composer-toolbar">
+        <button class="toolbar-btn" id="emojisBtn" title="Смайлы">😊</button>
+    </div>
+    
+    <div class="emojis-panel" id="emojisPanel">
+        <button class="emoji-btn">😊</button>
+        <button class="emoji-btn">😂</button>
+        <button class="emoji-btn">😍</button>
+        <button class="emoji-btn">😎</button>
+        <button class="emoji-btn">👍</button>
+        <button class="emoji-btn">👋</button>
+        <button class="emoji-btn">🎉</button>
+        <button class="emoji-btn">❤️</button>
+        <button class="emoji-btn">🙏</button>
+        <button class="emoji-btn">😉</button>
+    </div>
+    
+    <div class="composer-body">
+        <div style="padding: 16px 16px 0; font-weight: 600; font-size: 17px;">
+            Кому: <span id="recipientName">Плехов Лев Александрович</span>
+        </div>
+        
+        <textarea class="message-editor" id="messageEditor" placeholder="Коснитесь здесь, чтобы начать ввод сообщения"></textarea>
+    </div>
+    
+    <div class="composer-actions">
+        <button class="action-btn action-btn-secondary" id="scheduleBtn">
+            <i class="fas fa-clock"></i> Отправить позже
+        </button>
+        <button class="action-btn action-btn-primary" id="sendMessageBtn">
+            <i class="fas fa-paper-plane"></i> Отправить
+        </button>
+        <button class="action-btn action-btn-danger" id="cancelMessageBtn">
+            <i class="fas fa-times"></i> Отмена
+        </button>
+    </div>
+</div>
+
+<!-- Модальное окно для планирования отправки -->
+<div class="modal-overlay" id="scheduleModal">
+    <div class="modal">
+        <div class="modal-header">Запланировать отправку</div>
+        <div class="modal-content">
+            <p>Выберите дату и время для отправки сообщения</p>
+            <div class="schedule-picker">
+                <input type="datetime-local" id="scheduleDateTime" min="2026-01-05T00:00" value="2026-01-05T14:30">
+                <p style="font-size: 14px; color: #8e8e93; margin-top: 8px;">Сообщение будет отправлено автоматически в указанное время.</p>
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn" id="cancelScheduleBtn">Отмена</button>
+            <button class="modal-btn modal-btn-primary" id="confirmScheduleBtn">Запланировать</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно подтверждения удаления -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal">
+        <div class="modal-header">Удалить сообщение</div>
+        <div class="modal-content">
+            <p>Вы уверены, что хотите удалить это сообщение? Это действие нельзя отменить.</p>
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn" id="cancelDeleteBtn">Отмена</button>
+            <button class="modal-btn modal-btn-danger" id="confirmDeleteBtn">Удалить</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно блокировки отправки -->
+<div class="modal-overlay block-modal" id="blockModal">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-icon warning">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div>Отправка запрещена</div>
+        </div>
+        <div class="modal-content">
+            <p>Этот абонент запретил отправку сообщений от Вас.</p>
+        </div>
+        <div class="modal-details">
+            <p>Абонент <strong>Криштиану Роналду Душ Сантуш Авейру</strong> запретил пользователю <strong>Ольга</strong> писать ему.</p>
+            <p>Вы не можете общаться с этим абонентом, пока он сам не снимет блокировку.</p>
+            <p>Если считаете, что это ошибка, вы можете обратиться в поддержку Международной почты.</p>
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn modal-btn-primary" id="closeBlockModalBtn">Понятно</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для объяснения функции "Игнорирование" -->
+<div class="modal-overlay" id="ignoreModal">
+    <div class="modal">
+        <div class="modal-header">Функция "Игнорирование"</div>
+        <div class="modal-content">
+            <p>При включении этой функции вы не будете получать уведомления от этого пользователя, а его сообщения будут автоматически помечаться как прочитанные.</p>
+            <p>Это полезно, если вы не хотите общаться с человеком, но не хотите его блокировать полностью.</p>
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn modal-btn-primary" id="closeIgnoreModalBtn">Понятно</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для смены тарифа -->
+<div class="modal-overlay" id="changeTariffModal">
+    <div class="modal">
+        <div class="modal-header">Смена тарифа</div>
+        <div class="modal-content">
+            <p>Вы действительно хотите сменить тарифный план?</p>
+            <p id="selectedTariffInfo" style="margin-top: 10px; font-weight: 600;"></p>
+            <p style="font-size: 14px; color: #ff3b30; margin-top: 10px;">Внимание: смена тарифа вступит в силу с начала следующего расчетного периода.</p>
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn" id="cancelChangeTariffBtn">Отмена</button>
+            <button class="modal-btn modal-btn-primary" id="confirmChangeTariffBtn">Сменить тариф</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно ввода пин-кода -->
+<div class="modal-overlay" id="pinCodeModal">
+    <div class="modal">
+        <div class="modal-header">Введите пин-код</div>
+        <div class="modal-content">
+            <p>Для доступа к панели администратора введите пин-код:</p>
+            <input type="password" class="modal-input" id="pinCodeInput" maxlength="5" placeholder="Введите 5 цифр">
+            <p id="pinCodeError" style="color: #ff3b30; font-size: 14px; margin-top: 10px; display: none;">Неверный пин-код</p>
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn" id="cancelPinCodeBtn">Отмена</button>
+            <button class="modal-btn modal-btn-primary" id="confirmPinCodeBtn">Подтвердить</button>
+        </div>
+    </div>
+</div>
+
+<!-- Секретное меню администратора -->
+<div class="admin-overlay" id="adminPanel">
+    <div class="admin-header">
+        <h2>Панель администратора</h2>
+        <p>Международная почта</p>
+    </div>
+    
+    <div class="admin-content">
+        <div class="admin-section">
+            <h3>Отправить сообщение от имени абонента</h3>
+            <select class="admin-select" id="adminContactSelect">
+                <option value="0">Плехов Лев Александрович</option>
+                <option value="1">Криштиану Роналду Душ Сантуш Авейру</option>
+                <option value="2">Джорджина Родригес</option>
+                <option value="3">Криштиану-младший Роналду Душ Сантуш Авейру</option>
+            </select>
+            <textarea class="admin-input" id="adminMessageText" placeholder="Текст сообщения..." rows="3"></textarea>
+            <button class="admin-btn" id="adminSendMessageBtn">Отправить как выбранный абонент</button>
+        </div>
+        
+        <div class="admin-section">
+            <h3>Изменить статус "был(а) в сети"</h3>
+            <select class="admin-select" id="adminStatusContactSelect">
+                <option value="0">Плехов Лев Александрович</option>
+                <option value="1">Криштиану Роналду Душ Сантуш Авейру</option>
+                <option value="2">Джорджина Родригес</option>
+                <option value="3">Криштиану-младший Роналду Душ Сантуш Авейру</option>
+            </select>
+            <input class="admin-input" id="adminStatusText" placeholder="Например: был(а) в сети 5 минут назад" value="был(а) в сети 5 минут назад">
+            <button class="admin-btn" id="adminSetStatusBtn">Установить статус</button>
+        </div>
+        
+        <div class="admin-section">
+            <button class="admin-btn" id="exitAdminBtn" style="background-color: #ff3b30;">Выйти из панели администратора</button>
+        </div>
+    </div>
+</div>
+
+<!-- Навигационные вкладки -->
+<div class="tab-bar ios-safe-area">
+    <a href="#" class="tab-item active" data-tab="summaryPage">
+        <div class="tab-icon"><i class="fas fa-chart-pie"></i></div>
+        <div>Сводка</div>
+    </a>
+    <a href="#" class="tab-item" data-tab="chatsPage">
+        <div class="tab-icon"><i class="fas fa-comments"></i></div>
+        <div>Переписки</div>
+    </a>
+    <a href="#" class="tab-item" data-tab="familyPage">
+        <div class="tab-icon"><i class="fas fa-users"></i></div>
+        <div>Семья</div>
+    </a>
+    <a href="#" class="tab-item" data-tab="tariffPage" id="tariffTab">
+        <div class="tab-icon"><i class="fas fa-credit-card"></i></div>
+        <div>Тариф</div>
+    </a>
+</div>
+
+<script>
+    // Инициализация приложения
+    document.addEventListener('DOMContentLoaded', function() {
+        // Обновление времени в статус баре
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('currentTime').textContent = `Текущее время: ${hours}:${minutes}`;
+        }
+        
+        updateTime();
+        setInterval(updateTime, 60000);
+        
+        // Инициализация локального хранилища для переписки
+        if (!localStorage.getItem('mailMessages')) {
+            const initialMessages = {
+                '0': [], // Плехов Лев Александрович
+                '1': [], // Криштиану Роналду
+                '2': [], // Джорджина Родригес
+                '3': []  // Криштиану-младший
+            };
+            localStorage.setItem('mailMessages', JSON.stringify(initialMessages));
+        }
+        
+        // Инициализация закрепленных чатов
+        if (!localStorage.getItem('pinnedChats')) {
+            localStorage.setItem('pinnedChats', JSON.stringify([]));
+        }
+        
+        // Инициализация статусов "был(а) в сети"
+        if (!localStorage.getItem('userStatuses')) {
+            const initialStatuses = {
+                '0': 'был(а) в сети 5 минут назад',
+                '1': 'был(а) в сети 2 часа назад',
+                '2': 'был(а) в сети вчера',
+                '3': 'был(а) в сети 3 дня назад'
+            };
+            localStorage.setItem('userStatuses', JSON.stringify(initialStatuses));
+        }
+        
+        // Инициализация цветов иконок
+        if (!localStorage.getItem('iconColors')) {
+            const initialColors = {
+                '0': '#007aff',
+                '1': '#32d74b',
+                '2': '#ff453a',
+                '3': '#ff9f0a'
+            };
+            localStorage.setItem('iconColors', JSON.stringify(initialColors));
+        }
+        
+        // Инициализация игнорируемых пользователей
+        if (!localStorage.getItem('ignoredUsers')) {
+            localStorage.setItem('ignoredUsers', JSON.stringify([]));
+        }
+        
+        // Инициализация отключенных звуков
+        if (!localStorage.getItem('mutedChats')) {
+            localStorage.setItem('mutedChats', JSON.stringify([]));
+        }
+        
+        // Контакты данные
+        const contacts = [
+            {
+                id: 0,
+                name: 'Плехов Лев Александрович',
+                initials: 'ПЛ'
+            },
+            {
+                id: 1,
+                name: 'Криштиану Роналду Душ Сантуш Авейру',
+                initials: 'КР'
+            },
+            {
+                id: 2,
+                name: 'Джорджина Родригес',
+                initials: 'ДР'
+            },
+            {
+                id: 3,
+                name: 'Криштиану-младший Роналду Душ Сантуш Авейру',
+                initials: 'КМ'
             }
-            
-            updateTime();
-            setInterval(updateTime, 60000);
-            
-            // Инициализация локального хранилища для переписки
-            if (!localStorage.getItem('mailMessages')) {
-                const initialMessages = {
-                    '0': [], // Плехов Лев Александрович
-                    '1': [], // Криштиану Роналду
-                    '2': [], // Джорджина Родригес
-                    '3': []  // Криштиану-младший
-                };
-                localStorage.setItem('mailMessages', JSON.stringify(initialMessages));
-            }
-            
-            // Инициализация закрепленных чатов
-            if (!localStorage.getItem('pinnedChats')) {
-                localStorage.setItem('pinnedChats', JSON.stringify([]));
-            }
-            
-            // Инициализация статусов "был(а) в сети"
-            if (!localStorage.getItem('userStatuses')) {
-                const initialStatuses = {
-                    '0': 'был(а) в сети 5 минут назад',
-                    '1': 'был(а) в сети 2 часа назад',
-                    '2': 'был(а) в сети вчера',
-                    '3': 'был(а) в сети 3 дня назад'
-                };
-                localStorage.setItem('userStatuses', JSON.stringify(initialStatuses));
-            }
-            
-            // Инициализация цветов иконок
-            if (!localStorage.getItem('iconColors')) {
-                const initialColors = {
-                    '0': '#007aff',
-                    '1': '#32d74b',
-                    '2': '#ff453a',
-                    '3': '#ff9f0a'
-                };
-                localStorage.setItem('iconColors', JSON.stringify(initialColors));
-            }
-            
-            // Инициализация игнорируемых пользователей
-            if (!localStorage.getItem('ignoredUsers')) {
-                localStorage.setItem('ignoredUsers', JSON.stringify([]));
-            }
-            
-            // Инициализация отключенных звуков
-            if (!localStorage.getItem('mutedChats')) {
-                localStorage.setItem('mutedChats', JSON.stringify([]));
-            }
-            
-            // Контакты данные
-            const contacts = [
-                {
-                    id: 0,
-                    name: 'Плехов Лев Александрович',
-                    initials: 'ПЛ'
-                },
-                {
-                    id: 1,
-                    name: 'Криштиану Роналду Душ Сантуш Авейру',
-                    initials: 'КР'
-                },
-                {
-                    id: 2,
-                    name: 'Джорджина Родригес',
-                    initials: 'ДР'
-                },
-                {
-                    id: 3,
-                    name: 'Криштиану-младший Роналду Душ Сантуш Авейру',
-                    initials: 'КМ'
-                }
-            ];
-            
-            // Переключение между вкладками
-            const tabItems = document.querySelectorAll('.tab-item');
-            const pages = document.querySelectorAll('.page');
-            
-            tabItems.forEach(tab => {
-                tab.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetTab = this.getAttribute('data-tab');
-                    
-                    // Обновление активной вкладки
-                    tabItems.forEach(item => item.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Показать соответствующую страницу
-                    pages.forEach(page => {
-                        page.classList.remove('active');
-                        if (page.id === targetTab) {
-                            page.classList.add('active');
-                            
-                            // При открытии страницы переписок обновить список
-                            if (targetTab === 'chatsPage') {
-                                loadChatsList();
-                            }
+        ];
+        
+        // Переключение между вкладками
+        const tabItems = document.querySelectorAll('.tab-item');
+        const pages = document.querySelectorAll('.page');
+        
+        tabItems.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetTab = this.getAttribute('data-tab');
+                
+                // Обновление активной вкладки
+                tabItems.forEach(item => item.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Показать соответствующую страницу
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                    if (page.id === targetTab) {
+                        page.classList.add('active');
+                        
+                        // При открытии страницы переписок обновить список
+                        if (targetTab === 'chatsPage') {
+                            loadChatsList();
                         }
-                    });
+                    }
                 });
             });
+        });
+        
+        // Загрузка списка переписок
+        function loadChatsList() {
+            const chatsList = document.getElementById('chatsList');
+            chatsList.innerHTML = '';
             
-            // Загрузка списка переписок
-            function loadChatsList() {
-                const chatsList = document.getElementById('chatsList');
-                chatsList.innerHTML = '';
-                
-                const messages = JSON.parse(localStorage.getItem('mailMessages'));
-                const pinnedChats = JSON.parse(localStorage.getItem('pinnedChats'));
-                const iconColors = JSON.parse(localStorage.getItem('iconColors'));
-                
-                // Сначала отображаем закрепленные переписки
-                pinnedChats.forEach(contactId => {
-                    const contact = contacts[contactId];
-                    const contactMessages = messages[contactId];
-                    const lastMessage = contactMessages.length > 0 ? contactMessages[contactMessages.length - 1] : null;
-                    
-                    const chatItem = document.createElement('div');
-                    chatItem.className = 'chat-item pinned';
-                    chatItem.setAttribute('data-contact', contactId);
-                    
-                    const lastMessageText = lastMessage ? 
-                        (lastMessage.sender === 'user' ? 'Вы: ' : '') + lastMessage.text.substring(0, 30) + (lastMessage.text.length > 30 ? '...' : '') : 
-                        'Нет сообщений';
-                    
-                    const lastMessageTime = lastMessage ? formatMessageTime(lastMessage.date) : '';
-                    
-                    chatItem.innerHTML = `
-                        <div class="chat-icon" style="background-color: ${iconColors[contactId] || '#007aff'}">${contact.initials}</div>
-                        <div class="chat-info">
-                            <div class="chat-name">${contact.name}</div>
-                            <div class="chat-last-message">${lastMessageText}</div>
-                        </div>
-                        <div class="chat-time">${lastMessageTime}</div>
-                    `;
-                    
-                    chatsList.appendChild(chatItem);
-                });
-                
-                // Затем отображаем незакрепленные переписки
-                contacts.forEach((contact, index) => {
-                    if (pinnedChats.includes(index)) return; // Пропускаем уже добавленные закрепленные переписки
-                    
-                    const contactMessages = messages[index];
-                    const lastMessage = contactMessages.length > 0 ? contactMessages[contactMessages.length - 1] : null;
-                    
-                    const chatItem = document.createElement('div');
-                    chatItem.className = 'chat-item';
-                    chatItem.setAttribute('data-contact', index);
-                    
-                    const lastMessageText = lastMessage ? 
-                        (lastMessage.sender === 'user' ? 'Вы: ' : '') + lastMessage.text.substring(0, 30) + (lastMessage.text.length > 30 ? '...' : '') : 
-                        'Нет сообщений';
-                    
-                    const lastMessageTime = lastMessage ? formatMessageTime(lastMessage.date) : '';
-                    
-                    chatItem.innerHTML = `
-                        <div class="chat-icon" style="background-color: ${iconColors[index] || '#007aff'}">${contact.initials}</div>
-                        <div class="chat-info">
-                            <div class="chat-name">${contact.name}</div>
-                            <div class="chat-last-message">${lastMessageText}</div>
-                        </div>
-                        <div class="chat-time">${lastMessageTime}</div>
-                    `;
-                    
-                    chatsList.appendChild(chatItem);
-                });
-                
-                // Добавляем обработчики для переписок
-                document.querySelectorAll('.chat-item').forEach(item => {
-                    item.addEventListener('click', openChat);
-                    
-                    // Долгое нажатие для контекстного меню
-                    let pressTimer;
-                    item.addEventListener('touchstart', function(e) {
-                        pressTimer = setTimeout(() => {
-                            showContextMenu(e, parseInt(this.getAttribute('data-contact')));
-                        }, 800);
-                    });
-                    
-                    item.addEventListener('touchend', function() {
-                        clearTimeout(pressTimer);
-                    });
-                    
-                    item.addEventListener('touchmove', function() {
-                        clearTimeout(pressTimer);
-                    });
-                });
-            }
+            const messages = JSON.parse(localStorage.getItem('mailMessages'));
+            const pinnedChats = JSON.parse(localStorage.getItem('pinnedChats'));
+            const iconColors = JSON.parse(localStorage.getItem('iconColors'));
             
-            // Обработчики для рекомендуемых контактов в сводке
-            document.querySelectorAll('.recommended-contact').forEach(contact => {
-                contact.addEventListener('click', function() {
-                    const contactId = parseInt(this.getAttribute('data-contact'));
-                    openComposer(contactId);
-                });
-            });
-            
-            // Форматирование времени для сообщений
-            function formatMessageTime(dateString) {
-                const date = new Date(dateString);
-                const now = new Date();
-                const diffMs = now - date;
-                const diffMins = Math.floor(diffMs / 60000);
-                const diffHours = Math.floor(diffMs / 3600000);
-                const diffDays = Math.floor(diffMs / 86400000);
-                
-                if (diffMins < 60) {
-                    return `${diffMins} мин`;
-                } else if (diffHours < 24) {
-                    return `${diffHours} ч`;
-                } else if (diffDays < 7) {
-                    return `${diffDays} д`;
-                } else {
-                    return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
-                }
-            }
-            
-            // Открытие переписки
-            let currentChatId = null;
-            const chatWindow = document.getElementById('chatWindow');
-            const backFromChatBtn = document.getElementById('backFromChat');
-            
-            function openChat() {
-                const contactId = parseInt(this.getAttribute('data-contact'));
-                currentChatId = contactId;
+            // Сначала отображаем закрепленные переписки
+            pinnedChats.forEach(contactId => {
                 const contact = contacts[contactId];
-                
-                // Заполнение заголовка переписки
-                const iconColors = JSON.parse(localStorage.getItem('iconColors'));
-                document.getElementById('chatHeaderIcon').textContent = contact.initials;
-                document.getElementById('chatHeaderIcon').style.backgroundColor = iconColors[contactId] || '#007aff';
-                document.getElementById('chatHeaderName').textContent = contact.name;
-                
-                // Загрузка статуса "был(а) в сети"
-                const statuses = JSON.parse(localStorage.getItem('userStatuses'));
-                document.getElementById('chatHeaderStatus').textContent = statuses[contactId] || 'был(а) в сети недавно';
-                
-                // Загрузка сообщений
-                loadChatMessages(contactId);
-                
-                // Показать окно переписки
-                chatWindow.classList.add('active');
-            }
-            
-            // Кнопка "Назад" в переписке
-            backFromChatBtn.addEventListener('click', function() {
-                chatWindow.classList.remove('active');
-                currentChatId = null;
-            });
-            
-            // Загрузка сообщений в переписку
-            function loadChatMessages(contactId) {
-                const chatMessages = document.getElementById('chatMessages');
-                chatMessages.innerHTML = '';
-                
-                const messages = JSON.parse(localStorage.getItem('mailMessages'));
                 const contactMessages = messages[contactId];
+                const lastMessage = contactMessages.length > 0 ? contactMessages[contactMessages.length - 1] : null;
                 
-                if (contactMessages.length === 0) {
-                    const emptyMessage = document.createElement('div');
-                    emptyMessage.className = 'message-bubble message-incoming';
-                    emptyMessage.textContent = 'Начните переписку, отправив первое сообщение';
-                    emptyMessage.style.alignSelf = 'center';
-                    emptyMessage.style.textAlign = 'center';
-                    emptyMessage.style.maxWidth = '90%';
-                    chatMessages.appendChild(emptyMessage);
-                    return;
-                }
+                const chatItem = document.createElement('div');
+                chatItem.className = 'chat-item pinned';
+                chatItem.setAttribute('data-contact', contactId);
                 
-                contactMessages.forEach(msg => {
-                    const messageDate = new Date(msg.date);
-                    const formattedTime = messageDate.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-                    
-                    const messageElement = document.createElement('div');
-                    messageElement.className = `message-bubble ${msg.sender === 'user' ? 'message-outgoing' : 'message-incoming'}`;
-                    
-                    messageElement.innerHTML = `
-                        <div>${msg.text}</div>
-                        <div class="message-time">${formattedTime}</div>
-                    `;
-                    
-                    chatMessages.appendChild(messageElement);
-                });
+                const lastMessageText = lastMessage ? 
+                    (lastMessage.sender === 'user' ? 'Вы: ' : '') + lastMessage.text.substring(0, 30) + (lastMessage.text.length > 30 ? '...' : '') : 
+                    'Нет сообщений';
                 
-                // Прокрутка к последнему сообщению
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-            
-            // Контекстное меню для переписок
-            function showContextMenu(e, contactId) {
-                // Удаляем существующее меню, если есть
-                const existingMenu = document.querySelector('.context-menu');
-                if (existingMenu) {
-                    existingMenu.remove();
-                }
+                const lastMessageTime = lastMessage ? formatMessageTime(lastMessage.date) : '';
                 
-                // Создаем новое меню
-                const menu = document.createElement('div');
-                menu.className = 'context-menu';
-                
-                const pinnedChats = JSON.parse(localStorage.getItem('pinnedChats'));
-                const isPinned = pinnedChats.includes(contactId);
-                
-                const mutedChats = JSON.parse(localStorage.getItem('mutedChats'));
-                const isMuted = mutedChats.includes(contactId);
-                
-                const ignoredUsers = JSON.parse(localStorage.getItem('ignoredUsers'));
-                const isIgnored = ignoredUsers.includes(contactId);
-                
-                menu.innerHTML = `
-                    <div class="menu-item" id="pinChatItem">
-                        <i class="fas fa-thumbtack"></i>
-                        ${isPinned ? 'Открепить переписку' : 'Закрепить переписку'}
+                chatItem.innerHTML = `
+                    <div class="chat-icon" style="background-color: ${iconColors[contactId] || '#007aff'}">${contact.initials}</div>
+                    <div class="chat-info">
+                        <div class="chat-name">${contact.name}</div>
+                        <div class="chat-last-message">${lastMessageText}</div>
                     </div>
-                    <div class="menu-item" id="muteChatItem">
-                        <i class="fas fa-bell${isMuted ? '-slash' : ''}"></i>
-                        ${isMuted ? 'Включить звук' : 'Отключить звук'}
-                    </div>
-                    <div class="menu-item" id="ignoreUserItem">
-                        <i class="fas fa-user${isIgnored ? '-check' : '-slash'}"></i>
-                        ${isIgnored ? 'Прекратить игнорирование' : 'Игнорирование'}
-                    </div>
-                    <div class="menu-item" id="clearChatItem">
-                        <i class="fas fa-trash"></i>
-                        Очистить историю
-                    </div>
+                    <div class="chat-time">${lastMessageTime}</div>
                 `;
                 
-                // Позиционируем меню
-                const touch = e.touches ? e.touches[0] : e;
-                menu.style.left = Math.min(touch.clientX - 100, window.innerWidth - 220) + 'px';
-                menu.style.top = Math.min(touch.clientY - 10, window.innerHeight - 250) + 'px';
+                chatsList.appendChild(chatItem);
+            });
+            
+            // Затем отображаем незакрепленные переписки
+            contacts.forEach((contact, index) => {
+                if (pinnedChats.includes(index)) return; // Пропускаем уже добавленные закрепленные переписки
                 
-                document.body.appendChild(menu);
+                const contactMessages = messages[index];
+                const lastMessage = contactMessages.length > 0 ? contactMessages[contactMessages.length - 1] : null;
                 
-                // Обработчики для пунктов меню
-                document.getElementById('pinChatItem').addEventListener('click', function() {
-                    togglePinChat(contactId);
-                    menu.remove();
+                const chatItem = document.createElement('div');
+                chatItem.className = 'chat-item';
+                chatItem.setAttribute('data-contact', index);
+                
+                const lastMessageText = lastMessage ? 
+                    (lastMessage.sender === 'user' ? 'Вы: ' : '') + lastMessage.text.substring(0, 30) + (lastMessage.text.length > 30 ? '...' : '') : 
+                    'Нет сообщений';
+                
+                const lastMessageTime = lastMessage ? formatMessageTime(lastMessage.date) : '';
+                
+                chatItem.innerHTML = `
+                    <div class="chat-icon" style="background-color: ${iconColors[index] || '#007aff'}">${contact.initials}</div>
+                    <div class="chat-info">
+                        <div class="chat-name">${contact.name}</div>
+                        <div class="chat-last-message">${lastMessageText}</div>
+                    </div>
+                    <div class="chat-time">${lastMessageTime}</div>
+                `;
+                
+                chatsList.appendChild(chatItem);
+            });
+            
+            // Добавляем обработчики для переписок
+            document.querySelectorAll('.chat-item').forEach(item => {
+                item.addEventListener('click', openChat);
+                
+                // Долгое нажатие для контекстного меню
+                let pressTimer;
+                item.addEventListener('touchstart', function(e) {
+                    pressTimer = setTimeout(() => {
+                        showContextMenu(e, parseInt(this.getAttribute('data-contact')));
+                    }, 800);
                 });
                 
-                document.getElementById('muteChatItem').addEventListener('click', function() {
-                    toggleMuteChat(contactId);
-                    menu.remove();
+                item.addEventListener('touchend', function() {
+                    clearTimeout(pressTimer);
                 });
                 
-                document.getElementById('ignoreUserItem').addEventListener('click', function() {
-                    if (!isIgnored) {
-                        // Показываем объяснение функции
-                        document.getElementById('ignoreModal').classList.add('active');
-                        // После закрытия объяснения включаем игнорирование
-                        document.getElementById('closeIgnoreModalBtn').onclick = function() {
-                            document.getElementById('ignoreModal').classList.remove('active');
-                            toggleIgnoreUser(contactId);
-                        };
-                    } else {
+                item.addEventListener('touchmove', function() {
+                    clearTimeout(pressTimer);
+                });
+            });
+        }
+        
+        // Обработчики для рекомендуемых контактов в сводке
+        document.querySelectorAll('.recommended-contact').forEach(contact => {
+            contact.addEventListener('click', function() {
+                const contactId = parseInt(this.getAttribute('data-contact'));
+                openComposer(contactId);
+            });
+        });
+        
+        // Форматирование времени для сообщений
+        function formatMessageTime(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+            
+            if (diffMins < 60) {
+                return `${diffMins} мин`;
+            } else if (diffHours < 24) {
+                return `${diffHours} ч`;
+            } else if (diffDays < 7) {
+                return `${diffDays} д`;
+            } else {
+                return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
+            }
+        }
+        
+        // Открытие переписки
+        let currentChatId = null;
+        const chatWindow = document.getElementById('chatWindow');
+        const backFromChatBtn = document.getElementById('backFromChat');
+        
+        function openChat() {
+            const contactId = parseInt(this.getAttribute('data-contact'));
+            currentChatId = contactId;
+            const contact = contacts[contactId];
+            
+            // Заполнение заголовка переписки
+            const iconColors = JSON.parse(localStorage.getItem('iconColors'));
+            document.getElementById('chatHeaderIcon').textContent = contact.initials;
+            document.getElementById('chatHeaderIcon').style.backgroundColor = iconColors[contactId] || '#007aff';
+            document.getElementById('chatHeaderName').textContent = contact.name;
+            
+            // Загрузка статуса "был(а) в сети"
+            const statuses = JSON.parse(localStorage.getItem('userStatuses'));
+            document.getElementById('chatHeaderStatus').textContent = statuses[contactId] || 'был(а) в сети недавно';
+            
+            // Загрузка сообщений
+            loadChatMessages(contactId);
+            
+            // Показать окно переписки
+            chatWindow.classList.add('active');
+        }
+        
+        // Кнопка "Назад" в переписке
+        backFromChatBtn.addEventListener('click', function() {
+            chatWindow.classList.remove('active');
+            currentChatId = null;
+        });
+        
+        // Загрузка сообщений в переписку
+        function loadChatMessages(contactId) {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '';
+            
+            const messages = JSON.parse(localStorage.getItem('mailMessages'));
+            const contactMessages = messages[contactId];
+            
+            if (contactMessages.length === 0) {
+                const emptyMessage = document.createElement('div');
+                emptyMessage.className = 'message-bubble message-incoming';
+                emptyMessage.textContent = 'Начните переписку, отправив первое сообщение';
+                emptyMessage.style.alignSelf = 'center';
+                emptyMessage.style.textAlign = 'center';
+                emptyMessage.style.maxWidth = '90%';
+                chatMessages.appendChild(emptyMessage);
+                return;
+            }
+            
+            contactMessages.forEach(msg => {
+                const messageDate = new Date(msg.date);
+                const formattedTime = messageDate.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+                
+                const messageElement = document.createElement('div');
+                messageElement.className = `message-bubble ${msg.sender === 'user' ? 'message-outgoing' : 'message-incoming'}`;
+                
+                messageElement.innerHTML = `
+                    <div>${msg.text}</div>
+                    <div class="message-time">${formattedTime}</div>
+                `;
+                
+                chatMessages.appendChild(messageElement);
+            });
+            
+            // Прокрутка к последнему сообщению
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Контекстное меню для переписок
+        function showContextMenu(e, contactId) {
+            // Удаляем существующее меню, если есть
+            const existingMenu = document.querySelector('.context-menu');
+            if (existingMenu) {
+                existingMenu.remove();
+            }
+            
+            // Создаем новое меню
+            const menu = document.createElement('div');
+            menu.className = 'context-menu';
+            
+            const pinnedChats = JSON.parse(localStorage.getItem('pinnedChats'));
+            const isPinned = pinnedChats.includes(contactId);
+            
+            const mutedChats = JSON.parse(localStorage.getItem('mutedChats'));
+            const isMuted = mutedChats.includes(contactId);
+            
+            const ignoredUsers = JSON.parse(localStorage.getItem('ignoredUsers'));
+            const isIgnored = ignoredUsers.includes(contactId);
+            
+            menu.innerHTML = `
+                <div class="menu-item" id="pinChatItem">
+                    <i class="fas fa-thumbtack"></i>
+                    ${isPinned ? 'Открепить переписку' : 'Закрепить переписку'}
+                </div>
+                <div class="menu-item" id="muteChatItem">
+                    <i class="fas fa-bell${isMuted ? '-slash' : ''}"></i>
+                    ${isMuted ? 'Включить звук' : 'Отключить звук'}
+                </div>
+                <div class="menu-item" id="ignoreUserItem">
+                    <i class="fas fa-user${isIgnored ? '-check' : '-slash'}"></i>
+                    ${isIgnored ? 'Прекратить игнорирование' : 'Игнорирование'}
+                </div>
+                <div class="menu-item" id="clearChatItem">
+                    <i class="fas fa-trash"></i>
+                    Очистить историю
+                </div>
+            `;
+            
+            // Позиционируем меню
+            const touch = e.touches ? e.touches[0] : e;
+            menu.style.left = Math.min(touch.clientX - 100, window.innerWidth - 220) + 'px';
+            menu.style.top = Math.min(touch.clientY - 10, window.innerHeight - 250) + 'px';
+            
+            document.body.appendChild(menu);
+            
+            // Обработчики для пунктов меню
+            document.getElementById('pinChatItem').addEventListener('click', function() {
+                togglePinChat(contactId);
+                menu.remove();
+            });
+            
+            document.getElementById('muteChatItem').addEventListener('click', function() {
+                toggleMuteChat(contactId);
+                menu.remove();
+            });
+            
+            document.getElementById('ignoreUserItem').addEventListener('click', function() {
+                if (!isIgnored) {
+                    // Показываем объяснение функции
+                    document.getElementById('ignoreModal').classList.add('active');
+                    // После закрытия объяснения включаем игнорирование
+                    document.getElementById('closeIgnoreModalBtn').onclick = function() {
+                        document.getElementById('ignoreModal').classList.remove('active');
                         toggleIgnoreUser(contactId);
-                    }
-                    menu.remove();
-                });
-                
-                document.getElementById('clearChatItem').addEventListener('click', function() {
-                    showDeleteConfirmation(contactId);
-                    menu.remove();
-                });
-                
-                // Закрытие меню при клике вне его
-                setTimeout(() => {
-                    const closeMenu = function(event) {
-                        if (!menu.contains(event.target)) {
-                            menu.remove();
-                            document.removeEventListener('click', closeMenu);
-                            document.removeEventListener('touchstart', closeMenu);
-                        }
                     };
-                    
-                    document.addEventListener('click', closeMenu);
+                } else {
+                    toggleIgnoreUser(contactId);
+                }
+                menu.remove();
+            });
+            
+            document.getElementById('clearChatItem').addEventListener('click', function() {
+                showDeleteConfirmation(contactId);
+                menu.remove();
+            });
+            
+            // Закрытие меню при клике вне его
+            setTimeout(() => {
+                const closeMenu = function(event) {
+                    if (!menu.contains(event.target)) {
+                        menu.remove();
+                        document.removeEventListener('click', closeMenu);
+                        document.removeEventListener('touchstart', closeMenu);
+                    }
+                };
+                
+                document.addEventListener('click', closeMenu
+```
                     document.addEventListener('touchstart', closeMenu);
                 }, 100);
+            });
+        }
+        
+        // Функции для контекстного меню
+        function togglePinChat(contactId) {
+            const pinnedChats = JSON.parse(localStorage.getItem('pinnedChats'));
+            const index = pinnedChats.indexOf(contactId);
+            
+            if (index === -1) {
+                pinnedChats.push(contactId);
+            } else {
+                pinnedChats.splice(index, 1);
             }
             
-            // Функции для контекстного меню
-            function togglePinChat(contactId) {
-                const pinnedChats = JSON.parse(localStorage.getItem('pinnedChats'));
-                const index = pinnedChats.indexOf(contactId);
-                
-                if (index === -1) {
-                    pinnedChats.push(contactId);
-                } else {
-                    pinnedChats.splice(index, 1);
-                }
-                
-                localStorage.setItem('pinnedChats', JSON.stringify(pinnedChats));
-                loadChatsList();
-            }
-            
-            function toggleMuteChat(contactId) {
-                const mutedChats = JSON.parse(localStorage.getItem('mutedChats'));
-                const index = mutedChats.indexOf(contactId);
-                
-                if (index === -1) {
-                    mutedChats.push(contactId);
-                } else {
-                    mutedChats.splice(index, 1);
-                }
-                
-                localStorage.setItem('mutedChats', JSON.stringify(mutedChats));
-            }
-            
-            function toggleIgnoreUser(contactId) {
-                const ignoredUsers = JSON.parse(localStorage.getItem('ignoredUsers'));
-                const index = ignoredUsers.indexOf(contactId);
-                
-                if (index === -1) {
-                    ignoredUsers.push(contactId);
-                } else {
-                    ignoredUsers.splice(index, 1);
-                }
-                
-                localStorage.setItem('ignoredUsers', JSON.stringify(ignoredUsers));
-            }
-            
-            function showDeleteConfirmation(contactId) {
-                document.getElementById('deleteModal').classList.add('active');
-                
-                // Устанавливаем обработчики для модального окна удаления
-                document.getElementById('cancelDeleteBtn').onclick = function() {
-                    document.getElementById('deleteModal').classList.remove('active');
-                };
-                
-                document.getElementById('confirmDeleteBtn').onclick = function() {
-                    clearChatHistory(contactId);
-                    document.getElementById('deleteModal').classList.remove('active');
-                };
-            }
-            
-            function clearChatHistory(contactId) {
-                const messages = JSON.parse(localStorage.getItem('mailMessages'));
-                messages[contactId] = [];
-                localStorage.setItem('mailMessages', JSON.stringify(messages));
-                
-                if (currentChatId === contactId) {
-                    loadChatMessages(contactId);
-                }
-                
-                loadChatsList();
-            }
-            
-            // Открытие окна написания сообщения из переписки
-            const writeMessageFromChatBtn = document.getElementById('writeMessageFromChatBtn');
-            const messageComposer = document.getElementById('messageComposer');
-            const backFromComposerBtn = document.getElementById('backFromComposer');
-            
-            writeMessageFromChatBtn.addEventListener('click', function() {
-                if (currentChatId === null) return;
-                
-                openComposer(currentChatId);
-            });
-            
-            // Открытие окна написания сообщения
-            function openComposer(contactId) {
-                const contact = contacts[contactId];
-                
-                // Установка получателя
-                document.getElementById('recipientName').textContent = contact.name;
-                document.getElementById('composerTitle').textContent = `Сообщение для ${contact.name.split(' ')[0]}`;
-                
-                // Сброс состояния редактора
-                document.getElementById('messageEditor').value = '';
-                document.getElementById('emojisPanel').classList.remove('active');
-                
-                // Сохраняем текущий контакт для отправки
-                messageComposer.setAttribute('data-contact', contactId);
-                
-                // Показать окно написания
-                messageComposer.classList.add('active');
-            }
-            
-            // Кнопка "Назад" в окне написания сообщения
-            backFromComposerBtn.addEventListener('click', function() {
-                messageComposer.classList.remove('active');
-            });
-            
-            // Панель смайлов
-            const emojisBtn = document.getElementById('emojisBtn');
-            const emojisPanel = document.getElementById('emojisPanel');
-            
-            emojisBtn.addEventListener('click', function() {
-                emojisPanel.classList.toggle('active');
-            });
-            
-            // Вставка смайла в текст
-            document.querySelectorAll('.emoji-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const editor = document.getElementById('messageEditor');
-                    const cursorPos = editor.selectionStart;
-                    const text = editor.value;
-                    const emoji = this.textContent;
-                    
-                    editor.value = text.substring(0, cursorPos) + emoji + text.substring(cursorPos);
-                    editor.focus();
-                    editor.selectionStart = cursorPos + emoji.length;
-                    editor.selectionEnd = cursorPos + emoji.length;
-                });
-            });
-            
-            // Кнопка "Отмена" в окне написания
-            document.getElementById('cancelMessageBtn').addEventListener('click', function() {
-                messageComposer.classList.remove('active');
-            });
-            
-            // Планирование отправки
-            const scheduleBtn = document.getElementById('scheduleBtn');
-            const scheduleModal = document.getElementById('scheduleModal');
-            const cancelScheduleBtn = document.getElementById('cancelScheduleBtn');
-            const confirmScheduleBtn = document.getElementById('confirmScheduleBtn');
-            
-            let scheduledDateTime = null;
-            
-            scheduleBtn.addEventListener('click', function() {
-                scheduleModal.classList.add('active');
-            });
-            
-            cancelScheduleBtn.addEventListener('click', function() {
-                scheduleModal.classList.remove('active');
-            });
-            
-            confirmScheduleBtn.addEventListener('click', function() {
-                const dateTimeInput = document.getElementById('scheduleDateTime').value;
-                scheduledDateTime = new Date(dateTimeInput);
-                
-                // Обновляем текст кнопки
-                scheduleBtn.innerHTML = `<i class="fas fa-clock"></i> Запланировано`;
-                
-                scheduleModal.classList.remove('active');
-                showNotification(`Сообщение запланировано на отправку ${scheduledDateTime.toLocaleString('ru-RU')}`);
-            });
-            
-            // Отправка сообщения
-            const sendMessageBtn = document.getElementById('sendMessageBtn');
-            
-            sendMessageBtn.addEventListener('click', function() {
-                const contactId = parseInt(messageComposer.getAttribute('data-contact'));
-                if (isNaN(contactId)) return;
-                
-                const messageText = document.getElementById('messageEditor').value.trim();
-                
-                if (!messageText) {
-                    showNotification('Введите текст сообщения');
-                    return;
-                }
-                
-                // Сохранение сообщения в локальное хранилище
-                const messages = JSON.parse(localStorage.getItem('mailMessages'));
-                
-                const newMessage = {
-                    text: messageText,
-                    date: scheduledDateTime ? scheduledDateTime.toISOString() : new Date().toISOString(),
-                    sender: 'user'
-                };
-                
-                messages[contactId].push(newMessage);
-                localStorage.setItem('mailMessages', JSON.stringify(messages));
-                
-                // Сброс планировщика
-                scheduledDateTime = null;
-                scheduleBtn.innerHTML = `<i class="fas fa-clock"></i> Отправить позже`;
-                
-                // Закрытие окна написания и возврат к переписке
-                messageComposer.classList.remove('active');
-                
-                // Обновление переписки, если она открыта
-                if (currentChatId === contactId) {
-                    loadChatMessages(contactId);
-                }
-                
-                // Обновление списка переписок
-                loadChatsList();
-                
-                // Показать уведомление об отправке
-                const sendTime = scheduledDateTime ? 'запланировано' : 'отправлено';
-                showNotification(`Сообщение успешно ${sendTime}`);
-            });
-            
-            // Функция показа уведомления
-            function showNotification(text) {
-                const notification = document.createElement('div');
-                notification.textContent = text;
-                notification.style.position = 'fixed';
-                notification.style.top = '80px';
-                notification.style.left = '50%';
-                notification.style.transform = 'translateX(-50%)';
-                notification.style.backgroundColor = '#32d74b';
-                notification.style.color = 'white';
-                notification.style.padding = '12px 24px';
-                notification.style.borderRadius = '12px';
-                notification.style.zIndex = '4000';
-                notification.style.fontWeight = '600';
-                notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-                notification.style.animation = 'fadeIn 0.3s ease';
-                
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.style.opacity = '0';
-                    notification.style.transition = 'opacity 0.3s ease';
-                    setTimeout(() => {
-                        document.body.removeChild(notification);
-                    }, 300);
-                }, 3000);
-            }
-            
-            // Кнопки на странице тарифа
-            document.getElementById('changeTariffBtn').addEventListener('click', function() {
-                showNotification('Выберите тариф из списка для смены');
-            });
-            
-            document.getElementById('callSupportBtn').addEventListener('click', function() {
-                showNotification('Имитация звонка в поддержку...');
-            });
-            
-            document.getElementById('faqBtn').addEventListener('click', function() {
-                showNotification('Открытие раздела FAQ...');
-            });
-            
-            document.getElementById('documentsBtn').addEventListener('click', function() {
-                showNotification('Открытие документов...');
-            });
-            
-            // Обработчики для выбора тарифа
-            document.querySelectorAll('.tariff-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const tariff = this.getAttribute('data-tariff');
-                    const tariffName = this.querySelector('.tariff-option-name').textContent;
-                    const tariffPrice = this.querySelector('.tariff-option-price').textContent;
-                    
-                    // Показываем модальное окно подтверждения смены тарифа
-                    document.getElementById('selectedTariffInfo').textContent = `${tariffName} - ${tariffPrice}`;
-                    document.getElementById('changeTariffModal').classList.add('active');
-                    
-                    // Устанавливаем обработчики для модального окна
-                    document.getElementById('cancelChangeTariffBtn').onclick = function() {
-                        document.getElementById('changeTariffModal').classList.remove('active');
-                    };
-                    
-                    document.getElementById('confirmChangeTariffBtn').onclick = function() {
-                        showNotification(`Тариф успешно изменен на "${tariffName}"`);
-                        document.getElementById('changeTariffModal').classList.remove('active');
-                    };
-                });
-            });
-            
-            // Секретное меню администратора
-            const adminPanel = document.getElementById('adminPanel');
-            let tariffClickCount = 0;
-            let lastTariffClickTime = 0;
-            const pinCodeModal = document.getElementById('pinCodeModal');
-            
-            document.getElementById('tariffTab').addEventListener('click', function() {
-                const now = Date.now();
-                
-                // Сбрасываем счетчик, если прошло больше 3 секунд с последнего клика
-                if (now - lastTariffClickTime > 3000) {
-                    tariffClickCount = 0;
-                }
-                
-                lastTariffClickTime = now;
-                tariffClickCount++;
-                
-                // Если кликнули 10 раз подряд
-                if (tariffClickCount === 10) {
-                    tariffClickCount = 0;
-                    
-                    // Показываем модальное окно ввода пин-кода
-                    pinCodeModal.classList.add('active');
-                    document.getElementById('pinCodeInput').value = '';
-                    document.getElementById('pinCodeError').style.display = 'none';
-                }
-            });
-            
-            // Обработчики для модального окна ввода пин-кода
-            document.getElementById('cancelPinCodeBtn').addEventListener('click', function() {
-                pinCodeModal.classList.remove('active');
-            });
-            
-            document.getElementById('confirmPinCodeBtn').addEventListener('click', function() {
-                const pinCode = document.getElementById('pinCodeInput').value;
-                
-                if (pinCode === '84152') {
-                    // Открываем панель администратора
-                    pinCodeModal.classList.remove('active');
-                    adminPanel.classList.add('active');
-                } else {
-                    document.getElementById('pinCodeError').style.display = 'block';
-                }
-            });
-            
-            // Закрытие панели администратора
-            document.getElementById('exitAdminBtn').addEventListener('click', function() {
-                adminPanel.classList.remove('active');
-            });
-            
-            // Отправка сообщения от имени абонента
-            document.getElementById('adminSendMessageBtn').addEventListener('click', function() {
-                const contactId = parseInt(document.getElementById('adminContactSelect').value);
-                const messageText = document.getElementById('adminMessageText').value.trim();
-                
-                if (!messageText) {
-                    showNotification('Введите текст сообщения');
-                    return;
-                }
-                
-                const messages = JSON.parse(localStorage.getItem('mailMessages'));
-                
-                const newMessage = {
-                    text: messageText,
-                    date: new Date().toISOString(),
-                    sender: 'contact' // Важно: отправитель - контакт, а не пользователь
-                };
-                
-                messages[contactId].push(newMessage);
-                localStorage.setItem('mailMessages', JSON.stringify(messages));
-                
-                // Очищаем поле ввода
-                document.getElementById('adminMessageText').value = '';
-                
-                // Обновляем списки, если они открыты
-                if (currentChatId === contactId) {
-                    loadChatMessages(contactId);
-                }
-                
-                loadChatsList();
-                
-                showNotification(`Сообщение отправлено от имени ${contacts[contactId].name}`);
-            });
-            
-            // Установка статуса "был(а) в сети"
-            document.getElementById('adminSetStatusBtn').addEventListener('click', function() {
-                const contactId = parseInt(document.getElementById('adminStatusContactSelect').value);
-                const statusText = document.getElementById('adminStatusText').value.trim();
-                
-                if (!statusText) {
-                    showNotification('Введите текст статуса');
-                    return;
-                }
-                
-                const statuses = JSON.parse(localStorage.getItem('userStatuses'));
-                statuses[contactId] = statusText;
-                localStorage.setItem('userStatuses', JSON.stringify(statuses));
-                
-                // Обновляем в интерфейсе, если переписка открыта
-                if (currentChatId === contactId) {
-                    document.getElementById('chatHeaderStatus').textContent = statusText;
-                }
-                
-                showNotification(`Статус для ${contacts[contactId].name} установлен: ${statusText}`);
-            });
-            
-            // Закрытие модального окна объяснения
-            document.getElementById('closeIgnoreModalBtn').addEventListener('click', function() {
-                document.getElementById('ignoreModal').classList.remove('active');
-            });
-            
-            // Имитация iOS поведения (нажатия) для всех интерактивных элементов
-            const clickableElements = document.querySelectorAll('button, .chat-item, .tariff-option, .support-btn, .menu-item, .toolbar-btn, .recommended-contact, .emoji-btn');
-            clickableElements.forEach(el => {
-                el.addEventListener('touchstart', function() {
-                    this.style.opacity = '0.7';
-                });
-                
-                el.addEventListener('touchend', function() {
-                    this.style.opacity = '1';
-                });
-                
-                el.addEventListener('touchcancel', function() {
-                    this.style.opacity = '1';
-                });
-            });
-            
-            // Загружаем список переписок при загрузке страницы
+            localStorage.setItem('pinnedChats', JSON.stringify(pinnedChats));
             loadChatsList();
+        }
+        
+        function toggleMuteChat(contactId) {
+            const mutedChats = JSON.parse(localStorage.getItem('mutedChats'));
+            const index = mutedChats.indexOf(contactId);
+            
+            if (index === -1) {
+                mutedChats.push(contactId);
+            } else {
+                mutedChats.splice(index, 1);
+            }
+            
+            localStorage.setItem('mutedChats', JSON.stringify(mutedChats));
+        }
+        
+        function toggleIgnoreUser(contactId) {
+            const ignoredUsers = JSON.parse(localStorage.getItem('ignoredUsers'));
+            const index = ignoredUsers.indexOf(contactId);
+            
+            if (index === -1) {
+                ignoredUsers.push(contactId);
+            } else {
+                ignoredUsers.splice(index, 1);
+            }
+            
+            localStorage.setItem('ignoredUsers', JSON.stringify(ignoredUsers));
+        }
+        
+        function showDeleteConfirmation(contactId) {
+            document.getElementById('deleteModal').classList.add('active');
+            
+            // Устанавливаем обработчики для модального окна удаления
+            document.getElementById('cancelDeleteBtn').onclick = function() {
+                document.getElementById('deleteModal').classList.remove('active');
+            };
+            
+            document.getElementById('confirmDeleteBtn').onclick = function() {
+                clearChatHistory(contactId);
+                document.getElementById('deleteModal').classList.remove('active');
+            };
+        }
+        
+        function clearChatHistory(contactId) {
+            const messages = JSON.parse(localStorage.getItem('mailMessages'));
+            messages[contactId] = [];
+            localStorage.setItem('mailMessages', JSON.stringify(messages));
+            
+            if (currentChatId === contactId) {
+                loadChatMessages(contactId);
+            }
+            
+            loadChatsList();
+        }
+        
+        // Открытие окна написания сообщения из переписки
+        const writeMessageFromChatBtn = document.getElementById('writeMessageFromChatBtn');
+        const messageComposer = document.getElementById('messageComposer');
+        const backFromComposerBtn = document.getElementById('backFromComposer');
+        
+        writeMessageFromChatBtn.addEventListener('click', function() {
+            if (currentChatId === null) return;
+            
+            openComposer(currentChatId);
         });
-    </script>
+        
+        // Открытие окна написания сообщения
+        function openComposer(contactId) {
+            // Проверяем, не заблокирован ли пользователь для этого контакта
+            if (contactId === 1) { // Криштиану Роналду
+                // Показываем модальное окно блокировки
+                document.getElementById('blockModal').classList.add('active');
+                return;
+            }
+            
+            const contact = contacts[contactId];
+            
+            // Установка получателя
+            document.getElementById('recipientName').textContent = contact.name;
+            document.getElementById('composerTitle').textContent = `Сообщение для ${contact.name.split(' ')[0]}`;
+            
+            // Сброс состояния редактора
+            document.getElementById('messageEditor').value = '';
+            document.getElementById('emojisPanel').classList.remove('active');
+            
+            // Сохраняем текущий контакт для отправки
+            messageComposer.setAttribute('data-contact', contactId);
+            
+            // Показать окно написания
+            messageComposer.classList.add('active');
+        }
+        
+        // Кнопка "Назад" в окне написания сообщения
+        backFromComposerBtn.addEventListener('click', function() {
+            messageComposer.classList.remove('active');
+        });
+        
+        // Обработчик закрытия модального окна блокировки
+        document.getElementById('closeBlockModalBtn').addEventListener('click', function() {
+            document.getElementById('blockModal').classList.remove('active');
+        });
+        
+        // Панель смайлов
+        const emojisBtn = document.getElementById('emojisBtn');
+        const emojisPanel = document.getElementById('emojisPanel');
+        
+        emojisBtn.addEventListener('click', function() {
+            emojisPanel.classList.toggle('active');
+        });
+        
+        // Вставка смайла в текст
+        document.querySelectorAll('.emoji-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const editor = document.getElementById('messageEditor');
+                const cursorPos = editor.selectionStart;
+                const text = editor.value;
+                const emoji = this.textContent;
+                
+                editor.value = text.substring(0, cursorPos) + emoji + text.substring(cursorPos);
+                editor.focus();
+                editor.selectionStart = cursorPos + emoji.length;
+                editor.selectionEnd = cursorPos + emoji.length;
+            });
+        });
+        
+        // Кнопка "Отмена" в окне написания
+        document.getElementById('cancelMessageBtn').addEventListener('click', function() {
+            messageComposer.classList.remove('active');
+        });
+        
+        // Планирование отправки
+        const scheduleBtn = document.getElementById('scheduleBtn');
+        const scheduleModal = document.getElementById('scheduleModal');
+        const cancelScheduleBtn = document.getElementById('cancelScheduleBtn');
+        const confirmScheduleBtn = document.getElementById('confirmScheduleBtn');
+        
+        let scheduledDateTime = null;
+        
+        scheduleBtn.addEventListener('click', function() {
+            scheduleModal.classList.add('active');
+        });
+        
+        cancelScheduleBtn.addEventListener('click', function() {
+            scheduleModal.classList.remove('active');
+        });
+        
+        confirmScheduleBtn.addEventListener('click', function() {
+            const dateTimeInput = document.getElementById('scheduleDateTime').value;
+            scheduledDateTime = new Date(dateTimeInput);
+            
+            // Обновляем текст кнопки
+            scheduleBtn.innerHTML = `<i class="fas fa-clock"></i> Запланировано`;
+            
+            scheduleModal.classList.remove('active');
+            showNotification(`Сообщение запланировано на отправку ${scheduledDateTime.toLocaleString('ru-RU')}`);
+        });
+        
+        // Отправка сообщения
+        const sendMessageBtn = document.getElementById('sendMessageBtn');
+        
+        sendMessageBtn.addEventListener('click', function() {
+            const contactId = parseInt(messageComposer.getAttribute('data-contact'));
+            if (isNaN(contactId)) return;
+            
+            // Проверяем, не заблокирован ли пользователь для этого контакта
+            if (contactId === 1) { // Криштиану Роналду
+                // Показываем модальное окно блокировки
+                document.getElementById('blockModal').classList.add('active');
+                messageComposer.classList.remove('active');
+                return;
+            }
+            
+            const messageText = document.getElementById('messageEditor').value.trim();
+            
+            if (!messageText) {
+                showNotification('Введите текст сообщения');
+                return;
+            }
+            
+            // Сохранение сообщения в локальное хранилище
+            const messages = JSON.parse(localStorage.getItem('mailMessages'));
+            
+            const newMessage = {
+                text: messageText,
+                date: scheduledDateTime ? scheduledDateTime.toISOString() : new Date().toISOString(),
+                sender: 'user'
+            };
+            
+            messages[contactId].push(newMessage);
+            localStorage.setItem('mailMessages', JSON.stringify(messages));
+            
+            // Сброс планировщика
+            scheduledDateTime = null;
+            scheduleBtn.innerHTML = `<i class="fas fa-clock"></i> Отправить позже`;
+            
+            // Закрытие окна написания и возврат к переписке
+            messageComposer.classList.remove('active');
+            
+            // Обновление переписки, если она открыта
+            if (currentChatId === contactId) {
+                loadChatMessages(contactId);
+            }
+            
+            // Обновление списка переписок
+            loadChatsList();
+            
+            // Показать уведомление об отправке
+            const sendTime = scheduledDateTime ? 'запланировано' : 'отправлено';
+            showNotification(`Сообщение успешно ${sendTime}`);
+        });
+        
+        // Функция показа уведомления
+        function showNotification(text) {
+            const notification = document.createElement('div');
+            notification.textContent = text;
+            notification.style.position = 'fixed';
+            notification.style.top = '80px';
+            notification.style.left = '50%';
+            notification.style.transform = 'translateX(-50%)';
+            notification.style.backgroundColor = '#32d74b';
+            notification.style.color = 'white';
+            notification.style.padding = '12px 24px';
+            notification.style.borderRadius = '12px';
+            notification.style.zIndex = '4000';
+            notification.style.fontWeight = '600';
+            notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            notification.style.animation = 'fadeIn 0.3s ease';
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+        
+        // Кнопки на странице тарифа
+        document.getElementById('changeTariffBtn').addEventListener('click', function() {
+            showNotification('Выберите тариф из списка для смены');
+        });
+        
+        document.getElementById('callSupportBtn').addEventListener('click', function() {
+            showNotification('Имитация звонка в поддержку...');
+        });
+        
+        document.getElementById('faqBtn').addEventListener('click', function() {
+            showNotification('Открытие раздела FAQ...');
+        });
+        
+        document.getElementById('documentsBtn').addEventListener('click', function() {
+            showNotification('Открытие документов...');
+        });
+        
+        // Обработчики для выбора тарифа
+        document.querySelectorAll('.tariff-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const tariff = this.getAttribute('data-tariff');
+                const tariffName = this.querySelector('.tariff-option-name').textContent;
+                const tariffPrice = this.querySelector('.tariff-option-price').textContent;
+                
+                // Показываем модальное окно подтверждения смены тарифа
+                document.getElementById('selectedTariffInfo').textContent = `${tariffName} - ${tariffPrice}`;
+                document.getElementById('changeTariffModal').classList.add('active');
+                
+                // Устанавливаем обработчики для модального окна
+                document.getElementById('cancelChangeTariffBtn').onclick = function() {
+                    document.getElementById('changeTariffModal').classList.remove('active');
+                };
+                
+                document.getElementById('confirmChangeTariffBtn').onclick = function() {
+                    showNotification(`Тариф успешно изменен на "${tariffName}"`);
+                    document.getElementById('changeTariffModal').classList.remove('active');
+                };
+            });
+        });
+        
+        // Секретное меню администратора
+        const adminPanel = document.getElementById('adminPanel');
+        let tariffClickCount = 0;
+        let lastTariffClickTime = 0;
+        const pinCodeModal = document.getElementById('pinCodeModal');
+        
+        document.getElementById('tariffTab').addEventListener('click', function() {
+            const now = Date.now();
+            
+            // Сбрасываем счетчик, если прошло больше 3 секунд с последнего клика
+            if (now - lastTariffClickTime > 3000) {
+                tariffClickCount = 0;
+            }
+            
+            lastTariffClickTime = now;
+            tariffClickCount++;
+            
+            // Если кликнули 10 раз подряд
+            if (tariffClickCount === 10) {
+                tariffClickCount = 0;
+                
+                // Показываем модальное окно ввода пин-кода
+                pinCodeModal.classList.add('active');
+                document.getElementById('pinCodeInput').value = '';
+                document.getElementById('pinCodeError').style.display = 'none';
+            }
+        });
+        
+        // Обработчики для модального окна ввода пин-кода
+        document.getElementById('cancelPinCodeBtn').addEventListener('click', function() {
+            pinCodeModal.classList.remove('active');
+        });
+        
+        document.getElementById('confirmPinCodeBtn').addEventListener('click', function() {
+            const pinCode = document.getElementById('pinCodeInput').value;
+            
+            if (pinCode === '84152') {
+                // Открываем панель администратора
+                pinCodeModal.classList.remove('active');
+                adminPanel.classList.add('active');
+            } else {
+                document.getElementById('pinCodeError').style.display = 'block';
+            }
+        });
+        
+        // Закрытие панели администратора
+        document.getElementById('exitAdminBtn').addEventListener('click', function() {
+            adminPanel.classList.remove('active');
+        });
+        
+        // Отправка сообщения от имени абонента
+        document.getElementById('adminSendMessageBtn').addEventListener('click', function() {
+            const contactId = parseInt(document.getElementById('adminContactSelect').value);
+            const messageText = document.getElementById('adminMessageText').value.trim();
+            
+            if (!messageText) {
+                showNotification('Введите текст сообщения');
+                return;
+            }
+            
+            const messages = JSON.parse(localStorage.getItem('mailMessages'));
+            
+            const newMessage = {
+                text: messageText,
+                date: new Date().toISOString(),
+                sender: 'contact' // Важно: отправитель - контакт, а не пользователь
+            };
+            
+            messages[contactId].push(newMessage);
+            localStorage.setItem('mailMessages', JSON.stringify(messages));
+            
+            // Очищаем поле ввода
+            document.getElementById('adminMessageText').value = '';
+            
+            // Обновляем списки, если они открыты
+            if (currentChatId === contactId) {
+                loadChatMessages(contactId);
+            }
+            
+            loadChatsList();
+            
+            showNotification(`Сообщение отправлено от имени ${contacts[contactId].name}`);
+        });
+        
+        // Установка статуса "был(а) в сети"
+        document.getElementById('adminSetStatusBtn').addEventListener('click', function() {
+            const contactId = parseInt(document.getElementById('adminStatusContactSelect').value);
+            const statusText = document.getElementById('adminStatusText').value.trim();
+            
+            if (!statusText) {
+                showNotification('Введите текст статуса');
+                return;
+            }
+            
+            const statuses = JSON.parse(localStorage.getItem('userStatuses'));
+            statuses[contactId] = statusText;
+            localStorage.setItem('userStatuses', JSON.stringify(statuses));
+            
+            // Обновляем в интерфейсе, если переписка открыта
+            if (currentChatId === contactId) {
+                document.getElementById('chatHeaderStatus').textContent = statusText;
+            }
+            
+            showNotification(`Статус для ${contacts[contactId].name} установлен: ${statusText}`);
+        });
+        
+        // Закрытие модального окна объяснения
+        document.getElementById('closeIgnoreModalBtn').addEventListener('click', function() {
+            document.getElementById('ignoreModal').classList.remove('active');
+        });
+        
+        // Имитация iOS поведения (нажатия) для всех интерактивных элементов
+        const clickableElements = document.querySelectorAll('button, .chat-item, .tariff-option, .support-btn, .menu-item, .toolbar-btn, .recommended-contact, .emoji-btn');
+        clickableElements.forEach(el => {
+            el.addEventListener('touchstart', function() {
+                this.style.opacity = '0.7';
+            });
+            
+            el.addEventListener('touchend', function() {
+                this.style.opacity = '1';
+            });
+            
+            el.addEventListener('touchcancel', function() {
+                this.style.opacity = '1';
+            });
+        });
+        
+        // Загружаем список переписок при загрузке страницы
+        loadChatsList();
+    });
+</script>
 </body>
 </html>
+```Все изменения внесены:
+
+1. Убраны аватарки в панели "Кому бы вы хотели написать?"
+
+· Теперь в сводке отображаются только имена абонентов без иконок
+· Сделано для более чистого и минималистичного интерфейса
+
+2. Добавлена блокировка отправки сообщений Криштиану Роналду
+
+· При любой попытке отправки сообщения Криштиану Роналду появляется про
+                    
