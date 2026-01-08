@@ -75,24 +75,47 @@
             height: 100%;
             transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-origin: center;
+            position: relative;
+            overflow: hidden;
         }
         
         .tab-item.active {
             color: #007aff;
         }
         
-        .tab-item:active {
-            transform: scale(0.85);
+        .tab-item:active .tab-icon {
+            animation: tabBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .tab-item:active::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 122, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            animation: ripple 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes tabBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0;
+            }
         }
         
         .tab-icon {
             font-size: 22px;
             margin-bottom: 4px;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .tab-item:active .tab-icon {
-            transform: scale(1.2);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         /* Контент страниц */
@@ -162,7 +185,95 @@
             line-height: 1.4;
         }
         
-        /* Стили для списка чатов */
+        /* Рекомендуемые абоненты в сводке */
+        .recommended-contacts {
+            background-color: #fff;
+            margin: 12px 16px;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .recommended-contacts h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+        
+        .recommended-contact {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .recommended-contact:active {
+            background-color: #e9ecef;
+            transform: scale(0.98);
+        }
+        
+        .recommended-contact:last-child {
+            margin-bottom: 0;
+        }
+        
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #007aff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+        
+        .contact-name {
+            font-size: 17px;
+            font-weight: 600;
+        }
+        
+        /* Информация о тарифе в сводке */
+        .tariff-summary {
+            background-color: #fff;
+            margin: 12px 16px;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #007aff;
+        }
+        
+        .tariff-summary h2 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #007aff;
+        }
+        
+        .tariff-summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f2f2f7;
+        }
+        
+        .tariff-summary-item:last-child {
+            border-bottom: none;
+        }
+        
+        .tariff-summary-label {
+            color: #8e8e93;
+        }
+        
+        .tariff-summary-value {
+            font-weight: 600;
+        }
+        
+        /* Стили для списка переписок */
         .chats-list {
             background-color: #fff;
             margin: 12px 16px;
@@ -201,23 +312,18 @@
             border-radius: 50%;
         }
         
-        .chat-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+        .chat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
             background-color: #007aff;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 600;
             margin-right: 16px;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .chat-item:active .chat-avatar {
-            transform: scale(1.1);
         }
         
         .chat-info {
@@ -259,7 +365,7 @@
             margin-left: 8px;
         }
         
-        /* Стили для окна чата */
+        /* Стили для окна переписки */
         .chat-window {
             position: fixed;
             top: 0;
@@ -295,16 +401,16 @@
             flex: 1;
         }
         
-        .chat-header-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .chat-header-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
             background-color: #007aff;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             margin-right: 12px;
         }
@@ -527,6 +633,7 @@
             padding: 16px;
             text-align: center;
             font-weight: 600;
+            cursor: pointer;
             transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
@@ -535,7 +642,7 @@
             transform: scale(0.98);
         }
         
-        /* Стили для окна написания письма (улучшенный редактор) */
+        /* Стили для окна написания сообщения (упрощенный редактор) */
         .message-composer {
             position: fixed;
             top: 0;
@@ -575,7 +682,7 @@
             padding: 8px 16px;
             background-color: #f2f2f7;
             border-bottom: 1px solid #c6c6c8;
-            overflow-x: auto;
+            justify-content: flex-end;
         }
         
         .toolbar-btn {
@@ -586,18 +693,13 @@
             color: #007aff;
             cursor: pointer;
             border-radius: 6px;
-            margin-right: 8px;
+            margin-left: 8px;
             transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            white-space: nowrap;
         }
         
         .toolbar-btn:active {
             background-color: rgba(0, 122, 255, 0.1);
             transform: scale(0.95);
-        }
-        
-        .toolbar-btn.active {
-            background-color: rgba(0, 122, 255, 0.2);
         }
         
         .emojis-panel {
@@ -645,6 +747,11 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
         }
         
+        .message-editor::placeholder {
+            color: #8e8e93;
+            font-style: italic;
+        }
+        
         .composer-actions {
             padding: 16px;
             background-color: #f2f2f7;
@@ -656,7 +763,7 @@
         
         .action-btn {
             flex: 1;
-            min-width: calc(50% - 6px);
+            min-width: calc(33.333% - 8px);
             padding: 16px;
             border-radius: 12px;
             border: none;
@@ -679,20 +786,13 @@
         }
         
         .action-btn-secondary {
-            background-color: #fff;
-            color: #007aff;
-            border: 1px solid #c6c6c8;
+            background-color: #5ac8fa;
+            color: white;
         }
         
         .action-btn-danger {
-            background-color: #ff453a;
+            background-color: #ff3b30;
             color: white;
-        }
-        
-        .action-btn-help {
-            background-color: #32d74b;
-            color: white;
-            width: 100%;
         }
         
         .action-btn i {
@@ -739,7 +839,7 @@
             width: 20px;
         }
         
-        /* Модальные окна */
+        /* Модальные окна (iOS стиль) */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -753,7 +853,7 @@
             justify-content: center;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         .modal-overlay.active {
@@ -789,6 +889,16 @@
             color: #8e8e93;
             text-align: center;
             line-height: 1.4;
+        }
+        
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #c6c6c8;
+            font-size: 16px;
+            margin-top: 10px;
+            text-align: center;
         }
         
         .modal-actions {
@@ -908,6 +1018,87 @@
             background-color: white;
         }
         
+        /* Страница семьи */
+        .family-section {
+            background-color: #fff;
+            margin: 12px 16px;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .family-section h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: #007aff;
+        }
+        
+        .family-member {
+            padding: 16px;
+            border-bottom: 1px solid #f2f2f7;
+            display: flex;
+            align-items: center;
+        }
+        
+        .family-member:last-child {
+            border-bottom: none;
+        }
+        
+        .family-member-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: #007aff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+        
+        .family-member-info {
+            flex: 1;
+        }
+        
+        .family-member-name {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .family-member-role {
+            color: #8e8e93;
+            font-size: 14px;
+        }
+        
+        .family-member-status {
+            background-color: #32d74b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .family-info {
+            background-color: #f2f2f7;
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        
+        .family-info p {
+            margin-bottom: 8px;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+        
+        .family-info p:last-child {
+            margin-bottom: 0;
+        }
+        
         /* Анимации */
         .fade-in {
             animation: fadeIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -953,18 +1144,8 @@
         }
         
         /* Улучшенные анимации для всех интерактивных элементов */
-        button, .chat-item, .tariff-option, .support-btn, .menu-item, .toolbar-btn {
+        button, .chat-item, .tariff-option, .support-btn, .menu-item, .toolbar-btn, .recommended-contact {
             -webkit-tap-highlight-color: transparent;
-        }
-        
-        /* Анимация легкого отскока для всех нажатий */
-        @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(0.95); }
-        }
-        
-        .bounce:active {
-            animation: bounce 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
     </style>
 </head>
@@ -979,6 +1160,38 @@
         <div class="header">
             <h1>Сводка</h1>
             <p>Новости и обновления</p>
+        </div>
+        
+        <div class="recommended-contacts">
+            <h2>Кому бы вы хотели написать?</h2>
+            <div class="recommended-contact" data-contact="1">
+                <div class="contact-icon">КР</div>
+                <div class="contact-name">Криштиану Роналду Душ Сантуш Авейру</div>
+            </div>
+            <div class="recommended-contact" data-contact="2">
+                <div class="contact-icon">ДР</div>
+                <div class="contact-name">Джорджина Родригес</div>
+            </div>
+            <div class="recommended-contact" data-contact="3">
+                <div class="contact-icon">КМ</div>
+                <div class="contact-name">Криштиану-младший Роналду Душ Сантуш Авейру</div>
+            </div>
+        </div>
+        
+        <div class="tariff-summary">
+            <h2>Ваш тариф</h2>
+            <div class="tariff-summary-item">
+                <div class="tariff-summary-label">Текущий тариф</div>
+                <div class="tariff-summary-value">Единый</div>
+            </div>
+            <div class="tariff-summary-item">
+                <div class="tariff-summary-label">Статус</div>
+                <div class="tariff-summary-value">Активен</div>
+            </div>
+            <div class="tariff-summary-item">
+                <div class="tariff-summary-label">Действует до</div>
+                <div class="tariff-summary-value">21 ноября 2027</div>
+            </div>
         </div>
         
         <div class="news-feed">
@@ -1002,15 +1215,15 @@
         </div>
     </div>
     
-    <!-- Страница чатов -->
+    <!-- Страница переписок -->
     <div id="chatsPage" class="page">
         <div class="header">
-            <h1>Чаты</h1>
-            <p>Ваши переписки</p>
+            <h1>Переписки</h1>
+            <p>Ваши сообщения</p>
         </div>
         
         <div class="chats-list" id="chatsList">
-            <!-- Чаты будут загружены динамически -->
+            <!-- Переписки будут загружены динамически -->
         </div>
     </div>
     
@@ -1037,51 +1250,85 @@
         
         <div class="other-tariffs">
             <h2>Другие тарифы</h2>
-            <div class="tariff-option">
+            <div class="tariff-option" data-tariff="basic">
                 <div class="tariff-option-name">Базовый</div>
                 <div class="tariff-option-price">499 ₽/мес</div>
             </div>
-            <div class="tariff-option">
+            <div class="tariff-option" data-tariff="extended">
                 <div class="tariff-option-name">Расширенный</div>
                 <div class="tariff-option-price">899 ₽/мес</div>
             </div>
-            <div class="tariff-option">
+            <div class="tariff-option" data-tariff="business">
                 <div class="tariff-option-name">Бизнес</div>
                 <div class="tariff-option-price">1 499 ₽/мес</div>
             </div>
-            <div class="tariff-option">
+            <div class="tariff-option" data-tariff="premium">
                 <div class="tariff-option-name">Премиум</div>
                 <div class="tariff-option-price">2 499 ₽/мес</div>
             </div>
         </div>
         
         <div class="support-actions">
-            <div class="support-btn">
+            <div class="support-btn" id="changeTariffBtn">
                 <i class="fas fa-exchange-alt"></i> Сменить тариф
             </div>
-            <div class="support-btn">
+            <div class="support-btn" id="callSupportBtn">
                 <i class="fas fa-phone"></i> Позвонить в поддержку
             </div>
         </div>
         
         <div class="support-actions">
-            <div class="support-btn">
+            <div class="support-btn" id="faqBtn">
                 <i class="fas fa-question-circle"></i> FAQ
             </div>
-            <div class="support-btn">
+            <div class="support-btn" id="documentsBtn">
                 <i class="fas fa-file-contract"></i> Документы
             </div>
         </div>
     </div>
     
-    <!-- Окно чата -->
+    <!-- Страница семьи -->
+    <div id="familyPage" class="page">
+        <div class="header">
+            <h1>Семья</h1>
+            <p>Управление семейным доступом</p>
+        </div>
+        
+        <div class="family-section">
+            <h2>Привязанные члены семьи</h2>
+            <div class="family-member">
+                <div class="family-member-icon">ПЛ</div>
+                <div class="family-member-info">
+                    <div class="family-member-name">Плехов Лев Александрович</div>
+                    <div class="family-member-role">Тариф оплачивает Плехов Лев Александрович</div>
+                </div>
+                <div class="family-member-status">Активен</div>
+            </div>
+            <div class="family-member">
+                <div class="family-member-icon">ПО</div>
+                <div class="family-member-info">
+                    <div class="family-member-name">Плехова Ольга Ивановна</div>
+                    <div class="family-member-role">Владелец аккаунта</div>
+                </div>
+                <div class="family-member-status">Вы</div>
+            </div>
+        </div>
+        
+        <div class="family-info">
+            <p>Плехов Лев Александрович является личным менеджером Плеховой Ольги Ивановны.</p>
+            <p>Он отвечает за оплату тарифа и управление услугами Международной почты для вашей семьи.</p>
+            <p>Все письма и переписки доступны обоим членам семьи для просмотра и управления.</p>
+        </div>
+    </div>
+    
+    <!-- Окно переписки -->
     <div id="chatWindow" class="chat-window">
         <div class="chat-header">
             <button class="btn-back" id="backFromChat">
                 <i class="fas fa-chevron-left"></i>
             </button>
             <div class="chat-header-info">
-                <div class="chat-header-avatar" id="chatHeaderAvatar">ПЛ</div>
+                <div class="chat-header-icon" id="chatHeaderIcon">ПЛ</div>
                 <div>
                     <div class="chat-header-name" id="chatHeaderName">Плехов Лев Александрович</div>
                     <div class="chat-header-status" id="chatHeaderStatus">был(а) в сети 5 минут назад</div>
@@ -1101,23 +1348,18 @@
         </div>
     </div>
     
-    <!-- Окно написания письма (продвинутый редактор) -->
+    <!-- Окно написания сообщения (упрощенный редактор) -->
     <div id="messageComposer" class="message-composer">
         <div class="composer-header">
             <button class="btn-back" id="backFromComposer">
                 <i class="fas fa-chevron-left"></i>
             </button>
-            <h2 id="composerTitle">Новое письмо</h2>
+            <h2 id="composerTitle">Новое сообщение</h2>
             <div style="width: 44px;"></div>
         </div>
         
         <div class="composer-toolbar">
-            <button class="toolbar-btn" id="boldBtn" title="Жирный"><b>B</b></button>
-            <button class="toolbar-btn" id="italicBtn" title="Курсив"><i>I</i></button>
-            <button class="toolbar-btn" id="underlineBtn" title="Подчеркнутый"><u>U</u></button>
             <button class="toolbar-btn" id="emojisBtn" title="Смайлы">😊</button>
-            <button class="toolbar-btn" id="spellCheckBtn" title="Проверка орфографии"><i class="fas fa-spell-check"></i></button>
-            <button class="toolbar-btn" id="helpBtn" title="Советы по написанию"><i class="fas fa-lightbulb"></i></button>
         </div>
         
         <div class="emojis-panel" id="emojisPanel">
@@ -1138,21 +1380,18 @@
                 Кому: <span id="recipientName">Плехов Лев Александрович</span>
             </div>
             
-            <textarea class="message-editor" id="messageEditor" placeholder="Начните писать ваше письмо здесь..."></textarea>
+            <textarea class="message-editor" id="messageEditor" placeholder="Коснитесь здесь, чтобы начать ввод сообщения"></textarea>
         </div>
         
         <div class="composer-actions">
-            <button class="action-btn action-btn-help" id="aiHelpBtn">
-                <i class="fas fa-robot"></i> Я могу помочь!
+            <button class="action-btn action-btn-secondary" id="scheduleBtn">
+                <i class="fas fa-clock"></i> Отправить позже
             </button>
             <button class="action-btn action-btn-primary" id="sendMessageBtn">
-                <i class="fas fa-paper-plane"></i> Отправить!
+                <i class="fas fa-paper-plane"></i> Отправить
             </button>
-            <button class="action-btn action-btn-secondary" id="scheduleBtn">
-                <i class="fas fa-calendar-alt"></i> Запланировать отправку
-            </button>
-            <button class="action-btn action-btn-danger" id="deleteDraftBtn">
-                <i class="fas fa-trash"></i> Удалить
+            <button class="action-btn action-btn-danger" id="cancelMessageBtn">
+                <i class="fas fa-times"></i> Отмена
             </button>
         </div>
     </div>
@@ -1162,10 +1401,10 @@
         <div class="modal">
             <div class="modal-header">Запланировать отправку</div>
             <div class="modal-content">
-                <p>Выберите дату и время для отправки письма</p>
+                <p>Выберите дату и время для отправки сообщения</p>
                 <div class="schedule-picker">
                     <input type="datetime-local" id="scheduleDateTime" min="2026-01-05T00:00" value="2026-01-05T14:30">
-                    <p style="font-size: 14px; color: #8e8e93; margin-top: 8px;">Письмо будет отправлено автоматически в указанное время.</p>
+                    <p style="font-size: 14px; color: #8e8e93; margin-top: 8px;">Сообщение будет отправлено автоматически в указанное время.</p>
                 </div>
             </div>
             <div class="modal-actions">
@@ -1178,9 +1417,9 @@
     <!-- Модальное окно подтверждения удаления -->
     <div class="modal-overlay" id="deleteModal">
         <div class="modal">
-            <div class="modal-header">Удалить письмо</div>
+            <div class="modal-header">Удалить сообщение</div>
             <div class="modal-content">
-                <p>Вы уверены, что хотите удалить это письмо? Это действие нельзя отменить.</p>
+                <p>Вы уверены, что хотите удалить это сообщение? Это действие нельзя отменить.</p>
             </div>
             <div class="modal-actions">
                 <button class="modal-btn" id="cancelDeleteBtn">Отмена</button>
@@ -1199,6 +1438,38 @@
             </div>
             <div class="modal-actions">
                 <button class="modal-btn modal-btn-primary" id="closeIgnoreModalBtn">Понятно</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для смены тарифа -->
+    <div class="modal-overlay" id="changeTariffModal">
+        <div class="modal">
+            <div class="modal-header">Смена тарифа</div>
+            <div class="modal-content">
+                <p>Вы действительно хотите сменить тарифный план?</p>
+                <p id="selectedTariffInfo" style="margin-top: 10px; font-weight: 600;"></p>
+                <p style="font-size: 14px; color: #ff3b30; margin-top: 10px;">Внимание: смена тарифа вступит в силу с начала следующего расчетного периода.</p>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn" id="cancelChangeTariffBtn">Отмена</button>
+                <button class="modal-btn modal-btn-primary" id="confirmChangeTariffBtn">Сменить тариф</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно ввода пин-кода -->
+    <div class="modal-overlay" id="pinCodeModal">
+        <div class="modal">
+            <div class="modal-header">Введите пин-код</div>
+            <div class="modal-content">
+                <p>Для доступа к панели администратора введите пин-код:</p>
+                <input type="password" class="modal-input" id="pinCodeInput" maxlength="5" placeholder="Введите 5 цифр">
+                <p id="pinCodeError" style="color: #ff3b30; font-size: 14px; margin-top: 10px; display: none;">Неверный пин-код</p>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn" id="cancelPinCodeBtn">Отмена</button>
+                <button class="modal-btn modal-btn-primary" id="confirmPinCodeBtn">Подтвердить</button>
             </div>
         </div>
     </div>
@@ -1236,19 +1507,7 @@
             </div>
             
             <div class="admin-section">
-                <h3>Изменить аватарку абонента</h3>
-                <select class="admin-select" id="adminAvatarContactSelect">
-                    <option value="0">Плехов Лев Александрович</option>
-                    <option value="1">Криштиану Роналду Душ Сантуш Авейру</option>
-                    <option value="2">Джорджина Родригес</option>
-                    <option value="3">Криштиану-младший Роналду Душ Сантуш Авейру</option>
-                </select>
-                <input class="admin-input" id="adminAvatarColor" type="color" value="#007aff">
-                <button class="admin-btn" id="adminSetAvatarBtn">Установить цвет аватарки</button>
-            </div>
-            
-            <div class="admin-section">
-                <button class="admin-btn" id="exitAdminBtn" style="background-color: #ff453a;">Выйти из панели администратора</button>
+                <button class="admin-btn" id="exitAdminBtn" style="background-color: #ff3b30;">Выйти из панели администратора</button>
             </div>
         </div>
     </div>
@@ -1261,7 +1520,11 @@
         </a>
         <a href="#" class="tab-item" data-tab="chatsPage">
             <div class="tab-icon"><i class="fas fa-comments"></i></div>
-            <div>Чаты</div>
+            <div>Переписки</div>
+        </a>
+        <a href="#" class="tab-item" data-tab="familyPage">
+            <div class="tab-icon"><i class="fas fa-users"></i></div>
+            <div>Семья</div>
         </a>
         <a href="#" class="tab-item" data-tab="tariffPage" id="tariffTab">
             <div class="tab-icon"><i class="fas fa-credit-card"></i></div>
@@ -1310,15 +1573,15 @@
                 localStorage.setItem('userStatuses', JSON.stringify(initialStatuses));
             }
             
-            // Инициализация цветов аватарок
-            if (!localStorage.getItem('avatarColors')) {
+            // Инициализация цветов иконок
+            if (!localStorage.getItem('iconColors')) {
                 const initialColors = {
                     '0': '#007aff',
                     '1': '#32d74b',
                     '2': '#ff453a',
                     '3': '#ff9f0a'
                 };
-                localStorage.setItem('avatarColors', JSON.stringify(initialColors));
+                localStorage.setItem('iconColors', JSON.stringify(initialColors));
             }
             
             // Инициализация игнорируемых пользователей
@@ -1374,7 +1637,7 @@
                         if (page.id === targetTab) {
                             page.classList.add('active');
                             
-                            // При открытии страницы чатов обновить список
+                            // При открытии страницы переписок обновить список
                             if (targetTab === 'chatsPage') {
                                 loadChatsList();
                             }
@@ -1383,16 +1646,16 @@
                 });
             });
             
-            // Загрузка списка чатов
+            // Загрузка списка переписок
             function loadChatsList() {
                 const chatsList = document.getElementById('chatsList');
                 chatsList.innerHTML = '';
                 
                 const messages = JSON.parse(localStorage.getItem('mailMessages'));
                 const pinnedChats = JSON.parse(localStorage.getItem('pinnedChats'));
-                const avatarColors = JSON.parse(localStorage.getItem('avatarColors'));
+                const iconColors = JSON.parse(localStorage.getItem('iconColors'));
                 
-                // Сначала отображаем закрепленные чаты
+                // Сначала отображаем закрепленные переписки
                 pinnedChats.forEach(contactId => {
                     const contact = contacts[contactId];
                     const contactMessages = messages[contactId];
@@ -1409,7 +1672,7 @@
                     const lastMessageTime = lastMessage ? formatMessageTime(lastMessage.date) : '';
                     
                     chatItem.innerHTML = `
-                        <div class="chat-avatar" style="background-color: ${avatarColors[contactId] || '#007aff'}">${contact.initials}</div>
+                        <div class="chat-icon" style="background-color: ${iconColors[contactId] || '#007aff'}">${contact.initials}</div>
                         <div class="chat-info">
                             <div class="chat-name">${contact.name}</div>
                             <div class="chat-last-message">${lastMessageText}</div>
@@ -1420,9 +1683,9 @@
                     chatsList.appendChild(chatItem);
                 });
                 
-                // Затем отображаем незакрепленные чаты
+                // Затем отображаем незакрепленные переписки
                 contacts.forEach((contact, index) => {
-                    if (pinnedChats.includes(index)) return; // Пропускаем уже добавленные закрепленные чаты
+                    if (pinnedChats.includes(index)) return; // Пропускаем уже добавленные закрепленные переписки
                     
                     const contactMessages = messages[index];
                     const lastMessage = contactMessages.length > 0 ? contactMessages[contactMessages.length - 1] : null;
@@ -1438,7 +1701,7 @@
                     const lastMessageTime = lastMessage ? formatMessageTime(lastMessage.date) : '';
                     
                     chatItem.innerHTML = `
-                        <div class="chat-avatar" style="background-color: ${avatarColors[index] || '#007aff'}">${contact.initials}</div>
+                        <div class="chat-icon" style="background-color: ${iconColors[index] || '#007aff'}">${contact.initials}</div>
                         <div class="chat-info">
                             <div class="chat-name">${contact.name}</div>
                             <div class="chat-last-message">${lastMessageText}</div>
@@ -1449,7 +1712,7 @@
                     chatsList.appendChild(chatItem);
                 });
                 
-                // Добавляем обработчики для чатов
+                // Добавляем обработчики для переписок
                 document.querySelectorAll('.chat-item').forEach(item => {
                     item.addEventListener('click', openChat);
                     
@@ -1471,6 +1734,14 @@
                 });
             }
             
+            // Обработчики для рекомендуемых контактов в сводке
+            document.querySelectorAll('.recommended-contact').forEach(contact => {
+                contact.addEventListener('click', function() {
+                    const contactId = parseInt(this.getAttribute('data-contact'));
+                    openComposer(contactId);
+                });
+            });
+            
             // Форматирование времени для сообщений
             function formatMessageTime(dateString) {
                 const date = new Date(dateString);
@@ -1491,7 +1762,7 @@
                 }
             }
             
-            // Открытие чата
+            // Открытие переписки
             let currentChatId = null;
             const chatWindow = document.getElementById('chatWindow');
             const backFromChatBtn = document.getElementById('backFromChat');
@@ -1501,10 +1772,10 @@
                 currentChatId = contactId;
                 const contact = contacts[contactId];
                 
-                // Заполнение заголовка чата
-                const avatarColors = JSON.parse(localStorage.getItem('avatarColors'));
-                document.getElementById('chatHeaderAvatar').textContent = contact.initials;
-                document.getElementById('chatHeaderAvatar').style.backgroundColor = avatarColors[contactId] || '#007aff';
+                // Заполнение заголовка переписки
+                const iconColors = JSON.parse(localStorage.getItem('iconColors'));
+                document.getElementById('chatHeaderIcon').textContent = contact.initials;
+                document.getElementById('chatHeaderIcon').style.backgroundColor = iconColors[contactId] || '#007aff';
                 document.getElementById('chatHeaderName').textContent = contact.name;
                 
                 // Загрузка статуса "был(а) в сети"
@@ -1514,17 +1785,17 @@
                 // Загрузка сообщений
                 loadChatMessages(contactId);
                 
-                // Показать окно чата
+                // Показать окно переписки
                 chatWindow.classList.add('active');
             }
             
-            // Кнопка "Назад" в чате
+            // Кнопка "Назад" в переписке
             backFromChatBtn.addEventListener('click', function() {
                 chatWindow.classList.remove('active');
                 currentChatId = null;
             });
             
-            // Загрузка сообщений в чат
+            // Загрузка сообщений в переписку
             function loadChatMessages(contactId) {
                 const chatMessages = document.getElementById('chatMessages');
                 chatMessages.innerHTML = '';
@@ -1562,7 +1833,7 @@
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
             
-            // Контекстное меню для чатов
+            // Контекстное меню для переписок
             function showContextMenu(e, contactId) {
                 // Удаляем существующее меню, если есть
                 const existingMenu = document.querySelector('.context-menu');
@@ -1586,7 +1857,7 @@
                 menu.innerHTML = `
                     <div class="menu-item" id="pinChatItem">
                         <i class="fas fa-thumbtack"></i>
-                        ${isPinned ? 'Открепить чат' : 'Закрепить чат'}
+                        ${isPinned ? 'Открепить переписку' : 'Закрепить переписку'}
                     </div>
                     <div class="menu-item" id="muteChatItem">
                         <i class="fas fa-bell${isMuted ? '-slash' : ''}"></i>
@@ -1636,9 +1907,7 @@
                 });
                 
                 document.getElementById('clearChatItem').addEventListener('click', function() {
-                    if (confirm('Вы уверены, что хотите очистить историю переписки? Это действие нельзя отменить.')) {
-                        clearChatHistory(contactId);
-                    }
+                    showDeleteConfirmation(contactId);
                     menu.remove();
                 });
                 
@@ -1698,6 +1967,20 @@
                 localStorage.setItem('ignoredUsers', JSON.stringify(ignoredUsers));
             }
             
+            function showDeleteConfirmation(contactId) {
+                document.getElementById('deleteModal').classList.add('active');
+                
+                // Устанавливаем обработчики для модального окна удаления
+                document.getElementById('cancelDeleteBtn').onclick = function() {
+                    document.getElementById('deleteModal').classList.remove('active');
+                };
+                
+                document.getElementById('confirmDeleteBtn').onclick = function() {
+                    clearChatHistory(contactId);
+                    document.getElementById('deleteModal').classList.remove('active');
+                };
+            }
+            
             function clearChatHistory(contactId) {
                 const messages = JSON.parse(localStorage.getItem('mailMessages'));
                 messages[contactId] = [];
@@ -1710,7 +1993,7 @@
                 loadChatsList();
             }
             
-            // Открытие окна написания письма из чата
+            // Открытие окна написания сообщения из переписки
             const writeMessageFromChatBtn = document.getElementById('writeMessageFromChatBtn');
             const messageComposer = document.getElementById('messageComposer');
             const backFromComposerBtn = document.getElementById('backFromComposer');
@@ -1721,17 +2004,16 @@
                 openComposer(currentChatId);
             });
             
-            // Открытие окна написания письма
+            // Открытие окна написания сообщения
             function openComposer(contactId) {
                 const contact = contacts[contactId];
                 
                 // Установка получателя
                 document.getElementById('recipientName').textContent = contact.name;
-                document.getElementById('composerTitle').textContent = `Письмо для ${contact.name.split(' ')[0]}`;
+                document.getElementById('composerTitle').textContent = `Сообщение для ${contact.name.split(' ')[0]}`;
                 
                 // Сброс состояния редактора
                 document.getElementById('messageEditor').value = '';
-                document.querySelectorAll('.toolbar-btn').forEach(btn => btn.classList.remove('active'));
                 document.getElementById('emojisPanel').classList.remove('active');
                 
                 // Сохраняем текущий контакт для отправки
@@ -1741,7 +2023,7 @@
                 messageComposer.classList.add('active');
             }
             
-            // Кнопка "Назад" в окне написания письма
+            // Кнопка "Назад" в окне написания сообщения
             backFromComposerBtn.addEventListener('click', function() {
                 messageComposer.classList.remove('active');
             });
@@ -1752,7 +2034,6 @@
             
             emojisBtn.addEventListener('click', function() {
                 emojisPanel.classList.toggle('active');
-                this.classList.toggle('active');
             });
             
             // Вставка смайла в текст
@@ -1770,73 +2051,9 @@
                 });
             });
             
-            // Кнопки форматирования текста
-            const boldBtn = document.getElementById('boldBtn');
-            const italicBtn = document.getElementById('italicBtn');
-            const underlineBtn = document.getElementById('underlineBtn');
-            
-            function wrapText(tag) {
-                const editor = document.getElementById('messageEditor');
-                const start = editor.selectionStart;
-                const end = editor.selectionEnd;
-                const selectedText = editor.value.substring(start, end);
-                
-                let wrapStart, wrapEnd;
-                
-                switch(tag) {
-                    case 'bold':
-                        wrapStart = '<b>';
-                        wrapEnd = '</b>';
-                        break;
-                    case 'italic':
-                        wrapStart = '<i>';
-                        wrapEnd = '</i>';
-                        break;
-                    case 'underline':
-                        wrapStart = '<u>';
-                        wrapEnd = '</u>';
-                        break;
-                    default:
-                        return;
-                }
-                
-                const newText = editor.value.substring(0, start) + wrapStart + selectedText + wrapEnd + editor.value.substring(end);
-                editor.value = newText;
-                
-                // Возвращаем фокус и выделение
-                editor.focus();
-                editor.selectionStart = start + wrapStart.length;
-                editor.selectionEnd = end + wrapStart.length;
-            }
-            
-            boldBtn.addEventListener('click', () => wrapText('bold'));
-            italicBtn.addEventListener('click', () => wrapText('italic'));
-            underlineBtn.addEventListener('click', () => wrapText('underline'));
-            
-            // Кнопка проверки орфографии
-            document.getElementById('spellCheckBtn').addEventListener('click', function() {
-                this.classList.toggle('active');
-                alert('Менеджер орфографии активирован. Ошибки будут подчеркнуты красным.');
-            });
-            
-            // Кнопка помощи
-            document.getElementById('helpBtn').addEventListener('click', function() {
-                this.classList.toggle('active');
-                alert('Менеджер письма активирован. Подсказки по улучшению текста будут показаны справа.');
-            });
-            
-            // Кнопка "Я могу помочь!"
-            document.getElementById('aiHelpBtn').addEventListener('click', function() {
-                const suggestions = [
-                    "Попробуйте начать письмо с приветствия.",
-                    "Убедитесь, что указали тему письма.",
-                    "Проверьте, правильно ли указан получатель.",
-                    "Добавьте подпись в конце письма.",
-                    "Перечитайте письмо перед отправкой."
-                ];
-                
-                const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
-                alert(`Совет: ${randomSuggestion}`);
+            // Кнопка "Отмена" в окне написания
+            document.getElementById('cancelMessageBtn').addEventListener('click', function() {
+                messageComposer.classList.remove('active');
             });
             
             // Планирование отправки
@@ -1860,30 +2077,10 @@
                 scheduledDateTime = new Date(dateTimeInput);
                 
                 // Обновляем текст кнопки
-                scheduleBtn.innerHTML = `<i class="fas fa-calendar-alt"></i> Запланировано на ${scheduledDateTime.toLocaleDateString('ru-RU')}`;
+                scheduleBtn.innerHTML = `<i class="fas fa-clock"></i> Запланировано`;
                 
                 scheduleModal.classList.remove('active');
-                alert(`Письмо запланировано на отправку ${scheduledDateTime.toLocaleString('ru-RU')}`);
-            });
-            
-            // Удаление черновика
-            const deleteDraftBtn = document.getElementById('deleteDraftBtn');
-            const deleteModal = document.getElementById('deleteModal');
-            const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
-            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-            
-            deleteDraftBtn.addEventListener('click', function() {
-                deleteModal.classList.add('active');
-            });
-            
-            cancelDeleteBtn.addEventListener('click', function() {
-                deleteModal.classList.remove('active');
-            });
-            
-            confirmDeleteBtn.addEventListener('click', function() {
-                document.getElementById('messageEditor').value = '';
-                deleteModal.classList.remove('active');
-                alert('Черновик удален');
+                showNotification(`Сообщение запланировано на отправку ${scheduledDateTime.toLocaleString('ru-RU')}`);
             });
             
             // Отправка сообщения
@@ -1896,7 +2093,7 @@
                 const messageText = document.getElementById('messageEditor').value.trim();
                 
                 if (!messageText) {
-                    alert('Введите текст письма');
+                    showNotification('Введите текст сообщения');
                     return;
                 }
                 
@@ -1914,21 +2111,22 @@
                 
                 // Сброс планировщика
                 scheduledDateTime = null;
-                scheduleBtn.innerHTML = `<i class="fas fa-calendar-alt"></i> Запланировать отправку`;
+                scheduleBtn.innerHTML = `<i class="fas fa-clock"></i> Отправить позже`;
                 
-                // Закрытие окна написания и возврат к чату
+                // Закрытие окна написания и возврат к переписке
                 messageComposer.classList.remove('active');
                 
-                // Обновление чата, если он открыт
+                // Обновление переписки, если она открыта
                 if (currentChatId === contactId) {
                     loadChatMessages(contactId);
                 }
                 
-                // Обновление списка чатов
+                // Обновление списка переписок
                 loadChatsList();
                 
                 // Показать уведомление об отправке
-                showNotification('Письмо успешно отправлено');
+                const sendTime = scheduledDateTime ? 'запланировано' : 'отправлено';
+                showNotification(`Сообщение успешно ${sendTime}`);
             });
             
             // Функция показа уведомления
@@ -1959,10 +2157,51 @@
                 }, 3000);
             }
             
+            // Кнопки на странице тарифа
+            document.getElementById('changeTariffBtn').addEventListener('click', function() {
+                showNotification('Выберите тариф из списка для смены');
+            });
+            
+            document.getElementById('callSupportBtn').addEventListener('click', function() {
+                showNotification('Имитация звонка в поддержку...');
+            });
+            
+            document.getElementById('faqBtn').addEventListener('click', function() {
+                showNotification('Открытие раздела FAQ...');
+            });
+            
+            document.getElementById('documentsBtn').addEventListener('click', function() {
+                showNotification('Открытие документов...');
+            });
+            
+            // Обработчики для выбора тарифа
+            document.querySelectorAll('.tariff-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const tariff = this.getAttribute('data-tariff');
+                    const tariffName = this.querySelector('.tariff-option-name').textContent;
+                    const tariffPrice = this.querySelector('.tariff-option-price').textContent;
+                    
+                    // Показываем модальное окно подтверждения смены тарифа
+                    document.getElementById('selectedTariffInfo').textContent = `${tariffName} - ${tariffPrice}`;
+                    document.getElementById('changeTariffModal').classList.add('active');
+                    
+                    // Устанавливаем обработчики для модального окна
+                    document.getElementById('cancelChangeTariffBtn').onclick = function() {
+                        document.getElementById('changeTariffModal').classList.remove('active');
+                    };
+                    
+                    document.getElementById('confirmChangeTariffBtn').onclick = function() {
+                        showNotification(`Тариф успешно изменен на "${tariffName}"`);
+                        document.getElementById('changeTariffModal').classList.remove('active');
+                    };
+                });
+            });
+            
             // Секретное меню администратора
             const adminPanel = document.getElementById('adminPanel');
             let tariffClickCount = 0;
             let lastTariffClickTime = 0;
+            const pinCodeModal = document.getElementById('pinCodeModal');
             
             document.getElementById('tariffTab').addEventListener('click', function() {
                 const now = Date.now();
@@ -1979,15 +2218,27 @@
                 if (tariffClickCount === 10) {
                     tariffClickCount = 0;
                     
-                    // Запрашиваем пин-код
-                    const pinCode = prompt('Введите пин-код для доступа к панели администратора:');
-                    
-                    if (pinCode === '84152') {
-                        // Открываем панель администратора
-                        adminPanel.classList.add('active');
-                    } else {
-                        alert('Неверный пин-код');
-                    }
+                    // Показываем модальное окно ввода пин-кода
+                    pinCodeModal.classList.add('active');
+                    document.getElementById('pinCodeInput').value = '';
+                    document.getElementById('pinCodeError').style.display = 'none';
+                }
+            });
+            
+            // Обработчики для модального окна ввода пин-кода
+            document.getElementById('cancelPinCodeBtn').addEventListener('click', function() {
+                pinCodeModal.classList.remove('active');
+            });
+            
+            document.getElementById('confirmPinCodeBtn').addEventListener('click', function() {
+                const pinCode = document.getElementById('pinCodeInput').value;
+                
+                if (pinCode === '84152') {
+                    // Открываем панель администратора
+                    pinCodeModal.classList.remove('active');
+                    adminPanel.classList.add('active');
+                } else {
+                    document.getElementById('pinCodeError').style.display = 'block';
                 }
             });
             
@@ -2002,7 +2253,7 @@
                 const messageText = document.getElementById('adminMessageText').value.trim();
                 
                 if (!messageText) {
-                    alert('Введите текст сообщения');
+                    showNotification('Введите текст сообщения');
                     return;
                 }
                 
@@ -2027,7 +2278,7 @@
                 
                 loadChatsList();
                 
-                alert(`Сообщение отправлено от имени ${contacts[contactId].name}`);
+                showNotification(`Сообщение отправлено от имени ${contacts[contactId].name}`);
             });
             
             // Установка статуса "был(а) в сети"
@@ -2036,7 +2287,7 @@
                 const statusText = document.getElementById('adminStatusText').value.trim();
                 
                 if (!statusText) {
-                    alert('Введите текст статуса');
+                    showNotification('Введите текст статуса');
                     return;
                 }
                 
@@ -2044,32 +2295,12 @@
                 statuses[contactId] = statusText;
                 localStorage.setItem('userStatuses', JSON.stringify(statuses));
                 
-                // Обновляем в интерфейсе, если чат открыт
+                // Обновляем в интерфейсе, если переписка открыта
                 if (currentChatId === contactId) {
                     document.getElementById('chatHeaderStatus').textContent = statusText;
                 }
                 
-                alert(`Статус для ${contacts[contactId].name} установлен: ${statusText}`);
-            });
-            
-            // Установка цвета аватарки
-            document.getElementById('adminSetAvatarBtn').addEventListener('click', function() {
-                const contactId = parseInt(document.getElementById('adminAvatarContactSelect').value);
-                const color = document.getElementById('adminAvatarColor').value;
-                
-                const avatarColors = JSON.parse(localStorage.getItem('avatarColors'));
-                avatarColors[contactId] = color;
-                localStorage.setItem('avatarColors', JSON.stringify(avatarColors));
-                
-                // Обновляем в интерфейсе
-                loadChatsList();
-                
-                // Если чат открыт, обновляем аватар в заголовке
-                if (currentChatId === contactId) {
-                    document.getElementById('chatHeaderAvatar').style.backgroundColor = color;
-                }
-                
-                alert(`Цвет аватарки для ${contacts[contactId].name} изменен`);
+                showNotification(`Статус для ${contacts[contactId].name} установлен: ${statusText}`);
             });
             
             // Закрытие модального окна объяснения
@@ -2078,7 +2309,7 @@
             });
             
             // Имитация iOS поведения (нажатия) для всех интерактивных элементов
-            const clickableElements = document.querySelectorAll('button, .chat-item, .tariff-option, .support-btn, .menu-item, .toolbar-btn, .emoji-btn');
+            const clickableElements = document.querySelectorAll('button, .chat-item, .tariff-option, .support-btn, .menu-item, .toolbar-btn, .recommended-contact, .emoji-btn');
             clickableElements.forEach(el => {
                 el.addEventListener('touchstart', function() {
                     this.style.opacity = '0.7';
@@ -2093,7 +2324,7 @@
                 });
             });
             
-            // Загружаем список чатов при загрузке страницы
+            // Загружаем список переписок при загрузке страницы
             loadChatsList();
         });
     </script>
