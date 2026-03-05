@@ -2,2266 +2,497 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Международная почта</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>newpos :: старший менеджер плехов лев</title>
     <style>
+        /* тотальный бело-серый, никаких украшений, никаких эмодзи, минимум контраста */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+            font-family: 'Segoe UI', 'Arial', 'Helvetica', sans-serif;
         }
-        
+
         body {
-            background-color: #f2f2f7;
-            color: #000;
-            max-width: 500px;
-            margin: 0 auto;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .status-bar {
-            background-color: #fff;
-            height: 44px;
+            background: #969696; 
+            padding: 6px;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 0 16px;
-            font-size: 17px;
-            font-weight: 600;
-            color: #000;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid #c6c6c8;
+            min-height: 100vh;
         }
-        
-        .status-bar .time {
-            font-weight: 700;
-        }
-        
-        .tab-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 83px;
-            background-color: #fff;
-            border-top: 1px solid #c6c6c8;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding-bottom: 20px;
-            z-index: 1000;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        
-        .tab-item {
+
+        /* главный контейнер - всё серое и плоское */
+        .terminal {
+            width: 1480px;
+            max-width: 100%;
+            height: 960px;
+            max-height: 98vh;
+            background: #b0b0b0;  /* серый бетон */
+            border: 2px solid #6f6f6f;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #8e8e93;
-            text-decoration: none;
-            font-size: 12px;
-            flex: 1;
-            height: 100%;
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-origin: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .tab-item.active {
-            color: #007aff;
-        }
-        
-        .tab-item:active .tab-icon {
-            animation: tabBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .tab-item:active::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 60px;
-            height: 60px;
-            background: rgba(0, 122, 255, 0.1);
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            animation: ripple 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        @keyframes tabBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-        
-        @keyframes ripple {
-            to {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0;
-            }
-        }
-        
-        .tab-icon {
-            font-size: 22px;
-            margin-bottom: 4px;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .page {
-            display: none;
-            height: calc(100vh - 44px - 83px);
-            overflow-y: auto;
-            background-color: #f2f2f7;
-            padding-bottom: 20px;
-        }
-        
-        .page.active {
-            display: block;
-        }
-        
-        .header {
-            background-color: #fff;
-            padding: 16px;
-            margin-bottom: 12px;
-            border-bottom: 1px solid #c6c6c8;
-        }
-        
-        .header h1 {
-            font-size: 34px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        
-        .header p {
-            color: #8e8e93;
-            font-size: 16px;
-        }
-        
-        .news-feed {
-            background-color: #fff;
-            margin: 12px 16px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .news-item {
-            padding: 16px;
-            border-bottom: 1px solid #f2f2f7;
-        }
-        
-        .news-item:last-child {
-            border-bottom: none;
-        }
-        
-        .news-date {
-            font-size: 14px;
-            color: #8e8e93;
-            margin-bottom: 8px;
-        }
-        
-        .news-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #007aff;
-        }
-        
-        .news-content {
-            font-size: 16px;
-            line-height: 1.4;
-        }
-        
-        .recommended-contacts {
-            background-color: #fff;
-            margin: 12px 16px;
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .recommended-contacts h2 {
-            font-size: 20px;
-            margin-bottom: 16px;
-        }
-        
-        .recommended-contact {
-            display: flex;
-            align-items: center;
-            padding: 16px;
-            border-radius: 10px;
-            background-color: #f8f9fa;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .recommended-contact:active {
-            background-color: #e9ecef;
-            transform: scale(0.98);
-        }
-        
-        .recommended-contact:last-child {
-            margin-bottom: 0;
-        }
-        
-        .contact-name {
-            font-size: 17px;
-            font-weight: 600;
-        }
-        
-        .tariff-summary {
-            background-color: #fff;
-            margin: 12px 16px;
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid #007aff;
-        }
-        
-        .tariff-summary h2 {
-            font-size: 20px;
-            margin-bottom: 12px;
-            color: #007aff;
-        }
-        
-        .tariff-summary-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #f2f2f7;
-        }
-        
-        .tariff-summary-item:last-child {
-            border-bottom: none;
-        }
-        
-        .tariff-summary-label {
-            color: #8e8e93;
-        }
-        
-        .tariff-summary-value {
-            font-weight: 600;
-        }
-        
-        .chats-list {
-            background-color: #fff;
-            margin: 12px 16px;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        
-        .chat-item {
-            display: flex;
-            align-items: center;
-            padding: 16px;
-            border-bottom: 1px solid #f2f2f7;
-            cursor: pointer;
-            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-        }
-        
-        .chat-item:active {
-            background-color: #f2f2f7;
-            transform: scale(0.995);
-        }
-        
-        .chat-item:last-child {
-            border-bottom: none;
-        }
-        
-        .chat-item.pinned::before {
-            content: '';
-            position: absolute;
-            left: 6px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 4px;
-            background-color: #007aff;
-            border-radius: 50%;
-        }
-        
-        .chat-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background-color: #007aff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            margin-right: 16px;
-        }
-        
-        .chat-info {
-            flex: 1;
-        }
-        
-        .chat-name {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        
-        .chat-last-message {
-            color: #8e8e93;
-            font-size: 14px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            max-width: 250px;
-        }
-        
-        .chat-time {
-            color: #8e8e93;
-            font-size: 13px;
-            margin-left: 8px;
-        }
-        
-        .chat-unread {
-            background-color: #007aff;
-            color: white;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
-            margin-left: 8px;
-        }
-        
-        .chat-window {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #f2f2f7;
-            z-index: 2000;
-            transform: translateX(100%);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        
-        .chat-window.active {
-            transform: translateX(0);
-        }
-        
-        .chat-header {
-            background-color: #fff;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #c6c6c8;
-        }
-        
-        .chat-header-info {
-            display: flex;
-            align-items: center;
-            flex: 1;
-        }
-        
-        .chat-header-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            background-color: #007aff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 14px;
-            font-weight: 600;
-            margin-right: 12px;
-        }
-        
-        .chat-header-name {
-            font-size: 17px;
-            font-weight: 600;
-        }
-        
-        .chat-header-status {
-            font-size: 13px;
-            color: #8e8e93;
-        }
-        
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .message-bubble {
-            max-width: 80%;
-            padding: 12px 16px;
-            border-radius: 18px;
-            margin-bottom: 8px;
-            font-size: 16px;
-            line-height: 1.4;
-            position: relative;
-            word-wrap: break-word;
-            animation: messageAppear 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        @keyframes messageAppear {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .message-incoming {
-            background-color: #e5e5ea;
-            color: #000;
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
-        
-        .message-outgoing {
-            background-color: #007aff;
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-        
-        .message-time {
-            font-size: 11px;
-            color: #8e8e93;
-            margin-top: 4px;
-            text-align: right;
-        }
-        
-        .message-incoming .message-time {
-            color: #8e8e93;
-        }
-        
-        .message-outgoing .message-time {
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .chat-actions {
-            background-color: #fff;
-            padding: 12px 16px;
-            border-top: 1px solid #c6c6c8;
-            display: flex;
-            justify-content: center;
-        }
-        
-        .btn {
-            background-color: #007aff;
-            color: white;
-            border: none;
-            padding: 16px 24px;
-            border-radius: 12px;
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
-            display: block;
-            width: calc(100% - 32px);
-            margin: 0 auto;
-            text-align: center;
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .btn:active {
-            opacity: 0.8;
-            transform: scale(0.98);
-        }
-        
-        .btn-back {
-            background: none;
-            border: none;
-            font-size: 17px;
-            color: #007aff;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 8px;
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .btn-back:active {
-            background-color: rgba(0, 122, 255, 0.1);
-            transform: scale(0.95);
-        }
-        
-        .tariff-card {
-            background-color: #fff;
-            margin: 12px 16px;
-            border-radius: 12px;
-            padding: 24px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .tariff-name {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #007aff;
-        }
-        
-        .tariff-status {
-            background-color: #32d74b;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 600;
-            display: inline-block;
-            margin: 16px 0;
-        }
-        
-        .tariff-date {
-            color: #8e8e93;
-            margin-bottom: 24px;
-        }
-        
-        .tariff-features {
-            text-align: left;
-            margin-top: 24px;
-        }
-        
-        .tariff-features li {
-            padding: 12px 0;
-            border-bottom: 1px solid #f2f2f7;
-            list-style-type: none;
-            display: flex;
-            align-items: center;
-        }
-        
-        .tariff-features li:last-child {
-            border-bottom: none;
-        }
-        
-        .tariff-features i {
-            color: #007aff;
-            margin-right: 12px;
-            font-size: 18px;
-        }
-        
-        .other-tariffs {
-            background-color: #fff;
-            margin: 12px 16px;
-            border-radius: 12px;
-            padding: 16px;
-        }
-        
-        .other-tariffs h2 {
-            font-size: 20px;
-            margin-bottom: 16px;
-        }
-        
-        .tariff-option {
-            padding: 16px;
-            border-bottom: 1px solid #f2f2f7;
+            color: #1e1e1e;
+            font-size: 15px;
+            font-weight: 400;
+            box-shadow: none;
+        }
+
+        /* верхняя полоска - никаких эмодзи, строгий текст */
+        .top-bar {
+            background: #9f9f9f;
+            padding: 10px 12px;
+            border-bottom: 3px solid #7a7a7a;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: lowercase;
+            letter-spacing: 0px;
         }
-        
-        .tariff-option:active {
-            background-color: #f2f2f7;
-            transform: scale(0.995);
-        }
-        
-        .tariff-option:last-child {
-            border-bottom: none;
-        }
-        
-        .tariff-option-name {
+
+        .employee-title {
+            background: #8a8a8a;
+            color: #222;
+            padding: 6px 24px;
+            font-size: 1.6rem;
             font-weight: 600;
-            font-size: 18px;
+            border: 2px solid #6a6a6a;
+            font-family: 'Courier New', monospace;
         }
-        
-        .tariff-option-price {
-            color: #007aff;
+
+        .full-name {
+            font-size: 2rem;
+            background: #8e8e8e;
+            padding: 6px 40px;
+            border: 2px solid #6f6f6f;
+            color: #232323;
+            font-weight: 500;
+        }
+
+        .btn-header {
+            background: #a5a5a5;
+            border: 3px outset #838383;
+            color: #1f1f1f;
+            font-size: 1.3rem;
             font-weight: 600;
-        }
-        
-        .support-actions {
-            display: flex;
-            gap: 12px;
-            margin: 12px 16px;
-        }
-        
-        .support-btn {
-            flex: 1;
-            background-color: #fff;
-            border: 1px solid #c6c6c8;
-            border-radius: 12px;
-            padding: 16px;
-            text-align: center;
-            font-weight: 600;
+            padding: 8px 32px;
             cursor: pointer;
-            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: lowercase;
+            box-shadow: none;
+            font-family: 'Courier New', monospace;
         }
-        
-        .support-btn:active {
-            background-color: #f2f2f7;
-            transform: scale(0.98);
+
+        .btn-header:active {
+            border: 3px inset #838383;
         }
-        
-        .message-composer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #fff;
-            z-index: 3000;
-            transform: translateX(100%);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+        /* рабочая зона два столбца */
+        .workspace {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            border-top: 2px solid #747474;
+        }
+
+        /* левая часть - pos */
+        .pos-left {
+            width: 70%;
+            background: #acacac;
+            border-right: 4px solid #7a7a7a;
             display: flex;
             flex-direction: column;
-            max-width: 500px;
-            margin: 0 auto;
+            overflow: hidden;
         }
-        
-        .message-composer.active {
-            transform: translateX(0);
-        }
-        
-        .composer-header {
+
+        .pos-header-line {
+            background: #9b9b9b;
+            padding: 12px 14px;
+            border-bottom: 3px solid #787878;
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #212121;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 12px 16px;
-            border-bottom: 1px solid #c6c6c8;
-            background-color: #f2f2f7;
+            gap: 20px;
+            text-transform: lowercase;
         }
-        
-        .composer-header h2 {
-            font-size: 17px;
-            font-weight: 600;
+
+        .pos-header-line span {
+            background: #8a8a8a;
+            padding: 6px 28px;
+            border: 2px solid #6b6b6b;
+            font-size: 1.4rem;
         }
-        
-        .composer-toolbar {
-            display: flex;
-            padding: 8px 16px;
-            background-color: #f2f2f7;
-            border-bottom: 1px solid #c6c6c8;
-            justify-content: flex-end;
-        }
-        
-        .toolbar-btn {
-            background: none;
-            border: none;
-            padding: 8px 12px;
-            font-size: 18px;
-            color: #007aff;
-            cursor: pointer;
-            border-radius: 6px;
-            margin-left: 8px;
-            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .toolbar-btn:active {
-            background-color: rgba(0, 122, 255, 0.1);
-            transform: scale(0.95);
-        }
-        
-        .emojis-panel {
-            display: none;
-            padding: 12px 16px;
-            background-color: #f2f2f7;
-            border-bottom: 1px solid #c6c6c8;
-            flex-wrap: wrap;
+
+        /* сетка товаров - унылые серые кнопки */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 8px;
+            padding: 16px;
+            background: #9f9f9f;
+            border-bottom: 3px groove #6a6a6a;
         }
-        
-        .emojis-panel.active {
-            display: flex;
-        }
-        
-        .emoji-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
+
+        .product-cell {
+            background: #b9b9b9;
+            border: 4px outset #919191;
+            color: #1d1d1d;
+            padding: 28px 4px;
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 600;
+            line-height: 1.2;
             cursor: pointer;
-            padding: 4px;
-            border-radius: 6px;
-            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 0 #6b6b6b;
+            text-transform: lowercase;
+            word-break: break-word;
+            font-family: 'Arial', sans-serif;
         }
-        
-        .emoji-btn:active {
-            background-color: rgba(0, 122, 255, 0.1);
-            transform: scale(1.2);
+
+        .product-cell:active {
+            border: 4px inset #919191;
+            box-shadow: 0 1px 0 #6b6b6b;
+            transform: translateY(3px);
         }
-        
-        .composer-body {
-            flex: 1;
+
+        .price-rur {
+            font-size: 1.9rem;
+            background: #8f8f8f;
+            display: inline-block;
+            padding: 4px 16px;
+            margin-top: 8px;
+            border: 2px solid #6b6b6b;
+            color: #111;
+        }
+
+        /* блок заказа */
+        .order-panel {
+            background: #a3a3a3;
+            border-top: 4px double #6d6d6d;
+            padding: 18px;
+            margin-top: auto;
+        }
+
+        .total-row {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            font-size: 2.4rem;
+            background: #8c8c8c;
+            padding: 20px 28px;
+            border: 3px inset #6f6f6f;
+            color: #151515;
+            margin-bottom: 20px;
+            text-transform: lowercase;
         }
-        
-        .message-editor {
-            flex: 1;
-            padding: 16px;
-            font-size: 17px;
-            line-height: 1.5;
-            border: none;
-            resize: none;
-            outline: none;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
-        }
-        
-        .message-editor::placeholder {
-            color: #8e8e93;
-            font-style: italic;
-        }
-        
-        .composer-actions {
-            padding: 16px;
-            background-color: #f2f2f7;
-            border-top: 1px solid #c6c6c8;
+
+        .action-duo {
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
+            gap: 20px;
         }
-        
+
         .action-btn {
             flex: 1;
-            min-width: calc(33.333% - 8px);
-            padding: 16px;
-            border-radius: 12px;
-            border: none;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .action-btn:active {
-            transform: scale(0.98);
-        }
-        
-        .action-btn-primary {
-            background-color: #007aff;
-            color: white;
-        }
-        
-        .action-btn-secondary {
-            background-color: #5ac8fa;
-            color: white;
-        }
-        
-        .action-btn-danger {
-            background-color: #ff3b30;
-            color: white;
-        }
-        
-        .action-btn i {
-            margin-right: 8px;
-        }
-        
-        .context-menu {
-            position: fixed;
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            z-index: 4000;
-            overflow: hidden;
-            min-width: 200px;
-            animation: menuAppear 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        @keyframes menuAppear {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        
-        .menu-item {
-            padding: 16px;
-            border-bottom: 1px solid #f2f2f7;
-            cursor: pointer;
-            transition: background-color 0.15s;
-            display: flex;
-            align-items: center;
-        }
-        
-        .menu-item:active {
-            background-color: #f2f2f7;
-        }
-        
-        .menu-item:last-child {
-            border-bottom: none;
-        }
-        
-        .menu-item i {
-            margin-right: 12px;
-            color: #007aff;
-            width: 20px;
-        }
-        
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 5000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .modal {
-            background-color: #fff;
-            border-radius: 14px;
-            width: 90%;
-            max-width: 400px;
-            max-height: 80vh;
-            overflow-y: auto;
-            animation: modalAppear 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        @keyframes modalAppear {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        
-        .modal-header {
-            padding: 20px 20px 10px;
-            font-size: 22px;
+            background: #9d9d9d;
+            border: 6px outset #818181;
+            color: #0f0f0f;
+            font-size: 2.1rem;
             font-weight: 700;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .modal-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-        }
-        
-        .modal-icon.warning {
-            color: #ff3b30;
-        }
-        
-        .modal-content {
-            padding: 10px 20px 20px;
-            font-size: 17px;
-            color: #8e8e93;
-            text-align: center;
-            line-height: 1.4;
-        }
-        
-        .modal-input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #c6c6c8;
-            font-size: 16px;
-            margin-top: 10px;
-            text-align: center;
-        }
-        
-        .modal-actions {
-            display: flex;
-            border-top: 1px solid #c6c6c8;
-        }
-        
-        .modal-btn {
-            flex: 1;
-            padding: 16px;
-            background: none;
-            border: none;
-            font-size: 17px;
-            font-weight: 600;
+            padding: 26px 0;
             cursor: pointer;
-            transition: background-color 0.15s;
+            text-transform: lowercase;
+            font-family: 'Courier New', monospace;
         }
-        
-        .modal-btn:active {
-            background-color: #f2f2f7;
+
+        .action-btn:active {
+            border: 6px inset #818181;
         }
-        
-        .modal-btn-primary {
-            color: #007aff;
-        }
-        
-        .modal-btn-danger {
-            color: #ff3b30;
-        }
-        
-        .block-modal .modal-content {
-            color: #ff3b30;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-        
-        .block-modal .modal-details {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 16px;
-            margin-top: 16px;
-            font-size: 15px;
-            color: #8e8e93;
-            text-align: left;
-            line-height: 1.4;
-        }
-        
-        .admin-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #fff;
-            z-index: 6000;
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+        /* правая часть - новый блок вместо staff permissions */
+        .right-panel {
+            width: 30%;
+            background: #a7a7a7;
             display: flex;
             flex-direction: column;
-            max-width: 500px;
-            margin: 0 auto;
+            border-left: 4px solid #757575;
+        }
+
+        .right-header {
+            background: #969696;
+            padding: 20px 16px;
+            border-bottom: 4px solid #6f6f6f;
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #1b1b1b;
+            text-transform: lowercase;
+        }
+
+        .info-block {
+            background: #9e9e9e;
+            margin: 18px;
+            padding: 22px 16px;
+            border: 3px inset #6b6b6b;
+            font-size: 1.4rem;
+            color: #1f1f1f;
+            text-transform: lowercase;
+        }
+
+        .info-block div {
+            padding: 8px 0;
+            border-bottom: 2px solid #7e7e7e;
+        }
+
+        .helper-list {
+            flex: 1;
             overflow-y: auto;
+            background: #9c9c9c;
+            padding: 16px 12px;
         }
-        
-        .admin-overlay.active {
-            transform: translateY(0);
-        }
-        
-        .admin-header {
-            background-color: #007aff;
-            color: white;
-            padding: 20px 16px;
-            text-align: center;
-        }
-        
-        .admin-header h2 {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-        
-        .admin-content {
-            padding: 20px 16px;
-            flex: 1;
-        }
-        
-        .admin-section {
-            background-color: #f2f2f7;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 20px;
-        }
-        
-        .admin-section h3 {
-            font-size: 18px;
-            margin-bottom: 12px;
-            color: #007aff;
-        }
-        
-        .admin-input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #c6c6c8;
-            font-size: 16px;
-            margin-bottom: 12px;
-        }
-        
-        .admin-btn {
-            background-color: #007aff;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .admin-btn:active {
-            opacity: 0.8;
-            transform: scale(0.98);
-        }
-        
-        .admin-select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #c6c6c8;
-            font-size: 16px;
-            margin-bottom: 12px;
-            background-color: white;
-        }
-        
-        .family-section {
-            background-color: #fff;
-            margin: 12px 16px;
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .family-section h2 {
-            font-size: 20px;
+
+        /* карточка техподдержки/заявки */
+        .ticket-item {
+            background: #b1b1b1;
+            border: 3px outset #8c8c8c;
+            padding: 20px 12px;
             margin-bottom: 16px;
-            color: #007aff;
-        }
-        
-        .family-member {
-            padding: 16px;
-            border-bottom: 1px solid #f2f2f7;
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            gap: 8px;
+            color: #181818;
+            font-weight: 500;
         }
-        
-        .family-member:last-child {
-            border-bottom: none;
+
+        .ticket-title {
+            font-size: 1.5rem;
+            background: #929292;
+            padding: 6px;
+            border: 2px solid #747474;
         }
-        
-        .family-member-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background-color: #007aff;
-            display: flex;
+
+        .ticket-detail {
+            font-size: 1.2rem;
+            color: #252525;
+            background: #a3a3a3;
+            padding: 8px;
+            border: 2px inset #7c7c7c;
+        }
+
+        .dull-button {
+            background: #9b9b9b;
+            border: 5px outset #828282;
+            color: #101010;
+            font-size: 1.3rem;
+            padding: 12px 12px;
+            cursor: pointer;
+            text-align: center;
+            text-transform: lowercase;
+            margin-top: 6px;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            background: rgba(80,80,80,0.8);
+            top: 0; left: 0; width: 100%; height: 100%;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 18px;
+        }
+
+        .modal-box {
+            background: #a7a7a7;
+            border: 10px ridge #777;
+            padding: 40px 60px;
+            width: 600px;
+            color: #111;
+            font-size: 1.7rem;
+            box-shadow: none;
+        }
+
+        .modal-close-btn {
+            background: #959595;
+            border: 5px outset #7c7c7c;
+            padding: 18px 40px;
+            font-size: 1.8rem;
+            margin-top: 36px;
+            cursor: pointer;
+            color: #141414;
             font-weight: 600;
-            margin-right: 12px;
+            text-align: center;
+            text-transform: lowercase;
         }
-        
-        .family-member-info {
-            flex: 1;
+
+        /* скролл без украшений */
+        ::-webkit-scrollbar {
+            width: 18px;
+            background: #888;
         }
-        
-        .family-member-name {
-            font-size: 17px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        
-        .family-member-role {
-            color: #8e8e93;
-            font-size: 14px;
-        }
-        
-        .family-member-status {
-            background-color: #32d74b;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .family-info {
-            background-color: #f2f2f7;
-            border-radius: 10px;
-            padding: 16px;
-            margin-top: 16px;
-        }
-        
-        .family-info p {
-            margin-bottom: 8px;
-            font-size: 15px;
-            line-height: 1.4;
-        }
-        
-        .family-info p:last-child {
-            margin-bottom: 0;
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .ios-safe-area {
-            padding-top: env(safe-area-inset-top);
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-        
-        .schedule-picker {
-            padding: 16px;
-            background-color: #fff;
-            border-radius: 12px;
-            margin: 12px 16px;
-        }
-        
-        .schedule-picker input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #c6c6c8;
-            font-size: 16px;
-            margin-bottom: 12px;
-        }
-        
-        .explanation {
-            background-color: #f2f2f7;
-            padding: 16px;
-            border-radius: 12px;
-            margin: 16px;
-            font-size: 15px;
-            color: #8e8e93;
-            line-height: 1.4;
-        }
-        
-        button, .chat-item, .tariff-option, .support-btn, .menu-item, .toolbar-btn, .recommended-contact {
-            -webkit-tap-highlight-color: transparent;
+        ::-webkit-scrollbar-thumb {
+            background: #6f6f6f;
+            border: 2px solid #5c5c5c;
         }
     </style>
 </head>
 <body>
-    <div class="status-bar ios-safe-area">
-        <div class="time" id="currentTime">Текущее время: 14:30</div>
-    </div>
-    
-    <div id="summaryPage" class="page active">
-        <div class="header">
-            <h1>Сводка</h1>
-            <p>Новости и обновления</p>
-        </div>
-        
-        <div class="recommended-contacts">
-            <h2>Кому бы вы хотели написать?</h2>
-            <div class="recommended-contact" data-contact="1">
-                <div class="contact-name">Криштиану Роналду Душ Сантуш Авейру</div>
-            </div>
-            <div class="recommended-contact" data-contact="2">
-                <div class="contact-name">Джорджина Родригес</div>
-            </div>
-            <div class="recommended-contact" data-contact="3">
-                <div class="contact-name">Криштиану-младший Роналду Душ Сантуш Авейру</div>
-            </div>
-        </div>
-        
-        <div class="tariff-summary">
-            <h2>Ваш тариф</h2>
-            <div class="tariff-summary-item">
-                <div class="tariff-summary-label">Текущий тариф</div>
-                <div class="tariff-summary-value">Единый</div>
-            </div>
-            <div class="tariff-summary-item">
-                <div class="tariff-summary-label">Статус</div>
-                <div class="tariff-summary-value">Активен</div>
-            </div>
-            <div class="tariff-summary-item">
-                <div class="tariff-summary-label">Действует до</div>
-                <div class="tariff-summary-value">21 ноября 2027</div>
-            </div>
-        </div>
-        
-        <div class="news-feed">
-            <div class="news-item">
-                <div class="news-date">5 января 2026</div>
-                <div class="news-title">Обслуживание горячей линии</div>
-                <div class="news-content">Горячая линия Международной почты будет закрыта на техническое обслуживание с 15 по 18 января 2026 года. Несмотря на это, все отделения и онлайн-сервисы продолжат работать в обычном режиме. Приносим извинения за временные неудобства.</div>
-            </div>
-            
-            <div class="news-item">
-                <div class="news-date">31 декабря 2025</div>
-                <div class="news-title">Благодарность и поздравление</div>
-                <div class="news-content">Дорогие пользователи! Мы благодарим вас за то, что выбираете Международную почту. В 2025 году нашими услугами воспользовались более 104 миллионов человек по всему земному шару! От всей команды желаем вам счастливого Нового 2026 года! Пусть он принесет вам радость, успех и благополучие.</div>
-            </div>
-            
-            <div class="news-item">
-                <div class="news-date">28 декабря 2025</div>
-                <div class="news-title">Расширение валют для оплаты</div>
-                <div class="news-content">Теперь вы можете оплачивать услуги Международной почты не только в гривнах, но и в 9 других валютах: долларах США, евро, британских фунтах, швейцарских франках, японских иенах, канадских долларах, австралийских долларах, китайских юанях и российских рублях.</div>
-            </div>
-        </div>
-    </div>
-    
-    <div id="chatsPage" class="page">
-        <div class="header">
-            <h1>Переписки</h1>
-            <p>Ваши сообщения</p>
-        </div>
-        
-        <div class="chats-list" id="chatsList"></div>
-    </div>
-    
-    <div id="tariffPage" class="page">
-        <div class="header">
-            <h1>Тариф</h1>
-            <p>Управление тарифным планом</p>
-        </div>
-        
-        <div class="tariff-card">
-            <div class="tariff-name">Единый</div>
-            <div class="tariff-status">АКТИВЕН</div>
-            <div class="tariff-date">Пополнен до 21 ноября 2027 года</div>
-            
-            <ul class="tariff-features">
-                <li><i class="fas fa-globe"></i> Международная отправка без ограничений</li>
-                <li><i class="fas fa-envelope"></i> Неограниченное количество писем</li>
-                <li><i class="fas fa-paperclip"></i> Вложения до 100 МБ</li>
-                <li><i class="fas fa-shield-alt"></i> Приоритетная доставка</li>
-                <li><i class="fas fa-headset"></i> Круглосуточная поддержка</li>
-            </ul>
-        </div>
-        
-        <div class="other-tariffs">
-            <h2>Другие тарифы</h2>
-            <div class="tariff-option" data-tariff="basic">
-                <div class="tariff-option-name">Базовый</div>
-                <div class="tariff-option-price">499 ₽/мес</div>
-            </div>
-            <div class="tariff-option" data-tariff="extended">
-                <div class="tariff-option-name">Расширенный</div>
-                <div class="tariff-option-price">899 ₽/мес</div>
-            </div>
-            <div class="tariff-option" data-tariff="business">
-                <div class="tariff-option-name">Бизнес</div>
-                <div class="tariff-option-price">1 499 ₽/мес</div>
-            </div>
-            <div class="tariff-option" data-tariff="premium">
-                <div class="tariff-option-name">Премиум</div>
-                <div class="tariff-option-price">2 499 ₽/мес</div>
-            </div>
-        </div>
-        
-        <div class="support-actions">
-            <div class="support-btn" id="changeTariffBtn">
-                <i class="fas fa-exchange-alt"></i> Сменить тариф
-            </div>
-            <div class="support-btn" id="callSupportBtn">
-                <i class="fas fa-phone"></i> Позвонить в поддержку
-            </div>
-        </div>
-        
-        <div class="support-actions">
-            <div class="support-btn" id="faqBtn">
-                <i class="fas fa-question-circle"></i> FAQ
-            </div>
-            <div class="support-btn" id="documentsBtn">
-                <i class="fas fa-file-contract"></i> Документы
-            </div>
-        </div>
-    </div>
-    
-    <div id="familyPage" class="page">
-        <div class="header">
-            <h1>Семья</h1>
-            <p>Управление семейным доступом</p>
-        </div>
-        
-        <div class="family-section">
-            <h2>Привязанные члены семьи</h2>
-            <div class="family-member">
-                <div class="family-member-icon">ПЛ</div>
-                <div class="family-member-info">
-                    <div class="family-member-name">Плехов Лев Александрович</div>
-                    <div class="family-member-role">Тариф оплачивает Плехов Лев Александрович</div>
-                </div>
-                <div class="family-member-status">Активен</div>
-            </div>
-            <div class="family-member">
-                <div class="family-member-icon">ПО</div>
-                <div class="family-member-info">
-                    <div class="family-member-name">Плехова Ольга Ивановна</div>
-                    <div class="family-member-role">Владелец аккаунта</div>
-                </div>
-                <div class="family-member-status">Вы</div>
-            </div>
-        </div>
-        
-        <div class="family-info">
-            <p>Плехов Лев Александрович является личным менеджером Плеховой Ольги Ивановны.</p>
-            <p>Он отвечает за оплату тарифа и управление услугами Международной почты для вашей семьи.</p>
-            <p>Все письма и переписки доступны обоим членам семьи для просмотра и управления.</p>
-        </div>
-    </div>
-    
-    <div id="chatWindow" class="chat-window">
-        <div class="chat-header">
-            <button class="btn-back" id="backFromChat">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <div class="chat-header-info">
-                <div class="chat-header-icon" id="chatHeaderIcon">ПЛ</div>
-                <div>
-                    <div class="chat-header-name" id="chatHeaderName">Плехов Лев Александрович</div>
-                    <div class="chat-header-status" id="chatHeaderStatus">был(а) в сети 5 минут назад</div>
-                </div>
-            </div>
-            <div style="width: 44px;"></div>
-        </div>
-        
-        <div class="chat-messages" id="chatMessages"></div>
-        
-        <div class="chat-actions">
-            <button class="btn" id="writeMessageFromChatBtn">
-                <i class="fas fa-pen" style="margin-right: 8px;"></i> Написать сообщение
-            </button>
-        </div>
-    </div>
-    
-    <div id="messageComposer" class="message-composer">
-        <div class="composer-header">
-            <button class="btn-back" id="backFromComposer">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <h2 id="composerTitle">Новое сообщение</h2>
-            <div style="width: 44px;"></div>
-        </div>
-        
-        <div class="composer-toolbar">
-            <button class="toolbar-btn" id="emojisBtn" title="Смайлы">😊</button>
-        </div>
-        
-        <div class="emojis-panel" id="emojisPanel">
-            <button class="emoji-btn">😊</button>
-            <button class="emoji-btn">😂</button>
-            <button class="emoji-btn">😍</button>
-            <button class="emoji-btn">😎</button>
-            <button class="emoji-btn">👍</button>
-            <button class="emoji-btn">👋</button>
-            <button class="emoji-btn">🎉</button>
-            <button class="emoji-btn">❤️</button>
-            <button class="emoji-btn">🙏</button>
-            <button class="emoji-btn">😉</button>
-        </div>
-        
-        <div class="composer-body">
-            <div style="padding: 16px 16px 0; font-weight: 600; font-size: 17px;">
-                Кому: <span id="recipientName">Плехов Лев Александрович</span>
-            </div>
-            
-            <textarea class="message-editor" id="messageEditor" placeholder="Коснитесь здесь, чтобы начать ввод сообщения"></textarea>
-        </div>
-        
-        <div class="composer-actions">
-            <button class="action-btn action-btn-secondary" id="scheduleBtn">
-                <i class="fas fa-clock"></i> Отправить позже
-            </button>
-            <button class="action-btn action-btn-primary" id="sendMessageBtn">
-                <i class="fas fa-paper-plane"></i> Отправить
-            </button>
-            <button class="action-btn action-btn-danger" id="cancelMessageBtn">
-                <i class="fas fa-times"></i> Отмена
-            </button>
-        </div>
-    </div>
-    
-    <div class="modal-overlay" id="scheduleModal">
-        <div class="modal">
-            <div class="modal-header">Запланировать отправку</div>
-            <div class="modal-content">
-                <p>Выберите дату и время для отправки сообщения</p>
-                <div class="schedule-picker">
-                    <input type="datetime-local" id="scheduleDateTime" min="2026-01-05T00:00" value="2026-01-05T14:30">
-                    <p style="font-size: 14px; color: #8e8e93; margin-top: 8px;">Сообщение будет отправлено автоматически в указанное время.</p>
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn" id="cancelScheduleBtn">Отмена</button>
-                <button class="modal-btn modal-btn-primary" id="confirmScheduleBtn">Запланировать</button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal-overlay" id="deleteModal">
-        <div class="modal">
-            <div class="modal-header">Удалить сообщение</div>
-            <div class="modal-content">
-                <p>Вы уверены, что хотите удалить это сообщение? Это действие нельзя отменить.</p>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn" id="cancelDeleteBtn">Отмена</button>
-                <button class="modal-btn modal-btn-danger" id="confirmDeleteBtn">Удалить</button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal-overlay block-modal" id="blockModal">
-        <div class="modal">
-            <div class="modal-header">
-                <div class="modal-icon warning">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
-                <div>Отправка запрещена</div>
-            </div>
-            <div class="modal-content">
-                <p>Этот абонент запретил отправку сообщений от Вас.</p>
-            </div>
-            <div class="modal-details">
-                <p>Абонент <strong>Криштиану Роналду Душ Сантуш Авейру</strong> запретил пользователю <strong>Ольга</strong> писать ему.</p>
-                <p>Вы не можете общаться с этим абонентом, пока он сам не снимет блокировку.</p>
-                <p>Если считаете, что это ошибка, вы можете обратиться в поддержку Международной почты.</p>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn modal-btn-primary" id="closeBlockModalBtn">Понятно</button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal-overlay" id="ignoreModal">
-        <div class="modal">
-            <div class="modal-header">Функция "Игнорирование"</div>
-            <div class="modal-content">
-                <p>При включении этой функции вы не будете получать уведомления от этого пользователя, а его сообщения будут автоматически помечаться как прочитанные.</p>
-                <p>Это полезно, если вы не хотите общаться с человеком, но не хотите его блокировать полностью.</p>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn modal-btn-primary" id="closeIgnoreModalBtn">Понятно</button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal-overlay" id="changeTariffModal">
-        <div class="modal">
-            <div class="modal-header">Смена тарифа</div>
-            <div class="modal-content">
-                <p>Вы действительно хотите сменить тарифный план?</p>
-                <p id="selectedTariffInfo" style="margin-top: 10px; font-weight: 600;"></p>
-                <p style="font-size: 14px; color: #ff3b30; margin-top: 10px;">Внимание: смена тарифа вступит в силу с начала следующего расчетного периода.</p>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn" id="cancelChangeTariffBtn">Отмена</button>
-                <button class="modal-btn modal-btn-primary" id="confirmChangeTariffBtn">Сменить тариф</button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal-overlay" id="pinCodeModal">
-        <div class="modal">
-            <div class="modal-header">Введите пин-код</div>
-            <div class="modal-content">
-                <p>Для доступа к панели администратора введите пин-код:</p>
-                <input type="password" class="modal-input" id="pinCodeInput" maxlength="5" placeholder="Введите 5 цифр">
-                <p id="pinCodeError" style="color: #ff3b30; font-size: 14px; margin-top: 10px; display: none;">Неверный пин-код</p>
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn" id="cancelPinCodeBtn">Отмена</button>
-                <button class="modal-btn modal-btn-primary" id="confirmPinCodeBtn">Подтвердить</button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="admin-overlay" id="adminPanel">
-        <div class="admin-header">
-            <h2>Панель администратора</h2>
-            <p>Международная почта</p>
-        </div>
-        
-        <div class="admin-content">
-            <div class="admin-section">
-                <h3>Отправить сообщение от имени абонента</h3>
-                <select class="admin-select" id="adminContactSelect">
-                    <option value="0">Плехов Лев Александрович</option>
-                    <option value="1">Криштиану Роналду Душ Сантуш Авейру</option>
-                    <option value="2">Джорджина Родригес</option>
-                    <option value="3">Криштиану-младший Роналду Душ Сантуш Авейру</option>
-                </select>
-                <textarea class="admin-input" id="adminMessageText" placeholder="Текст сообщения..." rows="3"></textarea>
-                <button class="admin-btn" id="adminSendMessageBtn">Отправить как выбранный абонент</button>
-            </div>
-            
-            <div class="admin-section">
-                <h3>Изменить статус "был(а) в сети"</h3>
-                <select class="admin-select" id="adminStatusContactSelect">
-                    <option value="0">Плехов Лев Александрович</option>
-                    <option value="1">Криштиану Роналду Душ Сантуш Авейру</option>
-                    <option value="2">Джорджина Родригес</option>
-                    <option value="3">Криштиану-младший Роналду Душ Сантуш Авейру</option>
-                </select>
-                <input class="admin-input" id="adminStatusText" placeholder="Например: был(а) в сети 5 минут назад" value="был(а) в сети 5 минут назад">
-                <button class="admin-btn" id="adminSetStatusBtn">Установить статус</button>
-            </div>
-            
-            <div class="admin-section">
-                <button class="admin-btn" id="exitAdminBtn" style="background-color: #ff3b30;">Выйти из панели администратора</button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="tab-bar ios-safe-area">
-        <a href="#" class="tab-item active" data-tab="summaryPage">
-            <div class="tab-icon"><i class="fas fa-chart-pie"></i></div>
-            <div>Сводка</div>
-        </a>
-        <a href="#" class="tab-item" data-tab="chatsPage">
-            <div class="tab-icon"><i class="fas fa-comments"></i></div>
-            <div>Переписки</div>
-        </a>
-        <a href="#" class="tab-item" data-tab="familyPage">
-            <div class="tab-icon"><i class="fas fa-users"></i></div>
-            <div>Семья</div>
-        </a>
-        <a href="#" class="tab-item" data-tab="tariffPage" id="tariffTab">
-            <div class="tab-icon"><i class="fas fa-credit-card"></i></div>
-            <div>Тариф</div>
-        </a>
+<div class="terminal">
+    <!-- хедер без эмодзи -->
+    <div class="top-bar">
+        <div class="employee-title">POS Logged as</div>
+        <div class="full-name">ПЛЕХОВ ЛЕВ АЛЕКСАНДРОВИЧ</div>
+        <button class="btn-header" id="viewProfileBtn">My account</button>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function updateTime() {
-                const now = new Date();
-                const hours = now.getHours().toString().padStart(2, '0');
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                document.getElementById('currentTime').textContent = `Текущее время: ${hours}:${minutes}`;
-            }
-            
-            updateTime();
-            setInterval(updateTime, 60000);
-            
-            if (!localStorage.getItem('mailMessages')) {
-                const initialMessages = {
-                    '0': [],
-                    '1': [],
-                    '2': [],
-                    '3': []
-                };
-                localStorage.setItem('mailMessages', JSON.stringify(initialMessages));
-            }
-            
-            if (!localStorage.getItem('pinnedChats')) {
-                localStorage.setItem('pinnedChats', JSON.stringify([]));
-            }
-            
-            if (!localStorage.getItem('userStatuses')) {
-                const initialStatuses = {
-                    '0': 'был(а) в сети 5 минут назад',
-                    '1': 'был(а) в сети 2 часа назад',
-                    '2': 'был(а) в сети вчера',
-                    '3': 'был(а) в сети 3 дня назад'
-                };
-                localStorage.setItem('userStatuses', JSON.stringify(initialStatuses));
-            }
-            
-            if (!localStorage.getItem('iconColors')) {
-                const initialColors = {
-                    '0': '#007aff',
-                    '1': '#32d74b',
-                    '2': '#ff453a',
-                    '3': '#ff9f0a'
-                };
-                localStorage.setItem('iconColors', JSON.stringify(initialColors));
-            }
-            
-            if (!localStorage.getItem('ignoredUsers')) {
-                localStorage.setItem('ignoredUsers', JSON.stringify([]));
-            }
-            
-            if (!localStorage.getItem('mutedChats')) {
-                localStorage.setItem('mutedChats', JSON.stringify([]));
-            }
-            
-            const contacts = [
-                {
-                    id: 0,
-                    name: 'Плехов Лев Александрович',
-                    initials: 'ПЛ'
-                },
-                {
-                    id: 1,
-                    name: 'Криштиану Роналду Душ Сантуш Авейру',
-                    initials: 'КР'
-                },
-                {
-                    id: 2,
-                    name: 'Джорджина Родригес',
-                    initials: 'ДР'
-                },
-                {
-                    id: 3,
-                    name: 'Криштиану-младший Роналду Душ Сантуш Авейру',
-                    initials: 'КМ'
-                }
-            ];
-            
-            const tabItems = document.querySelectorAll('.tab-item');
-            const pages = document.querySelectorAll('.page');
-            
-            tabItems.forEach(tab => {
-                tab.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetTab = this.getAttribute('data-tab');
-                    
-                    tabItems.forEach(item => item.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    pages.forEach(page => {
-                        page.classList.remove('active');
-                        if (page.id === targetTab) {
-                            page.classList.add('active');
-                            
-                            if (targetTab === 'chatsPage') {
-                                loadChatsList();
-                            }
-                        }
-                    });
+    <!-- основной экран -->
+    <div class="workspace">
+        <!-- левый блок - pos -->
+        <div class="pos-left">
+            <div class="pos-header-line">
+                <span>newpos 5.63 / сенсор</span>
+                <span>кассир: плехов лев</span>
+            </div>
+
+            <!-- товарная сетка (все цены в рублях) -->
+            <div class="product-grid" id="productGrid">
+                <!-- скрипт заполнит -->
+            </div>
+
+            <!-- корзина и кнопки -->
+            <div class="order-panel">
+                <div class="total-row">
+                    <span>всего:</span>
+                    <span id="cartTotalRub">0 руб</span>
+                </div>
+                <div class="action-duo">
+                    <button class="action-btn" id="clearCartBtn">удалить</button>
+                    <button class="action-btn" id="payBtn">замена</button>
+                </div>
+            </div>
+        </div>
+
+            </div>
+
+            <div class="helper-list" id="ticketList">
+                <!-- динамические заявки -->
+            </div>
+            <div style="padding: 14px;">
+                <button class="dull-button" id="logBtn">журнал обновлений</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- модалка аккаунта (серая) -->
+    <div id="accountModal" class="modal-overlay">
+        <div class="modal-box">
+            <div style="border-bottom:4px ridge #7d7d7d;">просмотр аккаунта</div>
+            <p>сотрудник: ПЛЕХОВ ЛЕВ АЛЕКСАНДРОВИЧ</p>
+            <p>ид: lv-5910-88</p>
+            <p>роль: Кассир/HoReCa менеджер</p>
+            <p>последний вход: 05.03.2026 09:14</p>
+            <p>полномочия: полный доступ, изменение ролей</p>
+            <div class="modal-close-btn" id="closeModalBtn">закрыть</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // меню на русском, цены в рублях
+        const products = [
+            { name: 'комбо №1', price: 449, desc: 'бургер+фри+кола' },
+            { name: 'стейк', price: 1250, desc: 'рибай 300г' },
+            { name: 'цезарь', price: 590, desc: 'курица' },
+            { name: 'начос', price: 380, desc: 'сырные' },
+            { name: 'латте', price: 210, desc: 'ванильный' },
+            { name: 'мохито', price: 280, desc: 'без алкоголя' },
+            { name: 'крылья', price: 540, desc: '8 шт' },
+            { name: 'картошка', price: 190, desc: 'фри' },
+        ];
+
+        // корзина
+        let cart = [];
+
+        // продуктовая сетка
+        const grid = document.getElementById('productGrid');
+        function renderProducts() {
+            grid.innerHTML = '';
+            products.forEach(p => {
+                const cell = document.createElement('div');
+                cell.className = 'product-cell';
+                cell.innerHTML = `${p.name} <br> <span class="price-rur">${p.price} руб</span>`;
+                cell.addEventListener('click', () => {
+                    cart.push(p);
+                    updateTotal();
                 });
+                grid.appendChild(cell);
             });
-            
-            function loadChatsList() {
-                const chatsList = document.getElementById('chatsList');
-                chatsList.innerHTML = '';
-                
-                const messages = JSON.parse(localStorage.getItem('mailMessages'));
-                const pinnedChats = JSON.parse(localStorage.getItem('pinnedChats'));
-                const iconColors = JSON.parse(localStorage.getItem('iconColors'));
-                
-                pinnedChats.forEach(contactId => {
-                    const contact = contacts[contactId];
-                    const contactMessages = messages[contactId];
-                    const lastMessage = contactMessages.length > 0 ? contactMessages[contactMessages.length - 1] : null;
-                    
-                    const chatItem = document.createElement('div');
-                    chatItem.className = 'chat-item pinned';
-                    chatItem.setAttribute('data-contact', contactId);
-                    
-                    const lastMessageText = lastMessage ? 
-                        (lastMessage.sender === 'user' ? 'Вы: ' : '') + lastMessage.text.substring(0, 30) + (lastMessage.text.length > 30 ? '...' : '') : 
-                        'Нет сообщений';
-                    
-                    const lastMessageTime = lastMessage ? formatMessageTime(lastMessage.date) : '';
-                    
-                    chatItem.innerHTML = `
-                        <div class="chat-icon" style="background-color: ${iconColors[contactId] || '#007aff'}">${contact.initials}</div>
-                        <div class="chat-info">
-                            <div class="chat-name">${contact.name}</div>
-                            <div class="chat-last-message">${lastMessageText}</div>
-                        </div>
-                        <div class="chat-time">${lastMessageTime}</div>
-                    `;
-                    
-                    chatsList.appendChild(chatItem);
-                });
-                
-                contacts.forEach((contact, index) => {
-                    if (pinnedChats.includes(index)) return;
-                    
-                    const contactMessages = messages[index];
-                    const lastMessage = contactMessages.length > 0 ? contactMessages[contactMessages.length - 1] : null;
-                    
-                    const chatItem = document.createElement('div');
-                    chatItem.className = 'chat-item';
-                    chatItem.setAttribute('data-contact', index);
-                    
-                    const lastMessageText = lastMessage ? 
-                        (lastMessage.sender === 'user' ? 'Вы: ' : '') + lastMessage.text.substring(0, 30) + (lastMessage.text.length > 30 ? '...' : '') : 
-                        'Нет сообщений';
-                    
-                    const lastMessageTime = lastMessage ? formatMessageTime(lastMessage.date) : '';
-                    
-                    chatItem.innerHTML = `
-                        <div class="chat-icon" style="background-color: ${iconColors[index] || '#007aff'}">${contact.initials}</div>
-                        <div class="chat-info">
-                            <div class="chat-name">${contact.name}</div>
-                            <div class="chat-last-message">${lastMessageText}</div>
-                        </div>
-                        <div class="chat-time">${lastMessageTime}</div>
-                    `;
-                    
-                    chatsList.appendChild(chatItem);
-                });
-                
-                document.querySelectorAll('.chat-item').forEach(item => {
-                    item.addEventListener('click', openChat);
-                    
-                    let pressTimer;
-                    item.addEventListener('touchstart', function(e) {
-                        pressTimer = setTimeout(() => {
-                            showContextMenu(e, parseInt(this.getAttribute('data-contact')));
-                        }, 800);
-                    });
-                    
-                    item.addEventListener('touchend', function() {
-                        clearTimeout(pressTimer);
-                    });
-                    
-                    item.addEventListener('touchmove', function() {
-                        clearTimeout(pressTimer);
-                    });
-                });
-            }
-            
-            document.querySelectorAll('.recommended-contact').forEach(contact => {
-                contact.addEventListener('click', function() {
-                    const contactId = parseInt(this.getAttribute('data-contact'));
-                    openComposer(contactId);
-                });
-            });
-            
-            function formatMessageTime(dateString) {
-                const date = new Date(dateString);
-                const now = new Date();
-                const diffMs = now - date;
-                const diffMins = Math.floor(diffMs / 60000);
-                const diffHours = Math.floor(diffMs / 3600000);
-                const diffDays = Math.floor(diffMs / 86400000);
-                
-                if (diffMins < 60) {
-                    return `${diffMins} мин`;
-                } else if (diffHours < 24) {
-                    return `${diffHours} ч`;
-                } else if (diffDays < 7) {
-                    return `${diffDays} д`;
-                } else {
-                    return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
-                }
-            }
-            
-            let currentChatId = null;
-            const chatWindow = document.getElementById('chatWindow');
-            const backFromChatBtn = document.getElementById('backFromChat');
-            
-            function openChat() {
-                const contactId = parseInt(this.getAttribute('data-contact'));
-                currentChatId = contactId;
-                const contact = contacts[contactId];
-                
-                const iconColors = JSON.parse(localStorage.getItem('iconColors'));
-                document.getElementById('chatHeaderIcon').textContent = contact.initials;
-                document.getElementById('chatHeaderIcon').style.backgroundColor = iconColors[contactId] || '#007aff';
-                document.getElementById('chatHeaderName').textContent = contact.name;
-                
-                const statuses = JSON.parse(localStorage.getItem('userStatuses'));
-                document.getElementById('chatHeaderStatus').textContent = statuses[contactId] || 'был(а) в сети недавно';
-                
-                loadChatMessages(contactId);
-                
-                chatWindow.classList.add('active');
-            }
-            
-            backFromChatBtn.addEventListener('click', function() {
-                chatWindow.classList.remove('active');
-                currentChatId = null;
-            });
-            
-            function loadChatMessages(contactId) {
-                const chatMessages = document.getElementById('chatMessages');
-                chatMessages.innerHTML = '';
-                
-                const messages = JSON.parse(localStorage.getItem('mailMessages'));
-                const contactMessages = messages[contactId];
-                
-                if (contactMessages.length === 0) {
-                    const emptyMessage = document.createElement('div');
-                    emptyMessage.className = 'message-bubble message-incoming';
-                    emptyMessage.textContent = 'Начните переписку, отправив первое сообщение';
-                    emptyMessage.style.alignSelf = 'center';
-                    emptyMessage.style.textAlign = 'center';
-                    emptyMessage.style.maxWidth = '90%';
-                    chatMessages.appendChild(emptyMessage);
-                    return;
-                }
-                
-                contactMessages.forEach(msg => {
-                    const messageDate = new Date(msg.date);
-                    const formattedTime = messageDate.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-                    
-                    const messageElement = document.createElement('div');
-                    messageElement.className = `message-bubble ${msg.sender === 'user' ? 'message-outgoing' : 'message-incoming'}`;
-                    
-                    messageElement.innerHTML = `
-                        <div>${msg.text}</div>
-                        <div class="message-time">${formattedTime}</div>
-                    `;
-                    
-                    chatMessages.appendChild(messageElement);
-                });
-                
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-            
-            function showContextMenu(e, contactId) {
-                const existingMenu = document.querySelector('.context-menu');
-                if (existingMenu) {
-                    existingMenu.remove();
-                }
-                
-                const menu = document.createElement('div');
-                menu.className = 'context-menu';
-                
-                const pinnedChats = JSON.parse(localStorage.getItem('pinnedChats'));
-                const isPinned = pinnedChats.includes(contactId);
-                
-                const mutedChats = JSON.parse(localStorage.getItem('mutedChats'));
-                const isMuted = mutedChats.includes(contactId);
-                
-                const ignoredUsers = JSON.parse(localStorage.getItem('ignoredUsers'));
-                const isIgnored = ignoredUsers.includes(contactId);
-                
-                menu.innerHTML = `
-                    <div class="menu-item" id="pinChatItem">
-                        <i class="fas fa-thumbtack"></i>
-                        ${isPinned ? 'Открепить переписку' : 'Закрепить переписку'}
-                    </div>
-                    <div class="menu-item" id="muteChatItem">
-                        <i class="fas fa-bell${isMuted ? '-slash' : ''}"></i>
-                        ${isMuted ? 'Включить звук' : 'Отключить звук'}
-                    </div>
-                    <div class="menu-item" id="ignoreUserItem">
-                        <i class="fas fa-user${isIgnored ? '-check' : '-slash'}"></i>
-                        ${isIgnored ? 'Прекратить игнорирование' : 'Игнорирование'}
-                    </div>
-                    <div class="menu-item" id="clearChatItem">
-                        <i class="fas fa-trash"></i>
-                        Очистить историю
-                    </div>
-                `;
-                
-                const touch = e.touches ? e.touches[0] : e;
-                menu.style.left = Math.min(touch.clientX - 100, window.innerWidth - 220) + 'px';
-                menu.style.top = Math.min(touch.clientY - 10, window.innerHeight - 250) + 'px';
-                
-                document.body.appendChild(menu);
-                
-                document.getElementById('pinChatItem').addEventListener('click', function() {
-                    togglePinChat(contactId);
-                    menu.remove();
-                });
-                
-                document.getElementById('muteChatItem').addEventListener('click', function() {
-                    toggleMuteChat(contactId);
-                    menu.remove();
-                });
-                
-                document.getElementById('ignoreUserItem').addEventListener('click', function() {
-                    if (!isIgnored) {
-                        document.getElementById('ignoreModal').classList.add('active');
-                        document.getElementById('closeIgnoreModalBtn').onclick = function() {
-                            document.getElementById('ignoreModal').classList.remove('active');
-                            toggleIgnoreUser(contactId);
-                        };
-                    } else {
-                        toggleIgnoreUser(contactId);
-                    }
-                    menu.remove();
-                });
-                
-                document.getElementById('clearChatItem').addEventListener('click', function() {
-                    showDeleteConfirmation(contactId);
-                    menu.remove();
-                });
-                
-                setTimeout(() => {
-                    const closeMenu = function(event) {
-                        if (!menu.contains(event.target)) {
-                            menu.remove();
-                            document.removeEventListener('click', closeMenu);
-                            document.removeEventListener('touchstart', closeMenu);
-                        }
-                    };
-                    
-                    document.addEventListener('click', closeMenu);
-                    document.addEventListener('touchstart', closeMenu);
-                }, 100);
-            }
-            
-            function togglePinChat(contactId) {
-                const pinnedChats = JSON.parse(localStorage.getItem('pinnedChats'));
-                const index = pinnedChats.indexOf(contactId);
-                
-                if (index === -1) {
-                    pinnedChats.push(contactId);
-                } else {
-                    pinnedChats.splice(index, 1);
-                }
-                
-                localStorage.setItem('pinnedChats', JSON.stringify(pinnedChats));
-                loadChatsList();
-            }
-            
-            function toggleMuteChat(contactId) {
-                const mutedChats = JSON.parse(localStorage.getItem('mutedChats'));
-                const index = mutedChats.indexOf(contactId);
-                
-                if (index === -1) {
-                    mutedChats.push(contactId);
-                } else {
-                    mutedChats.splice(index, 1);
-                }
-                
-                localStorage.setItem('mutedChats', JSON.stringify(mutedChats));
-            }
-            
-            function toggleIgnoreUser(contactId) {
-                const ignoredUsers = JSON.parse(localStorage.getItem('ignoredUsers'));
-                const index = ignoredUsers.indexOf(contactId);
-                
-                if (index === -1) {
-                    ignoredUsers.push(contactId);
-                } else {
-                    ignoredUsers.splice(index, 1);
-                }
-                
-                localStorage.setItem('ignoredUsers', JSON.stringify(ignoredUsers));
-            }
-            
-            function showDeleteConfirmation(contactId) {
-                document.getElementById('deleteModal').classList.add('active');
-                
-                document.getElementById('cancelDeleteBtn').onclick = function() {
-                    document.getElementById('deleteModal').classList.remove('active');
-                };
-                
-                document.getElementById('confirmDeleteBtn').onclick = function() {
-                    clearChatHistory(contactId);
-                    document.getElementById('deleteModal').classList.remove('active');
-                };
-            }
-            
-            function clearChatHistory(contactId) {
-                const messages = JSON.parse(localStorage.getItem('mailMessages'));
-                messages[contactId] = [];
-                localStorage.setItem('mailMessages', JSON.stringify(messages));
-                
-                if (currentChatId === contactId) {
-                    loadChatMessages(contactId);
-                }
-                
-                loadChatsList();
-            }
-            
-            const writeMessageFromChatBtn = document.getElementById('writeMessageFromChatBtn');
-            const messageComposer = document.getElementById('messageComposer');
-            const backFromComposerBtn = document.getElementById('backFromComposer');
-            
-            writeMessageFromChatBtn.addEventListener('click', function() {
-                if (currentChatId === null) return;
-                
-                openComposer(currentChatId);
-            });
-            
-            function openComposer(contactId) {
-                if (contactId === 1) {
-                    document.getElementById('blockModal').classList.add('active');
-                    return;
-                }
-                
-                const contact = contacts[contactId];
-                
-                document.getElementById('recipientName').textContent = contact.name;
-                document.getElementById('composerTitle').textContent = `Сообщение для ${contact.name.split(' ')[0]}`;
-                
-                document.getElementById('messageEditor').value = '';
-                document.getElementById('emojisPanel').classList.remove('active');
-                
-                messageComposer.setAttribute('data-contact', contactId);
-                
-                messageComposer.classList.add('active');
-            }
-            
-            backFromComposerBtn.addEventListener('click', function() {
-                messageComposer.classList.remove('active');
-            });
-            
-            document.getElementById('closeBlockModalBtn').addEventListener('click', function() {
-                document.getElementById('blockModal').classList.remove('active');
-            });
-            
-            const emojisBtn = document.getElementById('emojisBtn');
-            const emojisPanel = document.getElementById('emojisPanel');
-            
-            emojisBtn.addEventListener('click', function() {
-                emojisPanel.classList.toggle('active');
-            });
-            
-            document.querySelectorAll('.emoji-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const editor = document.getElementById('messageEditor');
-                    const cursorPos = editor.selectionStart;
-                    const text = editor.value;
-                    const emoji = this.textContent;
-                    
-                    editor.value = text.substring(0, cursorPos) + emoji + text.substring(cursorPos);
-                    editor.focus();
-                    editor.selectionStart = cursorPos + emoji.length;
-                    editor.selectionEnd = cursorPos + emoji.length;
-                });
-            });
-            
-            document.getElementById('cancelMessageBtn').addEventListener('click', function() {
-                messageComposer.classList.remove('active');
-            });
-            
-            const scheduleBtn = document.getElementById('scheduleBtn');
-            const scheduleModal = document.getElementById('scheduleModal');
-            const cancelScheduleBtn = document.getElementById('cancelScheduleBtn');
-            const confirmScheduleBtn = document.getElementById('confirmScheduleBtn');
-            
-            let scheduledDateTime = null;
-            
-            scheduleBtn.addEventListener('click', function() {
-                scheduleModal.classList.add('active');
-            });
-            
-            cancelScheduleBtn.addEventListener('click', function() {
-                scheduleModal.classList.remove('active');
-            });
-            
-            confirmScheduleBtn.addEventListener('click', function() {
-                const dateTimeInput = document.getElementById('scheduleDateTime').value;
-                scheduledDateTime = new Date(dateTimeInput);
-                
-                scheduleBtn.innerHTML = `<i class="fas fa-clock"></i> Запланировано`;
-                
-                scheduleModal.classList.remove('active');
-                showNotification(`Сообщение запланировано на отправку ${scheduledDateTime.toLocaleString('ru-RU')}`);
-            });
-            
-            const sendMessageBtn = document.getElementById('sendMessageBtn');
-            
-            sendMessageBtn.addEventListener('click', function() {
-                const contactId = parseInt(messageComposer.getAttribute('data-contact'));
-                if (isNaN(contactId)) return;
-                
-                if (contactId === 1) {
-                    document.getElementById('blockModal').classList.add('active');
-                    messageComposer.classList.remove('active');
-                    return;
-                }
-                
-                const messageText = document.getElementById('messageEditor').value.trim();
-                
-                if (!messageText) {
-                    showNotification('Введите текст сообщения');
-                    return;
-                }
-                
-                const messages = JSON.parse(localStorage.getItem('mailMessages'));
-                
-                const newMessage = {
-                    text: messageText,
-                    date: scheduledDateTime ? scheduledDateTime.toISOString() : new Date().toISOString(),
-                    sender: 'user'
-                };
-                
-                messages[contactId].push(newMessage);
-                localStorage.setItem('mailMessages', JSON.stringify(messages));
-                
-                scheduledDateTime = null;
-                scheduleBtn.innerHTML = `<i class="fas fa-clock"></i> Отправить позже`;
-                
-                messageComposer.classList.remove('active');
-                
-                if (currentChatId === contactId) {
-                    loadChatMessages(contactId);
-                }
-                
-                loadChatsList();
-                
-                const sendTime = scheduledDateTime ? 'запланировано' : 'отправлено';
-                showNotification(`Сообщение успешно ${sendTime}`);
-            });
-            
-            function showNotification(text) {
-                const notification = document.createElement('div');
-                notification.textContent = text;
-                notification.style.position = 'fixed';
-                notification.style.top = '80px';
-                notification.style.left = '50%';
-                notification.style.transform = 'translateX(-50%)';
-                notification.style.backgroundColor = '#32d74b';
-                notification.style.color = 'white';
-                notification.style.padding = '12px 24px';
-                notification.style.borderRadius = '12px';
-                notification.style.zIndex = '4000';
-                notification.style.fontWeight = '600';
-                notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-                notification.style.animation = 'fadeIn 0.3s ease';
-                
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.style.opacity = '0';
-                    notification.style.transition = 'opacity 0.3s ease';
-                    setTimeout(() => {
-                        document.body.removeChild(notification);
-                    }, 300);
-                }, 3000);
-            }
-            
-            document.getElementById('changeTariffBtn').addEventListener('click', function() {
-                showNotification('Выберите тариф из списка для смены');
-            });
-            
-            document.getElementById('callSupportBtn').addEventListener('click', function() {
-                showNotification('Имитация звонка в поддержку...');
-            });
-            
-            document.getElementById('faqBtn').addEventListener('click', function() {
-                showNotification('Открытие раздела FAQ...');
-            });
-            
-            document.getElementById('documentsBtn').addEventListener('click', function() {
-                showNotification('Открытие документов...');
-            });
-            
-            document.querySelectorAll('.tariff-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const tariff = this.getAttribute('data-tariff');
-                    const tariffName = this.querySelector('.tariff-option-name').textContent;
-                    const tariffPrice = this.querySelector('.tariff-option-price').textContent;
-                    
-                    document.getElementById('selectedTariffInfo').textContent = `${tariffName} - ${tariffPrice}`;
-                    document.getElementById('changeTariffModal').classList.add('active');
-                    
-                    document.getElementById('cancelChangeTariffBtn').onclick = function() {
-                        document.getElementById('changeTariffModal').classList.remove('active');
-                    };
-                    
-                    document.getElementById('confirmChangeTariffBtn').onclick = function() {
-                        showNotification(`Тариф успешно изменен на "${tariffName}"`);
-                        document.getElementById('changeTariffModal').classList.remove('active');
-                    };
-                });
-            });
-            
-            const adminPanel = document.getElementById('adminPanel');
-            let tariffClickCount = 0;
-            let lastTariffClickTime = 0;
-            const pinCodeModal = document.getElementById('pinCodeModal');
-            
-            document.getElementById('tariffTab').addEventListener('click', function() {
-                const now = Date.now();
-                
-                if (now - lastTariffClickTime > 3000) {
-                    tariffClickCount = 0;
-                }
-                
-                lastTariffClickTime = now;
-                tariffClickCount++;
-                
-                if (tariffClickCount === 10) {
-                    tariffClickCount = 0;
-                    
-                    pinCodeModal.classList.add('active');
-                    document.getElementById('pinCodeInput').value = '';
-                    document.getElementById('pinCodeError').style.display = 'none';
-                }
-            });
-            
-            document.getElementById('cancelPinCodeBtn').addEventListener('click', function() {
-                pinCodeModal.classList.remove('active');
-            });
-            
-            document.getElementById('confirmPinCodeBtn').addEventListener('click', function() {
-                const pinCode = document.getElementById('pinCodeInput').value;
-                
-                if (pinCode === '84152') {
-                    pinCodeModal.classList.remove('active');
-                    adminPanel.classList.add('active');
-                } else {
-                    document.getElementById('pinCodeError').style.display = 'block';
-                }
-            });
-            
-            document.getElementById('exitAdminBtn').addEventListener('click', function() {
-                adminPanel.classList.remove('active');
-            });
-            
-            document.getElementById('adminSendMessageBtn').addEventListener('click', function() {
-                const contactId = parseInt(document.getElementById('adminContactSelect').value);
-                const messageText = document.getElementById('adminMessageText').value.trim();
-                
-                if (!messageText) {
-                    showNotification('Введите текст сообщения');
-                    return;
-                }
-                
-                const messages = JSON.parse(localStorage.getItem('mailMessages'));
-                
-                const newMessage = {
-                    text: messageText,
-                    date: new Date().toISOString(),
-                    sender: 'contact'
-                };
-                
-                messages[contactId].push(newMessage);
-                localStorage.setItem('mailMessages', JSON.stringify(messages));
-                
-                document.getElementById('adminMessageText').value = '';
-                
-                if (currentChatId === contactId) {
-                    loadChatMessages(contactId);
-                }
-                
-                loadChatsList();
-                
-                showNotification(`Сообщение отправлено от имени ${contacts[contactId].name}`);
-            });
-            
-            document.getElementById('adminSetStatusBtn').addEventListener('click', function() {
-                const contactId = parseInt(document.getElementById('adminStatusContactSelect').value);
-                const statusText = document.getElementById('adminStatusText').value.trim();
-                
-                if (!statusText) {
-                    showNotification('Введите текст статуса');
-                    return;
-                }
-                
-                const statuses = JSON.parse(localStorage.getItem('userStatuses'));
-                statuses[contactId] = statusText;
-                localStorage.setItem('userStatuses', JSON.stringify(statuses));
-                
-                if (currentChatId === contactId) {
-                    document.getElementById('chatHeaderStatus').textContent = statusText;
-                }
-                
-                showNotification(`Статус для ${contacts[contactId].name} установлен: ${statusText}`);
-            });
-            
-            document.getElementById('closeIgnoreModalBtn').addEventListener('click', function() {
-                document.getElementById('ignoreModal').classList.remove('active');
-            });
-            
-            const clickableElements = document.querySelectorAll('button, .chat-item, .tariff-option, .support-btn, .menu-item, .toolbar-btn, .recommended-contact, .emoji-btn');
-            clickableElements.forEach(el => {
-                el.addEventListener('touchstart', function() {
-                    this.style.opacity = '0.7';
-                });
-                
-                el.addEventListener('touchend', function() {
-                    this.style.opacity = '1';
-                });
-                
-                el.addEventListener('touchcancel', function() {
-                    this.style.opacity = '1';
-                });
-            });
-            
-            loadChatsList();
+        }
+
+        function updateTotal() {
+            let sum = cart.reduce((acc, i) => acc + i.price, 0);
+            document.getElementById('cartTotalRub').innerText = sum + ' руб';
+        }
+
+        document.getElementById('clearCartBtn').addEventListener('click', () => {
+            cart = [];
+            updateTotal();
         });
-    </script>
+
+        document.getElementById('payBtn').addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('корзина пуста');
+            } else {
+                let total = cart.reduce((s,i)=>s+i.price,0);
+                alert(`замена (оплата) на сумму ${total} руб (имитация)`);
+                cart = [];
+                updateTotal();
+            }
+        });
+
+        // заявки техподдержки (новый блок)
+        const tickets = [
+            { title: 'Коллеги не работает интерфейс бэкофиса, вызовите 099508', from: 'кассир анна', id: 'tsk-34' },
+            { title: 'не открывается смена', from: 'менеджер дмитрий', id: 'tsk-41' },
+            { title: 'ошибка 1с меркурий', from: 'бухгалтерия', id: 'tsk-39' },
+            { title: 'требуется доступ', from: 'воробьев', id: 'tsk-45' },
+        ];
+
+        const ticketContainer = document.getElementById('ticketList');
+        function renderTickets() {
+            ticketContainer.innerHTML = '';
+            tickets.forEach(t => {
+                const div = document.createElement('div');
+                div.className = 'ticket-item';
+                div.innerHTML = `
+                    <div class="ticket-title">${t.title}</div>
+                    <div class="ticket-detail">от: ${t.from} / ${t.id}</div>
+                    <div class="dull-button" style="font-size:1rem;">взять в работу</div>
+                `;
+                ticketContainer.appendChild(div);
+            });
+        }
+
+        // модалка моего аккаунта
+        const modal = document.getElementById('accountModal');
+        document.getElementById('viewProfileBtn').addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+        document.getElementById('closeModalBtn').addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) modal.style.display = 'none';
+        });
+
+        // журнал (кнопка)
+        document.getElementById('logBtn').addEventListener('click', () => {
+            alert('журнал обновлений (mock): 05.03 плехов принял заявку tsk-41, обновил права');
+        });
+
+        // запуск
+        renderProducts();
+        renderTickets();
+        updateTotal();
+    })();
+</script>
+<!-- надпись убрана, нет смайлов -->
 </body>
 </html>
