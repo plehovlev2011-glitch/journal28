@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang='ru' dir='ltr'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Запрос данных — VK</title>
+    <style>
+        /* --- VK Style Theme Variables (light/dark compatible) --- */
+        :root {
+            --vkui--color_background: #edeef0;
+            --vkui--color_background_content: #ffffff;
+            --vkui--color_background_secondary: #f0f2f5;
+            --vkui--color_background_tertiary: #fafbfc;
+            --vkui--color_background_accent_themed: #447bba;
+            --vkui--color_text_primary: #000000;
+            --vkui--color_text_secondary: #818c99;
+            --vkui--color_text_subhead: #626d7a;
+            --vkui--color_text_link: #2a5885;
+            --vkui--color_icon_accent: #447bba;
+            --vkui--color_icon_secondary: #99a2ad;
+            --vkui--color_separator_primary: #dce1e6;
+            --vkui--color_field_border_alpha: rgba(0, 0, 0, 0.12);
+            --vkui--size_border_radius--regular: 8px;
+            --vkui--size_border_radius_paper--regular: 12px;
+            --vkui--spacing_size_m: 8px;
+            --vkui--spacing_size_xl: 12px;
+            --vkui--spacing_size_2xl: 16px;
+            --vkui--elevation3: 0 0 2px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.08);
+            --vkui--elevation4: 0 0 8px rgba(0, 0, 0, 0.12), 0 16px 16px rgba(0, 0, 0, 0.16);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--vkui--color_background);
+            font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Geneva, Arial, sans-serif;
+            font-size: 13px;
+            line-height: 1.385;
+            color: var(--vkui--color_text_primary);
+            padding: 0;
+        }
+
+        /* Layout */
+        .page-layout {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 16px 20px 48px;
+        }
+
+        /* Header */
+        .vk-header {
+            background: var(--vkui--color_background_content);
+            border-bottom: 1px solid var(--vkui--color_separator_primary);
+            padding: 12px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--vkui--color_background_content);
+        }
+        .vk-header__inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .vk-logo {
+            color: var(--vkui--color_text_primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        .vk-logo svg {
+            width: 28px;
+            height: 28px;
+        }
+        .page-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin-left: auto;
+        }
+
+        /* Card Blocks */
+        .card {
+            background: var(--vkui--color_background_content);
+            border-radius: var(--vkui--size_border_radius_paper--regular);
+            box-shadow: 0 1px 0 0 var(--vkui--color_separator_primary), 0 0 0 1px var(--vkui--color_separator_secondary);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .card__header {
+            padding: 16px 20px 12px;
+            font-weight: 600;
+            font-size: 16px;
+            border-bottom: 1px solid var(--vkui--color_separator_primary);
+        }
+        .card__content {
+            padding: 16px 20px;
+        }
+
+        /* Account selector */
+        .account-selector {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .account-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+        .account-option.active {
+            opacity: 1;
+        }
+        .account-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background-color: var(--vkui--color_background_secondary);
+            background-size: cover;
+            background-position: center;
+            border: 2px solid transparent;
+        }
+        .account-option.active .account-avatar {
+            border-color: var(--vkui--color_background_accent_themed);
+            box-shadow: 0 0 0 2px rgba(68, 123, 186, 0.2);
+        }
+        .account-name {
+            font-weight: 500;
+        }
+        .disabled-hint {
+            font-size: 11px;
+            color: var(--vkui--color_text_secondary);
+            margin-top: 4px;
+        }
+        .edu-link {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--vkui--color_text_link);
+            cursor: pointer;
+            font-size: 13px;
+            padding: 8px 0;
+        }
+        .edu-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Checkbox list */
+        .checkbox-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--vkui--color_field_border_alpha);
+            border-radius: 8px;
+            padding: 12px 16px;
+            background: var(--vkui--color_background_secondary);
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            padding: 4px 0;
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--vkui--color_background_accent_themed);
+        }
+        .checkbox-item label {
+            cursor: pointer;
+            flex: 1;
+        }
+        .no-avatar {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background: var(--vkui--color_icon_secondary);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-size: 12px;
+            color: white;
+            margin-right: 8px;
+        }
+
+        /* Buttons */
+        .vk-button {
+            background: var(--vkui--color_background_accent_themed);
+            color: white;
+            border: none;
+            border-radius: var(--vkui--size_border_radius--regular);
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .vk-button:hover {
+            opacity: 0.88;
+        }
+        .vk-button.secondary {
+            background: var(--vkui--color_background_secondary_alpha);
+            color: var(--vkui--color_text_accent_themed);
+        }
+        .footer-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        /* Modal Loader */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.2s, opacity 0.2s;
+        }
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-card {
+            background: var(--vkui--color_background_modal);
+            border-radius: 16px;
+            max-width: 400px;
+            width: 90%;
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--vkui--elevation4);
+        }
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(68, 123, 186, 0.2);
+            border-top-color: var(--vkui--color_background_accent_themed);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .modal-text {
+            font-size: 15px;
+            margin: 16px 0 8px;
+            color: var(--vkui--color_text_primary);
+        }
+        .modal-sub {
+            font-size: 13px;
+            color: var(--vkui--color_text_secondary);
+            margin-bottom: 24px;
+        }
+        .cancel-btn {
+            background: none;
+            border: none;
+            color: var(--vkui--color_text_link);
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Terminal Logs — появляется только при выгрузке */
+        .terminal-box {
+            background: #1e1e2f;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+        .terminal-box.active {
+            display: block;
+        }
+        .log-line {
+            border-bottom: 1px solid #2a2a3a;
+            padding: 4px 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .timestamp {
+            color: #88f;
+            margin-right: 12px;
+        }
+
+        hr {
+            margin: 16px 0;
+            border-color: var(--vkui--color_separator_primary);
+        }
+        .inline-hint {
+            font-size: 12px;
+            color: var(--vkui--color_text_secondary);
+            margin-left: 28px;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="vk-header">
+    <div class="vk-header__inner">
+        <div class="vk-logo">
+            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.97 5.97C4 7.94 4 11.1 4 17.44v1.12c0 6.34 0 9.5 1.97 11.47C7.94 32 11.1 32 17.44 32h1.12c6.34 0 9.5 0 11.47-1.97C32 28.06 32 24.9 32 18.56v-1.12c0-6.34 0-9.5-1.97-11.47C28.06 4 24.9 4 18.56 4h-1.12C11.1 4 7.94 4 5.97 5.97Zm2.68 6.78c.16 7.28 3.99 11.67 10.3 11.67h.37v-4.17c2.3.23 4.02 1.95 4.72 4.17h3.32a9.22 9.22 0 0 0-4.69-5.85 8.89 8.89 0 0 0 3.99-5.82h-3.02c-.64 2.32-2.52 4.42-4.32 4.62v-4.62h-3.07v8.08c-1.86-.46-4.3-2.73-4.4-8.08h-3.2Z" fill="currentColor"/>
+            </svg>
+            <span>ВКонтакте</span>
+        </div>
+        <div class="page-title">Запрос данных</div>
+    </div>
+</div>
+
+<div class="page-layout">
+    <!-- Выбор аккаунта -->
+    <div class="card">
+        <div class="card__header">Выберите аккаунт</div>
+        <div class="card__content">
+            <div class="account-selector">
+                <div class="account-option" data-account="lev">
+                    <div class="account-avatar" style="background-image: url('ava1.png'); background-size: cover;"></div>
+                    <span class="account-name">Лев Плехов</span>
+                    <span class="disabled-hint">⚠️ Недоступен</span>
+                </div>
+                <div class="account-option active" data-account="ksenia">
+                    <div class="account-avatar" style="background-image: url('ava2.png'); background-size: cover;"></div>
+                    <span class="account-name">Ксения Хардина</span>
+                    <span class="disabled-hint"></span>
+                </div>
+                <button class="edu-link" id="eduAccountsBtn">Просмотр аккаунтов учебных организаций →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Выбор переписок и данных (без фотографий) -->
+    <div class="card">
+        <div class="card__header">Выгружаемые данные</div>
+        <div class="card__content">
+            <div style="margin-bottom: 16px;">
+                <label style="display: flex; align-items: center; gap: 12px;">
+                    <input type="checkbox" id="chatPeriodCheckbox" checked> 
+                    <span><strong>Переписки</strong> — не старше 1 года</span>
+                </label>
+                <div class="inline-hint">Будут выгружены текстовые сообщения за последние 12 месяцев</div>
+            </div>
+
+            <div style="font-weight: 500; margin: 12px 0 8px;">Диалоги для выгрузки (выберите нужные):</div>
+            <div class="checkbox-list" id="dialogsList">
+                <!-- Список диалогов вставится через JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Кнопка выгрузки -->
+    <div class="footer-buttons">
+        <button class="vk-button secondary" id="cancelTaskBtn" style="display: none;">Отмена</button>
+        <button class="vk-button" id="exportBtn">Выгрузить (2.1 MB)</button>
+    </div>
+
+    <!-- Терминал логов (появляется только во время выгрузки) -->
+    <div class="terminal-box" id="terminalLogs"></div>
+</div>
+
+<!-- Модальное окно загрузки -->
+<div id="loaderModal" class="modal-overlay">
+    <div class="modal-card">
+        <div class="spinner"></div>
+        <div class="modal-text">Мы выгружаем запрошенные данные.</div>
+        <div class="modal-sub">Из-за занятости серверов это может занять до 10 минут</div>
+        <button class="cancel-btn" id="modalCancelBtn">Отмена</button>
+    </div>
+</div>
+
+<script>
+    // Список диалогов (как в запросе, сохраняя дубли)
+    const rawDialogs = [
+        "Марина Перекладова-Кит", "Марина Перекладова-Кит", "Продюсерский дом \"ДИНАСТИЯ\"", "Елена Садакова", "Елена Садакова",
+        "ИВЭСЭП (КФ)", "Николай Солоницын", "Николай Солоницын", "Solo Dent | Стоматология | Киров", "Дарья Караваева",
+        "Дарья Караваева", "Андрей Кошелев", "Андрей Кошелев", "Живу дальше", "Свадебный фотограф Киров", "Андрей Уфимцев",
+        "Андрей Уфимцев", "На страже ВКонтакте", "ИВЭСЭП (КФ)", "Ирина Вычегжанина-Полещук", "Ирина Вычегжанина-Полещук",
+        "Александр Лобанов", "Александр Лобанов", "Есть одна идея", "ЗАО им. Френсиса Дрейка", "Надежда Садакова",
+        "Надежда Садакова", "ВятГУ (бывш. ВятГТУ, КирПИ)", "Андрей Рычихин", "Андрей Рычихин", "🚀", "Анна Фокина",
+        "Анна Фокина", "Наталья Пестова", "Наталья Пестова", "АО \"Электромашиностроительный завод \"ЛЕПСЕ\"", "Александр Коновалов",
+        "Александр Коновалов", "НА МВД РФ", "Оксана Висящева", "Оксана Висящева", "Мариночка Кострова", "Мариночка Кострова",
+        "Андрей Осипов", "Ксения Туйнас", "Ксения Туйнас", "Ничего не понимаю", "ВятГУ (бывш. ВятГТУ, КирПИ)", "Ольга Щенникова Мастер Украшений",
+        "Ольга Щенникова Мастер Украшений", "Здоровье и красота без лекарств", "Анна Кожина", "Анна Кожина, Андрей Осипов"
+    ];
+    
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+
+    function renderDialogs() {
+        const container = document.getElementById('dialogsList');
+        container.innerHTML = '';
+        rawDialogs.forEach((name, idx) => {
+            const div = document.createElement('div');
+            div.className = 'checkbox-item';
+            const checkboxId = `dialog_${idx}`;
+            div.innerHTML = `
+                <input type="checkbox" id="${checkboxId}" class="dialog-checkbox">
+                <label for="${checkboxId}">${escapeHtml(name)}</label>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    // --- Логирование в терминал (появляется только при выгрузке) ---
+    const terminal = document.getElementById('terminalLogs');
+    function clearTerminal() {
+        terminal.innerHTML = '';
+    }
+    function addLog(message) {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute:'2-digit', second:'2-digit' });
+        const logDiv = document.createElement('div');
+        logDiv.className = 'log-line';
+        logDiv.innerHTML = `<span class="timestamp">[${timeStr}]</span> ${message}`;
+        terminal.appendChild(logDiv);
+        terminal.scrollTop = terminal.scrollHeight;
+    }
+    function showTerminal() {
+        terminal.classList.add('active');
+    }
+    function hideTerminal() {
+        terminal.classList.remove('active');
+        clearTerminal();
+    }
+
+    // --- Процесс выгрузки ---
+    let exportTimer = null;
+    let isExporting = false;
+    const modal = document.getElementById('loaderModal');
+    const exportBtn = document.getElementById('exportBtn');
+    const cancelTaskBtn = document.getElementById('cancelTaskBtn');
+
+    function showModal() {
+        modal.classList.add('active');
+    }
+    function hideModal() {
+        modal.classList.remove('active');
+    }
+
+    function finishExport() {
+        isExporting = false;
+        if (exportTimer) clearTimeout(exportTimer);
+        exportTimer = null;
+        exportBtn.style.display = 'inline-block';
+        cancelTaskBtn.style.display = 'none';
+        hideModal();
+        hideTerminal();     // терминал скрываем после завершения
+    }
+
+    function cancelExport() {
+        if (!isExporting) return;
+        if (exportTimer) clearTimeout(exportTimer);
+        addLog('⚠️ Выгрузка отменена пользователем.');
+        finishExport();
+    }
+
+    function startExport() {
+        if (isExporting) return;
+        // проверка выбранного аккаунта
+        const activeAccount = document.querySelector('.account-option.active');
+        if (!activeAccount || activeAccount.dataset.account !== 'ksenia') {
+            alert('Ошибка: можно выгружать данные только для аккаунта Ксения Хардина.');
+            return;
+        }
+        // проверка выбора диалогов
+        const anyDialogChecked = Array.from(document.querySelectorAll('.dialog-checkbox')).some(cb => cb.checked);
+        if (!anyDialogChecked) {
+            alert('Выберите хотя бы один диалог для выгрузки.');
+            return;
+        }
+        
+        // очищаем прошлые логи и показываем терминал
+        clearTerminal();
+        showTerminal();
+        
+        isExporting = true;
+        exportBtn.style.display = 'none';
+        cancelTaskBtn.style.display = 'inline-block';
+        showModal();
+        
+        const checkedCount = document.querySelectorAll('.dialog-checkbox:checked').length;
+        addLog(`🚀 Запуск процесса выгрузки (выбрано ${checkedCount} диалогов, период: не старше 1 года).`);
+        addLog(`⏳ Сервер начал подготовку архива...`);
+        
+        let step = 1;
+        const interval = setInterval(() => {
+            if (!isExporting) {
+                clearInterval(interval);
+                return;
+            }
+            if (step === 1) addLog('📡 Запрос на формирование архива отправлен в обработку.');
+            if (step === 2) addLog('🔄 Обработка сообщений (этап 1/3) ...');
+            if (step === 3) addLog('📁 Упаковка медиа-вложений ...');
+            if (step === 4) addLog('🔐 Шифрование архива (опционально) ...');
+            if (step === 5) addLog('✅ Готовность архива ~85%, финальная сборка.');
+            step++;
+        }, 18000); // каждые 18 секунд
+        
+        // Таймер 2.5 минуты = 150000 мс
+        exportTimer = setTimeout(() => {
+            if (!isExporting) return;
+            clearInterval(interval);
+            addLog('🎉 Архив успешно сформирован! Начинается загрузка ZIP-файла.');
+            
+            // Симуляция скачивания файла из корня
+            const link = document.createElement('a');
+            link.href = '/ZIP%20archive_ext_vk.zip';
+            link.download = 'archive_ext_vk.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            addLog('📦 Файл "ZIP archive_ext_vk.zip" (2.1 MB) скачан.');
+            addLog('✨ Процесс завершён успешно.');
+            finishExport();
+            hideModal();
+        }, 150000);
+    }
+
+    // --- Обработчики UI ---
+    document.querySelectorAll('.account-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+            if (opt.dataset.account === 'lev') {
+                alert('Аккаунт Лев Плехов недоступен для выгрузки данных. Выберите Ксению Хардину.');
+                return;
+            }
+            document.querySelectorAll('.account-option').forEach(o => o.classList.remove('active'));
+            opt.classList.add('active');
+            // лог не пишем, потому что терминал еще не активен, но можно было бы, но по заданию терминал только при выгрузке
+        });
+    });
+    
+    document.getElementById('eduAccountsBtn').addEventListener('click', () => {
+        // кнопка ничего не делает, просто алерт для имитации (или ничего)
+        // в задаче сказано "ничего не делает"
+    });
+    
+    document.getElementById('exportBtn').addEventListener('click', startExport);
+    document.getElementById('cancelTaskBtn').addEventListener('click', cancelExport);
+    document.getElementById('modalCancelBtn').addEventListener('click', cancelExport);
+    
+    // Рендер списка диалогов
+    renderDialogs();
+</script>
+</body>
+</html>
