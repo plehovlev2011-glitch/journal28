@@ -496,15 +496,16 @@ const MONTHS_RU = ['янв','фев','мар','апр','мая','июн','июл
 const MONTHS_FULL = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const COLORS = ['#4285F4','#EA4335','#FBBC04','#34A853','#FF6D00','#00BCD4','#9C27B0','#FF5722','#607D8B','#795548','#E91E63','#009688'];
 
-// ─────────── GAS BRIDGE ──────────────
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzg-i_wy00WeMSDp5GhPOydzZHAusH0i53gWswE7fmm0l9_NsP5l2op0pMBx48Mj8ri/exec';
+
 function gs(fn, ...args) {
-  return new Promise((res, rej) => {
-    try {
-      google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](...args);
-    } catch(e) {
-      res({ success:false, error:'Вне Google Apps Script' });
-    }
-  });
+  return fetch(SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fn, params: args })
+  })
+  .then(res => res.json())
+  .catch(err => ({ success: false, error: err.message }));
 }
 
 // ─────────── AUTH ──────────────
