@@ -496,14 +496,19 @@ const MONTHS_RU = ['янв','фев','мар','апр','мая','июн','июл
 const MONTHS_FULL = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const COLORS = ['#4285F4','#EA4335','#FBBC04','#34A853','#FF6D00','#00BCD4','#9C27B0','#FF5722','#607D8B','#795548','#E91E63','#009688'];
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxbFwBAv4secWutBXnghGx1hgpPN57_AttIB42-Aj7cMkXG3Fn2eIrQkcUUDBpMSQtO/exec';
+const SCRIPT_URL = 'https://corsproxy.io/?' + encodeURIComponent('https://script.google.com/macros/s/AKfycbxbFwBAv4secWutBXnghGx1hgpPN57_AttIB42-Aj7cMkXG3Fn2eIrQkcUUDBpMSQtO/exec');
 
-function gs(fn, ...args) {
-  return fetch(SCRIPT_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ fn, params: args })
-  }).then(res => res.json()).catch(err => ({ success: false, error: err.message }));
+async function gs(fn, ...args) {
+  try {
+    const response = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fn, params: args })
+    });
+    return await response.json();
+  } catch(err) {
+    return { success: false, error: err.message };
+  }
 }
 // ─────────── AUTH ──────────────
 async function doLogin() {
