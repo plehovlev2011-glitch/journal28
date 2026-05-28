@@ -503,11 +503,8 @@ function gs(fn, ...args) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ fn, params: args })
-  })
-  .then(res => res.json())
-  .catch(err => ({ success: false, error: err.message }));
+  }).then(res => res.json()).catch(err => ({ success: false, error: err.message }));
 }
-
 // ─────────── AUTH ──────────────
 async function doLogin() {
   const email = document.getElementById('t-email').value.trim();
