@@ -1,542 +1,1247 @@
 <!DOCTYPE html>
-<html lang='ru' dir='ltr'>
+<html lang="ru">
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="shortcut icon" href="/images/icons/favicons/fav_logo.ico?8" />
-    <link rel="preconnect" href="https://login.vk.com" />
-    <link rel="preconnect" href="https://api.vk.com" />
-    <link rel="apple-touch-icon" href="/images/icons/pwa/apple/default.png?15">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes' />
-    <meta name="og:title" content="" />
-    <meta name="og:description" content="Защита данных ВКонтакте" />
-    <meta name="og:image" content="https://vk.com/images/landings/transparency/share.png" />
-    <meta name="referrer" content="no-referrer" />
-    <title>Защита данных ВКонтакте</title>
-    <noscript><meta http-equiv="refresh" content="0; URL=/badbrowser.php"></noscript>
-    <style>
-        /* --- Base Styles & Resets (Inlined from CSS) --- */
-        body {
-            background: var(--vkui--color_background);
-            color: var(--vkui--color_text_primary);
-            margin: 0;
-            padding: 0;
-            direction: ltr;
-            font-size: var(--vkui--font_text--font_size--compact);
-            font-family: var(--vkui--font_family_base, -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Geneva, "Noto Sans Armenian", "Noto Sans Bengali", "Noto Sans Cherokee", "Noto Sans Devanagari", "Noto Sans Ethiopic", "Noto Sans Georgian", "Noto Sans Hebrew", "Noto Sans Kannada", "Noto Sans Khmer", "Noto Sans Lao", "Noto Sans Osmanya", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Thai", arial, Tahoma, verdana, sans-serif);
-            line-height: 1.154;
-            font-weight: 400;
-            -webkit-font-smoothing: subpixel-antialiased;
-            -moz-osx-font-smoothing: auto;
-        }
-        :root {
-            --vkui--size_border_radius--regular: 8px;
-            --vkui--size_border_radius_paper--regular: 12px;
-            --vkui--size_check_border_radius--regular: 4px;
-            --vkui--size_button_large_height--regular: 44px;
-            --vkui--size_button_large_height--compact: 36px;
-            --vkui--size_button_medium_height--regular: 36px;
-            --vkui--size_button_medium_height--compact: 32px;
-            --vkui--size_button_small_height--regular: 30px;
-            --vkui--size_button_small_height--compact: 28px;
-            --wide-column-width: 550px;
-            --narrow-column-width: 230px;
-            --boxes-box-shadow: 0 2px 10px var(--black_alpha40);
-            --online-badge-background: var(--vkui--color_background_content);
-            --page-block-shadow: 0 1px 0 0 var(--vkui--color_separator_primary), 0 0 0 1px var(--vkui--color_separator_secondary);
-            --page-block-offset: 15px;
-            --page-block-header-height: 54px;
-            --page-block-header-button-margin-top: 14px;
-            --page-block-header-font-size: 16px;
-            --h2-font-size: 16px;
-            --vkui--gradient_black: rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.02) 15%, rgba(0, 0, 0, 0.08) 30%, rgba(0, 0, 0, 0.32) 70%, rgba(0, 0, 0, 0.38) 85%, rgba(0, 0, 0, 0.4) 100%;
-            --vkui--gradient_white: rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.05) 15%, rgba(255, 255, 255, 0.2) 30%, rgba(255, 255, 255, 0.8) 70%, rgba(255, 255, 255, 0.95) 85%, rgba(255, 255, 255, 1) 100%;
-            --vkui--gradient_tint: rgba(249, 249, 249, 0) 0%, rgba(249, 249, 249, 0.05) 15%, rgba(249, 249, 249, 0.2) 30%, rgba(249, 249, 249, 0.8) 70%, rgba(249, 249, 249, 0.95) 85%, rgba(249, 249, 249, 1) 100%;
-            --vkui--gradient: rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.05) 15%, rgba(255, 255, 255, 0.2) 30%, rgba(255, 255, 255, 0.8) 70%, rgba(255, 255, 255, 0.95) 85%, rgba(255, 255, 255, 1) 100%;
-            --vkui--elevation1: 0px 0px 2px rgba(0, 0, 0, 0.03), 0px 2px 2px rgba(0, 0, 0, 0.06);
-            --vkui--elevation2: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 4px rgba(0, 0, 0, 0.06);
-            --vkui--elevation3: 0px 0px 2px rgba(0, 0, 0, 0.08), 0px 4px 16px rgba(0, 0, 0, 0.08);
-            --vkui--elevation4: 0px 0px 8px rgba(0, 0, 0, 0.12), 0px 16px 16px rgba(0, 0, 0, 0.16);
-            --vkui--blur_m: 16px;
-            --vkui--font_family_fallbacks: -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", Geneva, "Noto Sans Armenian", "Noto Sans Bengali", "Noto Sans Cherokee", "Noto Sans Devanagari", "Noto Sans Ethiopic", "Noto Sans Georgian", "Noto Sans Hebrew", "Noto Sans Kannada", "Noto Sans Khmer", "Noto Sans Lao", "Noto Sans Osmanya", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Thai", arial, Tahoma, verdana, sans-serif;
-            --vkui--font_family_accent: "VK Sans Display", -apple-system, system-ui, "Helvetica Neue", Roboto, sans-serif;
-            --vkui--font_family_base: -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica Neue", Geneva, "Noto Sans Armenian", "Noto Sans Bengali", "Noto Sans Cherokee", "Noto Sans Devanagari", "Noto Sans Ethiopic", "Noto Sans Georgian", "Noto Sans Hebrew", "Noto Sans Kannada", "Noto Sans Khmer", "Noto Sans Lao", "Noto Sans Osmanya", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Thai", arial, Tahoma, verdana, sans-serif;
-            --vkui--font_weight_accent1: 600;
-            --vkui--font_weight_accent2: 500;
-            --vkui--font_weight_accent3: 400;
-            --vkui--font_weight_base1: 600;
-            --vkui--font_weight_base2: 500;
-            --vkui--font_weight_base3: 400;
-            --vkui--spacing_size_2xs: 2px;
-            --vkui--spacing_size_xs: 4px;
-            --vkui--spacing_size_s: 6px;
-            --vkui--spacing_size_m: 8px;
-            --vkui--spacing_size_l: 10px;
-            --vkui--spacing_size_xl: 12px;
-            --vkui--spacing_size_2xl: 16px;
-            --vkui--spacing_size_3xl: 20px;
-            --vkui--spacing_size_4xl: 24px;
-            --vkui--opacity_disable: 0.52;
-            --vkui--opacity_disable_accessibility: 0.52;
-            --vkui--opacity_active: 0.72;
-            --vkui--z_index_modal: 99;
-            --vkui--z_index_popout: 100;
-            --vkui--color_text_link: #2a5885;
-            --vkui--color_text_primary: #000000;
-            --vkui--color_text_secondary: #818c99;
-            --vkui--color_text_subhead: #626d7a;
-            --vkui--color_text_tertiary: #99a2ad;
-            --vkui--color_background_accent: #447bba;
-            --vkui--color_background_modal: #ffffff;
-            --vkui--color_background_secondary: #f0f2f5;
-            --vkui--color_background_tertiary: #fafbfc;
-            --vkui--color_separator_primary: #dce1e6;
-            --vkui--color_separator_secondary: #e7e8ec;
-            --vkui--color_icon_accent: #447bba;
-            --vkui--color_icon_secondary: #99a2ad;
-            --vkui--color_icon_tertiary: #aeb7c2;
-            --black_alpha8: rgba(0, 0, 0, 0.08);
-            --black_alpha12: rgba(0, 0, 0, 0.12);
-            --black_alpha40: rgba(0, 0, 0, 0.40);
-            --black_alpha60: rgba(0, 0, 0, 0.60);
-            --black_alpha72: rgba(0, 0, 0, 0.72);
-            --blue_400: #5181b8;
-            --white: #ffffff;
-            --steel_gray_60: #edeef0;
-            --steel_gray_100: #dce1e6;
-            --steel_gray_140: #c5d0db;
-            --steel_gray_500: #6f7985;
-            --steel_gray_540: #626d7a;
-        }
-        [scheme=vkcom_dark] {
-            --vkui--color_text_primary: #e1e3e6;
-            --vkui--color_text_secondary: #828282;
-            --vkui--color_text_subhead: #939393;
-            --vkui--color_text_tertiary: #656565;
-            --vkui--color_background_accent: #71aaeb;
-            --vkui--color_background_modal: #292929;
-            --vkui--color_background_secondary: #333333;
-            --vkui--color_background_tertiary: #292929;
-            --vkui--color_separator_primary: #363738;
-            --vkui--color_separator_secondary: #292929;
-            --vkui--color_icon_accent: #71aaeb;
-            --vkui--color_icon_secondary: #828282;
-            --vkui--color_icon_tertiary: #656565;
-        }
-        .landing {
-            text-align: center;
-        }
-        .landing_transparencyHeader {
-            position: fixed;
-            z-index: 2;
-            top: 0;
-            width: 100%;
-            background: var(--blue_400);
-            height: 76px;
-            box-sizing: border-box;
-            font-family: SF Pro Text, "Noto Sans Armenian", "Noto Sans Bengali", "Noto Sans Cherokee", "Noto Sans Devanagari", "Noto Sans Ethiopic", "Noto Sans Georgian", "Noto Sans Hebrew", "Noto Sans Kannada", "Noto Sans Khmer", "Noto Sans Lao", "Noto Sans Osmanya", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Thai", sans-serif;
-            font-size: 17px;
-            font-weight: 400;
-        }
-        .landing_transparencyHeader__content {
-            width: 100%;
-            height: 100%;
-            max-width: 940px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .landing_transparencyHeader__brandLink {
-            display: inline-block;
-            width: 36px;
-            height: 36px;
-            color: var(--white);
-            transition: opacity .3s;
-            flex-shrink: 0;
-            margin-right: 16px;
-        }
-        .landing_transparencyHeader__title {
-            display: flex;
-            align-items: center;
-            font-family: "TT Commons", "Noto Sans Armenian", "Noto Sans Bengali", "Noto Sans Cherokee", "Noto Sans Devanagari", "Noto Sans Ethiopic", "Noto Sans Georgian", "Noto Sans Hebrew", "Noto Sans Kannada", "Noto Sans Khmer", "Noto Sans Lao", "Noto Sans Osmanya", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Thai", sans-serif;
-            font-size: 17px;
-            font-weight: 600;
-            line-height: 1.41;
-            color: var(--white);
-        }
-        .landing_transparencyHeader__navList {
-            display: inline-flex;
-            align-items: center;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        .landing_transparencyHeader__navItem {
-            list-style: none;
-            color: var(--white);
-            opacity: 1;
-            transition: opacity .3s;
-        }
-        .landing_transparencyHeader__navItem a {
-            color: var(--white);
-            display: inline-block;
-            padding: 28px 20px;
-            text-decoration: none;
-        }
-        .landing_transparencyMenu {
-            margin: 76px auto;
-            max-width: 940px;
-        }
-        .LandingsTransparencyTabsScroll {
-            position: relative;
-            margin: 76px auto;
-            max-width: 940px;
-            border-bottom: 1px solid var(--vkui--color_separator_primary);
-        }
-        .ui_tabs {
-            background: var(--steel_gray_10);
-            padding: 8px;
-        }
-        .ui_tabs .ui_tab_sel a, .ui_tabs .ui_tab_sel a b, .ui_tabs .ui_tab_sel a:hover {
-            background: var(--light_blue_500);
-            color: var(--white);
-        }
-        .landing_transparencyMenu .ui_tabs {
-            font-size: 14px;
-            padding: 0;
-            border-bottom: none;
-        }
-        .landing_transparencyMenu .ui_tab {
-            padding-left: 0;
-            padding-right: 0;
-            line-height: 1.29;
-            padding-top: 24px;
-            padding-bottom: 24px !important;
-            margin-left: 0;
-            margin-right: 32px;
-            opacity: .6;
-            color: var(--black);
-            display: inline-block;
-        }
-        .landing_transparencyMenu .ui_tab_sel {
-            opacity: 1;
-            border-bottom: 2px solid #2975cc;
-        }
-        .landing_transparencyContent {
-            margin: 76px auto;
-            margin-bottom: 50px;
-            width: 100%;
-            max-width: 940px;
-            box-sizing: border-box;
-        }
-        .landing_transparencySection {
-            padding-top: 72px;
-        }
-        .landing_transparencySection__counter {
-            box-sizing: border-box;
-            width: 140px;
-            height: 140px;
-            background-color: var(--blue_400);
-            margin-bottom: 40px;
-            line-height: 1.25;
-            font-size: 48px;
-            font-weight: 600;
-            padding-left: 31px;
-            padding-top: 64px;
-            color: var(--white);
-            font-family: var(--vk-sans-display, 'TT Commons', "Noto Sans Armenian", "Noto Sans Bengali", "Noto Sans Cherokee", "Noto Sans Devanagari", "Noto Sans Ethiopic", "Noto Sans Georgian", "Noto Sans Hebrew", "Noto Sans Kannada", "Noto Sans Khmer", "Noto Sans Lao", "Noto Sans Osmanya", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Thai", sans-serif);
-        }
-        .landing_transparencySection__title {
-            color: var(--vkui--color_text_muted);
-            font-size: 49px;
-            font-weight: 600;
-            margin: 0 0 24px;
-            line-height: 1.25;
-            font-family: var(--vk-sans-display, 'TT Commons', "Noto Sans Armenian", "Noto Sans Bengali", "Noto Sans Cherokee", "Noto Sans Devanagari", "Noto Sans Ethiopic", "Noto Sans Georgian", "Noto Sans Hebrew", "Noto Sans Kannada", "Noto Sans Khmer", "Noto Sans Lao", "Noto Sans Osmanya", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Thai", sans-serif);
-        }
-        .landing_transparencySection__description {
-            font-size: 22px;
-            line-height: 1.55;
-            color: var(--vkui--color_text_subhead);
-            margin-bottom: 72px;
-            font-family: var(--vk-sans-display, SFProDisplay, "Noto Sans Armenian", "Noto Sans Bengali", "Noto Sans Cherokee", "Noto Sans Devanagari", "Noto Sans Ethiopic", "Noto Sans Georgian", "Noto Sans Hebrew", "Noto Sans Kannada", "Noto Sans Khmer", "Noto Sans Lao", "Noto Sans Osmanya", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Thai", sans-serif);
-        }
-        .landing_transparencySection__wiki {
-            padding-left: 80px;
-            font-family: SF Pro Text, "Noto Sans Armenian", "Noto Sans Bengali", "Noto Sans Cherokee", "Noto Sans Devanagari", "Noto Sans Ethiopic", "Noto Sans Georgian", "Noto Sans Hebrew", "Noto Sans Kannada", "Noto Sans Khmer", "Noto Sans Lao", "Noto Sans Osmanya", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Thai", sans-serif;
-            font-size: 17px;
-            line-height: 1.65;
-            text-align: left;
-        }
-        [dir=rtl] .landing_transparencySection__wiki {
-            text-align: right;
-            padding-right: 80px;
-            padding-left: 0;
-        }
-        .landing_transparencySection__wiki .wikiSubHeader {
-            font-size: 24px;
-            display: block;
-            color: var(--blue_400);
-            font-weight: 500;
-            margin-top: 64px;
-            margin-bottom: 12px;
-            margin-left: -44px;
-            line-height: 23px;
-            font-family: var(--vk-sans-display, 'TT Commons', "Noto Sans Armenian", "Noto Sans Bengali", "Noto Sans Cherokee", "Noto Sans Devanagari", "Noto Sans Ethiopic", "Noto Sans Georgian", "Noto Sans Hebrew", "Noto Sans Kannada", "Noto Sans Khmer", "Noto Sans Lao", "Noto Sans Osmanya", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Thai", sans-serif);
-        }
-        [dir=rtl] .landing_transparencySection__wiki .wikiSubHeader {
-            margin-right: -44px;
-            margin-left: 0;
-        }
-        .listing {
-            list-style: disc;
-            color: var(--light_blue_400);
-            margin: 5px 0;
-            padding-left: 30px;
-        }
-        .wikiVkLink, .wikiExtLink {
-            color: var(--blue_400);
-            text-decoration: none;
-        }
-        .landing_transparencyArchive {
-            padding-bottom: 12px;
-            border-bottom: 1px solid #e7e8ec;
-            margin-top: 24px;
-        }
-        .landing_transparencyArchive__controls {
-            margin-top: 12px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-        }
-        .flat_button {
-            background-color: var(--vkui--color_background_accent_themed);
-            color: var(--vkui--color_text_contrast_themed);
-            border: 0;
-            display: inline-block;
-            position: relative;
-            line-height: normal;
-            padding: 7px 16px 8px;
-            font-size: 12.5px;
-            line-height: 15px;
-            cursor: pointer;
-            border-radius: var(--vkui--size_border_radius--regular);
-            text-decoration: none;
-        }
-        .flat_button:hover {
-            opacity: 0.88;
-            text-decoration: none;
-        }
-        .landing_transparencySection__nextWrap {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            margin-top: 40px;
-        }
-        .landing_transparencySection__next {
-            display: inline-block;
-            position: relative;
-            margin: 40px 80px;
-            font-family: "TT Commons", "Noto Sans Armenian", "Noto Sans Bengali", "Noto Sans Cherokee", "Noto Sans Devanagari", "Noto Sans Ethiopic", "Noto Sans Georgian", "Noto Sans Hebrew", "Noto Sans Kannada", "Noto Sans Khmer", "Noto Sans Lao", "Noto Sans Osmanya", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Thai", sans-serif;
-            font-weight: 500;
-            font-size: 17px;
-            line-height: 1.41;
-            color: var(--blue_400);
-            text-decoration: none;
-        }
-        .landing_transparencyFooter {
-            width: 100%;
-            height: 81px;
-            box-shadow: inset 0 1px 0 0 #f0f2f5;
-        }
-        .landing_transparencyFooter__links {
-            margin: 0 auto;
-            display: flex;
-            width: 100%;
-            height: 100%;
-            max-width: 940px;
-            justify-content: space-between;
-            align-items: center;
-            box-sizing: border-box;
-        }
-        @media (max-width: 940px) {
-            .landing_transparencyHeader, .landing_transparencyMenu, .LandingsTransparencyTabsScroll, .landing_transparencyContent, .landing_transparencyFooter__links {
-                padding-right: 15px;
-                padding-left: 15px;
-            }
-            .landing_transparencyHeader__navList { display: none; }
-            .landing_transparencySection__wiki { padding-left: 0; }
-            [dir=rtl] .landing_transparencySection__wiki { padding-right: 0; }
-            .landing_transparencySection__wiki .wikiSubHeader { margin-left: 0; }
-            .landing_transparencySection__next { margin: 40px 0; }
-            .landing_transparencySection__counter { width: 56px; height: 56px; font-size: 28px; padding-top: 18px; padding-left: 11px; margin-bottom: 20px; }
-            .landing_transparencySection__title { font-size: 24px; }
-            .landing_transparencySection__description { font-size: 19px; }
-            .landing_transparencyFooter__links { flex-direction: column; justify-content: space-around; }
-        }
-    </style>
-    <style>
-        /* Additional critical styles for buttons and layout */
-        .clear_fix::after {
-            content: ".";
-            display: block;
-            height: 0;
-            font-size: 0;
-            line-height: 0;
-            clear: both;
-            visibility: hidden;
-        }
-        .ui_tabs_old {
-            background: none;
-            padding: 0;
-            border-bottom: 1px solid var(--vkui--color_separator_primary);
-        }
-        .ui_tab_old {
-            float: left;
-            margin: 0 32px -1px 0;
-            padding: 14px 0 15px;
-            font-size: 14px;
-            line-height: 18px;
-            font-weight: 400;
-            color: var(--vkui--color_text_secondary);
-            text-decoration: none;
-            border-bottom: 2px solid transparent;
-        }
-        .ui_tab_sel {
-            color: var(--vkui--color_text_primary);
-            border-bottom-color: var(--vkui--color_stroke_accent);
-        }
-        .landing_transparencyMenu .ui_tab {
-            float: left;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#1a73e8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Дневник — Учитель</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary:#1a73e8; --primary-d:#1557b0; --primary-light:#e8f0fe;
+  --bg:#f8f9fa; --card:#fff; --border:#e8eaed;
+  --text:#202124; --ts:#5f6368; --th:#9aa0a6;
+  --good:#34a853; --bad:#ea4335; --warn:#fbbc04; --orange:#fa7b17;
+  --nav-h:56px; --sb:env(safe-area-inset-bottom,0px);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;font-family:'Roboto',sans-serif;background:var(--bg);color:var(--text);overscroll-behavior:none;}
+
+/* ── AUTH ────── */
+#auth{position:fixed;inset:0;z-index:200;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;}
+.auth-logo{width:72px;height:72px;border-radius:18px;background:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:24px;}
+.auth-logo svg{width:38px;height:38px;}
+.auth-title{font-size:22px;font-weight:700;margin-bottom:4px;}
+.auth-sub{font-size:13px;color:var(--ts);margin-bottom:40px;}
+.af{width:100%;max-width:340px;}
+.field{position:relative;margin-bottom:18px;}
+.field input{width:100%;padding:14px 16px 14px 46px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-family:'Roboto',sans-serif;background:#f8f9fa;outline:none;transition:border-color .15s;}
+.field input:focus{border-color:var(--primary);background:#fff;}
+.fi{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--th);pointer-events:none;}
+.btn-p{width:100%;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:'Roboto',sans-serif;cursor:pointer;transition:opacity .15s;}
+.btn-p:active{opacity:.85;}
+.btn-p:disabled{opacity:.6;}
+.auth-err{color:var(--bad);font-size:13px;text-align:center;margin-top:10px;min-height:18px;}
+.auth-hint{font-size:12px;color:var(--th);text-align:center;margin-top:20px;}
+.auth-hint b{color:var(--ts);font-weight:500;}
+.auth-hint a{color:var(--primary);text-decoration:none;font-size:12px;}
+
+/* ── APP ────── */
+#app{height:100dvh;display:flex;flex-direction:column;display:none;}
+.topbar{flex-shrink:0;padding:0 16px;height:52px;border-bottom:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:space-between;}
+.topbar-left{display:flex;align-items:center;gap:10px;}
+.back-btn{width:36px;height:36px;border:none;background:none;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ts);}
+.back-btn:active{background:var(--bg);}
+.topbar-title{font-size:17px;font-weight:600;}
+.topbar-right{display:flex;align-items:center;gap:4px;}
+.icon-btn{width:36px;height:36px;border:none;background:none;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ts);}
+.icon-btn:active{background:var(--bg);}
+
+/* ── SCREENS ────── */
+.screen{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;display:none;padding-bottom:16px;}
+.screen.active{display:block;}
+.screens-wrap{flex:1;position:relative;overflow:hidden;}
+
+/* ── BOTTOM NAV ────── */
+.bottom-nav{flex-shrink:0;height:calc(var(--nav-h) + var(--sb));display:flex;border-top:1px solid var(--border);padding-bottom:var(--sb);background:var(--card);}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:none;cursor:pointer;padding:6px 0;color:var(--th);font-size:10px;font-family:'Roboto',sans-serif;transition:color .12s;}
+.ni.active{color:var(--primary);}
+.ni svg{width:22px;height:22px;}
+
+/* ── COMMON ────── */
+.spinner{width:26px;height:26px;border:2.5px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading{display:flex;align-items:center;justify-content:center;padding:60px 0;}
+.empty{padding:48px 24px;text-align:center;color:var(--th);font-size:14px;}
+.section-title{font-size:11px;font-weight:600;color:var(--ts);letter-spacing:.7px;text-transform:uppercase;padding:16px 16px 6px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--border);}
+.row:last-child{border-bottom:none;}
+.row-tap{cursor:pointer;}
+.row-tap:active{background:var(--bg);}
+.fa{margin-left:auto;color:var(--th);}
+.chip{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:500;}
+.chip-blue{background:var(--primary-light);color:var(--primary);}
+.chip-green{background:#e6f4ea;color:#137333;}
+.chip-yellow{background:#fef7e0;color:#b06000;}
+.chip-red{background:#fce8e6;color:#c5221f;}
+
+/* FAB */
+.fab{position:fixed;bottom:calc(var(--nav-h) + var(--sb) + 16px);right:16px;width:52px;height:52px;border-radius:50%;background:var(--primary);color:#fff;border:none;font-size:26px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.18);cursor:pointer;z-index:50;}
+.fab:active{opacity:.85;}
+
+/* ── HOME / STATS ────── */
+.home-hello{padding:16px;background:var(--card);border-bottom:1px solid var(--border);}
+.home-hello h2{font-size:18px;font-weight:700;margin-bottom:2px;}
+.home-hello p{font-size:13px;color:var(--ts);}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:4px;}
+.stat-val{font-size:28px;font-weight:700;color:var(--primary);}
+.stat-label{font-size:12px;color:var(--ts);}
+.recent-grade-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);}
+.recent-grade-item:last-child{border-bottom:none;}
+.rg-grade{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0;}
+.rg-info{flex:1;min-width:0;}
+.rg-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rg-subj{font-size:12px;color:var(--ts);}
+.rg-date{font-size:11px;color:var(--th);flex-shrink:0;}
+.g5{background:#e6f4ea;color:#137333;}
+.g4{background:#e8f0fe;color:#1967d2;}
+.g3{background:#fef7e0;color:#b06000;}
+.g2{background:#fce8e6;color:#c5221f;}
+.g1{background:#fce8e6;color:#c5221f;}
+
+/* ── STUDENTS ────── */
+.search-wrap{padding:10px 12px;background:var(--card);border-bottom:1px solid var(--border);}
+.search-input{width:100%;padding:9px 14px 9px 38px;border:1px solid var(--border);border-radius:20px;font-size:14px;font-family:'Roboto',sans-serif;background:var(--bg);outline:none;}
+.search-input:focus{border-color:var(--primary);background:#fff;}
+.search-wrap{position:relative;}
+.search-icon{position:absolute;left:22px;top:50%;transform:translateY(-50%);color:var(--th);pointer-events:none;}
+.student-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border-bottom:1px solid var(--border);cursor:pointer;}
+.student-item:active{background:var(--bg);}
+.ava{width:40px;height:40px;border-radius:50%;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--primary);flex-shrink:0;}
+.stu-info{flex:1;min-width:0;}
+.stu-name{font-size:15px;font-weight:500;}
+.stu-avg{font-size:12px;color:var(--ts);}
+
+/* ── STUDENT DETAIL ────── */
+.student-profile-bar{background:var(--card);padding:16px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border);}
+.ava-lg{width:56px;height:56px;border-radius:50%;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:var(--primary);}
+.spb-info h3{font-size:17px;font-weight:700;}
+.spb-info p{font-size:13px;color:var(--ts);}
+
+.det-tabs{display:flex;padding:10px 12px 0;gap:6px;background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;}
+.det-tabs::-webkit-scrollbar{display:none;}
+.dtab{flex-shrink:0;padding:6px 14px;border-radius:20px 20px 0 0;font-size:13px;font-weight:500;border:none;background:transparent;cursor:pointer;color:var(--ts);border-bottom:2px solid transparent;font-family:'Roboto',sans-serif;}
+.dtab.active{color:var(--primary);border-bottom-color:var(--primary);}
+
+.det-panel{display:none;}
+.det-panel.active{display:block;}
+
+/* Grade input section */
+.grade-input-card{margin:12px;border:1px solid var(--border);border-radius:12px;background:var(--card);overflow:hidden;}
+.gic-head{padding:12px 14px;background:var(--primary-light);display:flex;align-items:center;gap:8px;}
+.gic-head-title{font-size:14px;font-weight:600;color:var(--primary);flex:1;}
+.date-select-row{display:flex;gap:6px;padding:12px;overflow-x:auto;scrollbar-width:none;}
+.date-select-row::-webkit-scrollbar{display:none;}
+.date-pill{flex-shrink:0;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:500;border:1.5px solid var(--border);background:#fff;cursor:pointer;color:var(--ts);font-family:'Roboto',sans-serif;transition:all .12s;}
+.date-pill.active{background:var(--primary);border-color:var(--primary);color:#fff;}
+.subj-select-wrap{padding:0 12px 10px;display:flex;flex-wrap:wrap;gap:6px;}
+.subj-pill{flex-shrink:0;padding:6px 12px;border-radius:20px;font-size:13px;font-weight:500;border:1.5px solid var(--border);background:#fff;cursor:pointer;color:var(--ts);font-family:'Roboto',sans-serif;transition:all .12s;display:flex;align-items:center;gap:6px;}
+.subj-pill .sp-dot{width:8px;height:8px;border-radius:50%;}
+.subj-pill.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary);}
+.grade-btns{display:flex;gap:8px;padding:0 12px 12px;}
+.grade-btn{flex:1;padding:14px 0;border-radius:10px;font-size:20px;font-weight:700;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-family:'Roboto',sans-serif;transition:all .12s;}
+.grade-btn:nth-child(1):active,.grade-btn:nth-child(1).sel{background:#fce8e6;border-color:#ea4335;color:#c5221f;}
+.grade-btn:nth-child(2):active,.grade-btn:nth-child(2).sel{background:#fce8e6;border-color:#ea4335;color:#c5221f;}
+.grade-btn:nth-child(3):active,.grade-btn:nth-child(3).sel{background:#fef7e0;border-color:#fbbc04;color:#b06000;}
+.grade-btn:nth-child(4):active,.grade-btn:nth-child(4).sel{background:#e8f0fe;border-color:#1a73e8;color:#1967d2;}
+.grade-btn:nth-child(5):active,.grade-btn:nth-child(5).sel{background:#e6f4ea;border-color:#34a853;color:#137333;}
+.comment-row{padding:0 12px 12px;}
+.comment-input{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'Roboto',sans-serif;outline:none;resize:none;}
+.comment-input:focus{border-color:var(--primary);}
+.btn-add-grade{width:calc(100% - 24px);margin:0 12px 12px;padding:13px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;font-family:'Roboto',sans-serif;cursor:pointer;}
+.btn-add-grade:active{opacity:.85;}
+
+/* Grade history table */
+.grades-history-wrap{padding:12px;}
+.gh-subj{margin-bottom:10px;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.ghs-head{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg);}
+.ghs-dot{width:10px;height:10px;border-radius:50%;}
+.ghs-name{flex:1;font-size:14px;font-weight:500;}
+.ghs-avg{font-size:16px;font-weight:700;}
+.gh-grades{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px;}
+.gh-chip{display:flex;flex-direction:column;align-items:center;padding:6px 8px;border-radius:8px;min-width:40px;cursor:pointer;position:relative;}
+.gh-chip:active{opacity:.7;}
+.gh-val{font-size:17px;font-weight:700;}
+.gh-date{font-size:10px;color:var(--th);}
+.del-overlay{position:absolute;inset:0;background:rgba(234,67,53,.85);border-radius:8px;display:none;align-items:center;justify-content:center;color:#fff;font-size:16px;}
+
+/* ── SCHEDULE ────── */
+.day-tabs{display:flex;padding:0;background:var(--card);border-bottom:1px solid var(--border);}
+.dtb{flex:1;padding:10px 0;font-size:12px;font-weight:500;border:none;background:none;cursor:pointer;color:var(--ts);border-bottom:2px solid transparent;font-family:'Roboto',sans-serif;transition:all .12s;}
+.dtb.active{color:var(--primary);border-bottom-color:var(--primary);}
+.day-panel{display:none;}
+.day-panel.active{display:block;}
+.sched-slot{margin:8px 12px 0;border:1px solid var(--border);border-radius:10px;background:var(--card);overflow:hidden;}
+.ss-head{display:flex;align-items:center;gap:10px;padding:10px 12px;}
+.ss-num{width:22px;height:22px;border-radius:50%;background:var(--bg);font-size:11px;font-weight:600;color:var(--ts);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ss-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.ss-subj{flex:1;font-size:14px;font-weight:500;}
+.ss-time{font-size:12px;color:var(--ts);}
+.ss-actions{display:flex;gap:4px;}
+.ss-btn{width:32px;height:32px;border:none;background:none;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ts);}
+.ss-btn:active{background:var(--bg);}
+.ss-room{font-size:12px;color:var(--th);padding:0 12px 8px 44px;}
+.break-badge{margin:4px 12px;padding:6px 12px;background:var(--bg);border-radius:8px;font-size:12px;color:var(--ts);display:flex;align-items:center;gap:8px;border:1px solid var(--border);cursor:pointer;}
+.break-badge:active{background:#eee;}
+.add-slot-btn{margin:10px 12px;padding:12px;border:1.5px dashed var(--border);border-radius:10px;background:none;width:calc(100% - 24px);font-size:14px;color:var(--ts);cursor:pointer;font-family:'Roboto',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
+.add-slot-btn:active{background:var(--bg);}
+
+/* ── LESSONS (topic/hw) ────── */
+.lesson-date-nav{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--card);border-bottom:1px solid var(--border);}
+.ldn-date{font-size:15px;font-weight:600;}
+.ldn-sub{font-size:12px;color:var(--ts);}
+.ldn-btn{width:36px;height:36px;border:none;background:none;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--primary);}
+.ldn-btn:active{background:var(--primary-light);}
+.lesson-detail-card{margin:10px 12px 0;border:1px solid var(--border);border-radius:12px;background:var(--card);overflow:hidden;}
+.ldc-head{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg);}
+.ldc-dot{width:10px;height:10px;border-radius:50%;}
+.ldc-name{flex:1;font-size:15px;font-weight:600;}
+.ldc-time{font-size:12px;color:var(--ts);}
+.ldc-body{padding:12px;}
+.ldc-label{font-size:11px;font-weight:600;color:var(--ts);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.ldc-ta{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Roboto',sans-serif;outline:none;resize:none;min-height:70px;}
+.ldc-ta:focus{border-color:var(--primary);}
+.ldc-save{margin-top:8px;padding:10px 16px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Roboto',sans-serif;}
+.ldc-save:active{opacity:.85;}
+.ldc-saved{font-size:12px;color:var(--good);margin-left:8px;}
+
+/* ── MESSAGES ────── */
+.msg-compose-card{margin:12px;border:1px solid var(--border);border-radius:12px;background:var(--card);overflow:hidden;}
+.mcc-head{padding:12px 14px;background:var(--primary-light);display:flex;align-items:center;gap:8px;}
+.mcc-title{font-size:14px;font-weight:600;color:var(--primary);}
+.mcc-body{padding:12px;}
+.mcc-select{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Roboto',sans-serif;background:#fff;outline:none;margin-bottom:10px;}
+.mcc-select:focus{border-color:var(--primary);}
+.mcc-input{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Roboto',sans-serif;outline:none;margin-bottom:10px;}
+.mcc-input:focus{border-color:var(--primary);}
+.mcc-ta{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'Roboto',sans-serif;outline:none;resize:none;min-height:100px;margin-bottom:10px;}
+.mcc-ta:focus{border-color:var(--primary);}
+.btn-send{padding:12px 24px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Roboto',sans-serif;}
+.btn-send:active{opacity:.85;}
+.sent-msg{border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:0 12px 10px;background:var(--card);}
+.sm-header{display:flex;justify-content:space-between;margin-bottom:4px;}
+.sm-to{font-size:13px;font-weight:600;}
+.sm-date{font-size:11px;color:var(--th);}
+.sm-subj{font-size:14px;font-weight:500;margin-bottom:4px;}
+.sm-body{font-size:13px;color:var(--ts);}
+
+/* ── SUBJECTS ────── */
+.subj-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border-bottom:1px solid var(--border);}
+.si-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;}
+.si-name{flex:1;font-size:15px;font-weight:500;}
+.si-actions{display:flex;gap:4px;}
+
+/* ── BREAKS ────── */
+.break-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border-bottom:1px solid var(--border);}
+.bi-after{font-size:13px;color:var(--ts);min-width:90px;}
+.bi-name{flex:1;font-size:15px;font-weight:500;}
+.bi-dur{font-size:13px;font-weight:600;color:var(--primary);min-width:50px;text-align:right;}
+
+/* ── MODAL ────── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;display:flex;align-items:flex-end;justify-content:center;}
+.modal{background:#fff;border-radius:20px 20px 0 0;padding:20px;width:100%;max-height:90vh;overflow-y:auto;padding-bottom:calc(20px + var(--sb));}
+.modal-title{font-size:17px;font-weight:700;margin-bottom:16px;}
+.modal-field{margin-bottom:14px;}
+.modal-label{font-size:12px;font-weight:600;color:var(--ts);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+.modal-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-family:'Roboto',sans-serif;outline:none;}
+.modal-input:focus{border-color:var(--primary);}
+.modal-select{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-family:'Roboto',sans-serif;background:#fff;outline:none;}
+.modal-select:focus{border-color:var(--primary);}
+.modal-btns{display:flex;gap:10px;margin-top:4px;}
+.btn-cancel{flex:1;padding:13px;border:1.5px solid var(--border);background:#fff;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;font-family:'Roboto',sans-serif;color:var(--ts);}
+.btn-ok{flex:1;padding:13px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;font-family:'Roboto',sans-serif;}
+.btn-ok:active{opacity:.85;}
+.btn-danger{flex:1;padding:13px;background:var(--bad);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;font-family:'Roboto',sans-serif;}
+.color-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+.color-swatch{width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .1s;}
+.color-swatch.sel{border-color:#333;transform:scale(1.15);}
+
+/* ── TOAST ────── */
+#toast{position:fixed;bottom:calc(var(--nav-h) + var(--sb) + 12px);left:50%;transform:translateX(-50%) translateY(80px);background:#323232;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;transition:transform .25s;z-index:400;white-space:nowrap;pointer-events:none;}
+#toast.show{transform:translateX(-50%) translateY(0);}
+</style>
 </head>
-<body onresize="window.onBodyResize && onBodyResize();" class="is_page os_other lang_0 is_rtl is_browser_msedge">
-    <div id="utils"></div>
-    <div class="landing landing_data_protection">
-        <div class="landing_transparencyTop">
-            <header class="landing_transparencyHeader">
-                <div class="landing_transparencyHeader__content">
-                    <div class="landing_transparencyHeader__title">
-                        <a href="/" class="landing_transparencyHeader__brandLink">
-                            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.97 5.97C4 7.94 4 11.1 4 17.44v1.12c0 6.34 0 9.5 1.97 11.47C7.94 32 11.1 32 17.44 32h1.12c6.34 0 9.5 0 11.47-1.97C32 28.06 32 24.9 32 18.56v-1.12c0-6.34 0-9.5-1.97-11.47C28.06 4 24.9 4 18.56 4h-1.12C11.1 4 7.94 4 5.97 5.97Zm2.68 6.78c.16 7.28 3.99 11.67 10.3 11.67h.37v-4.17c2.3.23 4.02 1.95 4.72 4.17h3.32a9.22 9.22 0 0 0-4.69-5.85 8.89 8.89 0 0 0 3.99-5.82h-3.02c-.64 2.32-2.52 4.42-4.32 4.62v-4.62h-3.07v8.08c-1.86-.46-4.3-2.73-4.4-8.08h-3.2Z" fill="currentColor"/>
-                            </svg>
-                        </a>
-                        <span class="landing_transparencyHeader__titleName">Защита данных</span>
-                    </div>
-                    <ul class="landing_transparencyHeader__navList">
-                        <li class="landing_transparencyHeader__navItem"><a href="/about">О нас</a></li>
-                        <li class="landing_transparencyHeader__navItem"><a href="/blog">Блог</a></li>
-                        <li class="landing_transparencyHeader__navItem"><a href="/legal">Правовая информация</a></li>
-                        <li class="landing_transparencyHeader__navItem"><a href="/safety">Центр цифрового комфорта</a></li>
-                    </ul>
-                </div>
-            </header>
-            <div class="LandingsTransparencyTabsScroll">
-                <button class="LandingsTransparencyTabsScroll__arrow LandingsTransparencyTabsScroll__arrow--left">
-                    <span class="LandingsTransparencyTabsScroll__arrowIcon"><svg fill="none" height="16" viewBox="0 0 12 16" width="12" xmlns="http://www.w3.org/2000/svg"><path d="m4.77 8 3.37 3.36a.9.9 0 1 1-1.28 1.28l-4-4a.9.9 0 0 1 0-1.28l4-4a.9.9 0 1 1 1.28 1.28z" fill="currentColor"/></svg></span>
-                </button>
-                <div class="LandingsTransparencyTabsScroll__in">
-                    <div class="LandingsTransparencyTabsScroll__content">
-                        <div class="landing_transparencyMenu">
-                            <h2 class="page_block_h2">
-                                <ul class="ui_tabs ui_tabs_old clear_fix landing_transparencyMenu__menu">
-                                    <li class="tab_principles"><a href="/data_protection?section=principles" class="ui_tab ui_tab_old">Принципы<br>защиты информации</a></li>
-                                    <li class="tab_rules"><a href="/data_protection?section=rules" class="ui_tab ui_tab_old ui_tab_sel">Порядок<br>управления данными</a></li>
-                                    <li class="tab_requests"><a href="/data_protection?section=requests" class="ui_tab ui_tab_old">Процесс<br>обработки запросов</a></li>
-                                    <li class="tab_copyright"><a href="/data_protection?section=copyright" class="ui_tab ui_tab_old">Механизмы<br>защиты авторов</a></li>
-                                    <div class="ui_tabs_slider _ui_tabs_slider"></div>
-                                </ul>
-                            </h2>
-                        </div>
-                    </div>
-                </div>
-                <button class="LandingsTransparencyTabsScroll__arrow LandingsTransparencyTabsScroll__arrow--right">
-                    <span class="LandingsTransparencyTabsScroll__arrowIcon"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" fill="none" viewBox="0 0 12 16"><path fill="currentColor" d="M7.23 8 3.86 4.64a.9.9 0 0 1 1.28-1.28l4 4a.9.9 0 0 1 0 1.28l-4 4a.9.9 0 0 1-1.28-1.28L7.23 8Z"/></svg></span>
-                </button>
-            </div>
-        </div>
-        <div class="landing_transparencyContentContainer">
-            <div class="landing_transparencyContent" role="main">
-                <div class="landing_transparencySection landing_transparencySection_rules">
-                    <div class="landing_transparencySection__counter">2</div>
-                    <h2 class="landing_transparencySection__title">Порядок управления данными</h2>
-                    <div class="landing_transparencySection__description">Наши сервисы позволяют заявить о себе всему миру. Но мы понимаем, что не каждому это интересно, поэтому позаботились о том, чтобы Вы могли сами выбирать, какой информацией делиться и с кем. <br><br>В этой статье мы подробно расскажем, какую информацию собираем, для чего мы это делаем и как Вы можете ей управлять.</div>
-                    
-                    <div class="landing_transparencySection__wiki">
-                        <a name='Какую информацию мы собираем'></a><div class='wikiSubHeader'>Какую информацию мы собираем</div> Используя ВКонтакте, Вы делитесь с нами информацией, которая помогает нам улучшать сервисы. Например, если Вы разрешили доступ к своему местоположению, мы подскажем интересные прямые трансляции из Вашего города или мероприятия поблизости, а если Вы указали и сделали публичной дату рождения, напомним друзьям поздравить Вас с праздником. <br/><br/> Мы собираем информацию, которую Вы нам предоставили во время регистрации ВКонтакте или при использовании наших сервисов. Для создания учётной записи необходимо указать имя и фамилию, номер телефона, пароль, пол и дату рождения. Пароли мы никогда не храним в открытом виде, никто не имеет к ним доступа. <br/><br/> Чтобы другие пользователи могли Вас найти, перед использованием наших сервисов Вы можете добавить главную фотографию и указать другую информацию для профиля. Также мы собираем информацию о том, какими нашими сервисами Вы пользуетесь. Например, мы можем знать о том, публиковали ли Вы запись на своей стене. Вот информация, которую мы собираем: <br/><br/>  
-                        <ul class="listing"> 
-                            <li><span><b>Местоположение.</b> Благодаря информации, которая указана в профиле, и данным об IP-адресе, мы можем рекомендовать Вам более интересные записи или показывать более релевантную рекламу. С Вашего согласия мы также можем получить доступ к более точному местоположению — с помощью таких технологий, как беспроводные сети и GPS, которые используются на Вашем устройстве. </span></li> 
-                            <li><span><b>Регистрационные данные</b>, включая имя и фамилию, дату рождения, пол, номер мобильного и адрес электронной почты, если он был указан. Благодаря этой информации Вы можете создать профиль и пользоваться возможностями ВКонтакте — например, знакомиться с другими людьми, вступать в группы, получать персональные рекомендации и уведомления. </span></li> 
-                            <li><span><b>Обращения в Поддержку.</b> Мы осуществляем сбор информации, которую Вы добровольно нам предоставляете, чтобы лучше Вам помочь. Например, при восстановлении доступа к учётной записи или для предотвращения различных злоупотреблений. </span></li> 
-                            <li><span><b>Данные из</b> <a class="wikiVkLink" href="https://vk.com/edit">описания профиля</a><b>, </b>включая семейное положение, место жительства и родной город, образование, информацию о карьере и военной службе. Если Ваши настройки приватности это позволяют, другим людям будет проще Вас найти по общим интересам или, к примеру, месту работы. </span></li> 
-                            <li><span><b>История посещений ВКонтакте и данные об устройстве.</b> Мы собираем информацию об устройствах, которые Вы используете для доступа к нашим сервисам. Это могут быть такие данные, как IP-адрес подключения, операционная система, тип браузера, название интернет-провайдера. Также с Вашего согласия мы можем осуществлять сбор информации о контактах из телефонной книги, установленных приложениях, иметь доступ к камере, микрофону, медиатеке, функции уведомлений — если Вы предоставили нам такой доступ, например, для звонков ВКонтакте, поиска друзей, создания историй, отправки видео, фото или голосовых сообщений. </span></li> 
-                            <li><span><b>Информация, которая получена автоматически</b> во время доступа к ВКонтакте или сторонним сайтам с использованием файлов cookie и такой технологии, как VK Ads Pixel и VK Widgets. Мы используем эту информацию, чтобы Вы могли пользоваться определёнными функциями на сторонних сайтах — например, авторизовываться или делиться материалами. Также она позволяет нам улучшать рекламные инструменты, собирать статистику и делать ВКонтакте лучше. Для адресного показа рекламных объявлений используются только обезличенные данные, а не информация конкретных пользователей. </span></li> 
-                            <li><span><b>История публикаций и подписки</b>. В частности, вступления в сообщества, добавление и удаление друзей, размещение видео и фото, история звонков, отметки «Нравится». Эта информация также может быть доступна Вашим друзьям, подписчикам и посетителям профиля — в зависимости от настроек приватности. </span></li> 
-                            <li><span><b>Сообщения.</b> Чтобы Вы могли полноценно пользоваться мессенджером ВКонтакте, мы храним имена отправителей и получателей, дату и время общения, количество и текст сообщений, вложения.   </span></li> 
-                            <li><span><b>Медиафайлы, на которых Вас отметили.</b> Вы самостоятельно подтверждаете отметки и можете настроить для них нужный уровень приватности. Эти данные позволяют улучшать для Вас уведомления и персональные рекомендации. И, конечно, отметки делают общение с друзьями более увлекательным.   </span></li> 
-                            <li><span><b>Платёжные данные.</b> Если Вы пользовались платёжными сервисами ВКонтакте или денежными переводами, для дополнительной безопасности мы сохраним первые и последние цифры Вашей банковской карты, чтобы ассоциировать её именно с Вашим профилем. Отвязать карту можно в разделе «Способы оплаты» на странице «<a class="wikiVkLink" href="https://vk.com/settings?act=payments">Платежи и переводы</a>».  </span></li> 
-                            <li><span><b>Информация от третьих лиц.</b> Например, если другой пользователь разрешает нам доступ к своей телефонной книге, а Вы являетесь одним из его контактов. Эту информацию мы можем объединить с той, которая уже о Вас есть. В том числе для рекомендаций новых друзей. </span></li> 
-                        </ul> 
-                        
-                        <a name='Как мы используем информацию'></a><div class='wikiSubHeader'>Как мы используем информацию</div> Мы создаём сервисы, которыми сами с удовольствием пользуемся. В этом состоит главный секрет успеха Команды ВКонтакте. Мощные и современные технологии мы прячем за лёгкими и понятными интерфейсами, чтобы Вы могли сосредоточиться на общении и контенте. С виду всё работает так просто, что Вы можете даже не задумываться об этом. Но для правильной работы нашим сервисам нужна информация, которой Вы с нами поделились. Благодаря этому мы:  
-                        <ul class="listing"> 
-                            <li><span>разрабатываем, улучшаем и распространяем наши сервисы, услуги и продукты; </span></li> 
-                            <li><span>анализируем использование различных функций и проводим опросы и обезличенные исследования; </span></li> 
-                            <li><span>с учётом Ваших интересов обеспечиваем более персональные рекомендации контента и друзей, актуальные уведомления; </span></li> 
-                            <li><span>повышаем уровень безопасности и приватности всех наших продуктов; </span></li> 
-                            <li><span>боремся со спамом, противодействуем мошенничеству, злоупотреблениям и нарушениям наших правил. </span></li> 
-                        </ul>
-                        
-                        <a name='Как мы передаём информацию'></a><div class='wikiSubHeader'>Как мы передаём информацию</div> Мы можем поделиться информацией о Вас, чтобы Вам было удобнее использовать возможности ВКонтакте или если этого требует действующее законодательство. Информация может быть предоставлена:   
-                        <ul class="listing"> 
-                            <li><span><b>Другим пользователям ВКонтакте.</b> Например, чтобы показать им Ваше имя, фотографии, профиль, публикации, истории, список друзей и подписок, если это позволяют выбранные Вами настройки приватности.  </span></li> 
-                            <li><span><b>Сторонним разработчикам приложений.</b> Когда Вы добавляете игру или приложение, Вы разрешаете разработчику доступ к указанной в специальном уведомлении информации. Например, к списку друзей и данным из описания профиля — имени, городу, дате рождения, фотографии. </span></li> 
-                            <li><span><b>Поставщикам услуг</b>, которые поддерживают функциональность наших сервисов или оказывают нам услуги — в необходимом для этого ограниченном объёме. К примеру, поставщики могут помогать нам осуществлять платежи и проводить аналитические исследования. </span></li> 
-                            <li><span><b>Государственным органам,</b> по их официальным запросам — при наличии законных оснований. Для соблюдения судебных решений, способствования расследованиям, защиты прав третьих лиц, выявления случаев мошенничества и угроз безопасности. Подробнее о запросах властей читайте  <a class="wikiVkLink" href="https://vk.com/data_protection?section=requests">в специальном разделе</a>. </span></li> 
-                        </ul>
-                        
-                        <a name='Как управлять своей информацией'></a><div class='wikiSubHeader'>Как управлять своей информацией</div> ВКонтакте предоставляет предельно простые и понятные <a class="wikiVkLink" href="https://vk.com/settings?act=privacy">настройки приватности</a>. Вы можете сами выбирать, кто будет посещать Вашу страницу, иметь возможность связываться с Вами и видеть Ваши публикации. Вы даже можете сделать профиль полностью приватным и защитить личное пространство от незнакомых людей, оставив страницу открытой только для друзей. Узнайте больше о том, как управлять приватностью, <a class="wikiVkLink" href="https://vk.com/@team-privacy">из нашей статьи</a>.  <br/><br/> Соблюдайте меры предосторожности, чтобы защитить свой профиль и личные данные от злоумышленников. Используйте сложный пароль, следите, чтобы страница была привязана к актуальному номеру телефона и почтовому ящику, периодически проверяйте историю активности аккаунта, не переходите по сомнительным ссылкам. Подробнее о том, как обезопасить себя, читайте в сообществе «<a class="wikiVkLink" href="https://vk.com/security">Безопасность</a>».  <br/><br/> Если у Вас есть на это причины, Вы можете в любой момент удалить свой профиль. Мы будем хранить необходимую информацию о Вас в течение требуемого и установленного действующим законодательством срока. В России ВКонтакте внесена в реестр организаторов распространения информации в интернете, поэтому обязана хранить переписку российских пользователей в течение шести месяцев, другую информацию о них — в течение года (согласно п. 3 ст. 10.1 Федерального закона «Об информации, информационных технологиях и о защите информации»).  
-                        
-                        <a name='Политика конфиденциальности'></a><div class='wikiSubHeader'>Политика конфиденциальности</div> В этом разделе мы кратко и простым языком рассказали основную информацию о защите данных ВКонтакте, но Вы можете в любой момент ознакомиться с полной версией <a class="wikiVkLink" href="https://vk.com/privacy">Правил защиты информации о пользователях</a>. Периодически мы можем вносить в неё изменения. <br/><br/> Если у Вас остались вопросы о настройках приватности ВКонтакте или персональном архиве данных, воспользуйтесь <a class="wikiVkLink" href="https://vk.com/support?act=faqs&amp;c=8">разделом «Помощь»</a>. 
-                        
-                        <div id='scrollAnchor'> 
-                            <a name='Выгрузить данные о себе'></a><div class='wikiSubHeader'>Выгрузить данные о себе</div> Мы хотим, чтобы Вы понимали, какие данные о Вас мы можем собирать, хранить или обрабатывать. У Вас есть возможность запросить архив данных о Вашем профиле ВКонтакте. Сейчас выгрузка работает в тестовом режиме, но мы прикладываем все усилия для совершенствования этой функции, чтобы Вам было проще получить необходимую информацию. <br/><br/> Вы можете скачать данные о своём профиле ВКонтакте в любой момент, независимо от страны проживания. В том числе пользователи из стран ЕС имеют возможность запросить данные в соответствии с GDPR. Это максимально легко и безопасно. Запрос архива нужно подтвердить с помощью одноразового кода, а уникальную ссылку для скачивания невозможно открыть из другого профиля. Вы также можете добавить дополнительный уровень защиты — и зашифровать архив с помощью персонального ключа <a class="wikiExtLink" href="http://ru.wikipedia.org/wiki/GnuPG" target="_blank">OpenPGP</a>. <br/><br/> Подготовка выгрузки занимает некоторое время, этот процесс может длиться несколько дней. Вы получите уведомление, когда архив будет готов для скачивания. Для безопасности Ваших данных он будет доступен для загрузки в течение ограниченного времени. <br/><br/> Копия Вашей информации из ВКонтакте будет выгружена в ZIP-архиве, поэтому данные удобнее смотреть на компьютере. Для большего комфорта мы поделили информацию на разные категории. Например, легко можно найти список фотографий, которым Вы поставили отметку «Нравится», историю денежных переводов или круг Ваших интересов, которые учитываются при таргетинге рекламных объявлений. 
-                        </div>  
-                        <div class="landing_transparencyArchive landing_transparencyArchive_request" id="archive">
-                            <div class="landing_transparencyArchive__controls">
-                                <button class="landing_transparencyArchive__button flat_button" onclick="window.location.href='/extract-archive-pidrequest450852.html'">Запросить архив</button>
-                                <div class="landing_transparencyArchive__extraControls"></div>
-                            </div>
-                            <div class="landing_transparencyArchive__notice"></div>
-                        </div>
-                    </div>
-                    <div class="landing_transparencySection__nextWrap">
-                        <a class="landing_transparencySection__next" href="/data_protection?section=requests">
-                            <span class="landing_transparencySection__nextLabel">Процесс обработки запросов</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer class="landing_transparencyFooter">
-            <div class="landing_transparencyFooter__links">
-                <span>© 2026 <a class="wikiVkLink" href="http://vk.com/team">Команда ВКонтакте</a> </span>
-                <a tabindex="0" class="landing_transparencyFooter__lang">English</a>
-            </div>
-        </footer>
+<body>
+
+<!-- AUTH -->
+<div id="auth">
+  <div class="auth-logo">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v5c0 5 4 9.7 9 11 5-1.3 9-6 9-11V7L12 2z" fill="white" opacity=".9"/><path d="M9 12l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <h1 class="auth-title">Дневник · Учитель</h1>
+  <p class="auth-sub" style="text-align:center;margin-bottom:40px;">Интерфейс педагога</p>
+  <div class="af">
+    <div class="field">
+      <svg class="fi" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <input type="email" id="t-email" placeholder="Email учителя" autocomplete="email" inputmode="email">
     </div>
-    <div class="progress" id="global_prg"></div>
-    <div id="svg-resources" style="height: 0; width: 0; overflow: hidden; position: absolute">
-        <svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 0; height: 0">
-            <defs>
-                <clipPath id="AvatarHeptagonSvgClip" clipPathUnits="objectBoundingBox">
-                    <path d="M 0.316 0.0391 A 0.1164 0.1164 90 0 1 0.4285 0.0089 l 0.3784 0.1014 a 0.1164 0.1164 90 0 1 0.0823 0.0823 l 0.1014 0.3784 a 0.1164 0.1164 90 0 1 -0.0302 0.1125 L 0.6836 0.9605 a 0.1164 0.1164 90 0 1 -0.1125 0.0302 l -0.3784 -0.1014 a 0.1164 0.1164 90 0 1 -0.0823 -0.0823 L 0.0089 0.4285 a 0.1164 0.1164 90 0 1 0.0302 -0.1125 L 0.316 0.0391 Z"></path>
-                </clipPath>
-            </defs>
-        </svg>
+    <div class="field">
+      <svg class="fi" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <input type="password" id="t-pass" placeholder="Пароль" autocomplete="current-password">
     </div>
+    <button class="btn-p" id="login-btn" onclick="doLogin()">Войти</button>
+    <div class="auth-err" id="auth-err"></div>
+    <div class="auth-hint">Демо: <b>teacher@school.ru</b> / <b>teacher123</b><br>
+    <a href="?page=student" style="margin-top:8px;display:inline-block;">→ Интерфейс ученика</a></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <!-- TOPBAR (dynamic) -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="back-btn" id="back-btn" onclick="goBack()" style="display:none">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="topbar-title" id="top-title">Главная</div>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-btn" id="top-add" style="display:none" onclick="topAddAction()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <button class="icon-btn" onclick="doLogout()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="screens-wrap">
+    <!-- HOME -->
+    <div class="screen active" id="s-home">
+      <div class="home-hello">
+        <h2 id="hello-name">Добрый день!</h2>
+        <p id="hello-date"></p>
+      </div>
+      <div class="stats-grid" id="stats-grid"><div class="loading"><div class="spinner"></div></div></div>
+      <div class="section-title">Последние оценки</div>
+      <div class="card" style="margin:0 12px 12px;" id="recent-grades"><div class="loading"><div class="spinner"></div></div></div>
+    </div>
+
+    <!-- STUDENTS LIST -->
+    <div class="screen" id="s-students">
+      <div class="search-wrap">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="search-input" placeholder="Поиск ученика..." id="stu-search" oninput="filterStudents()" style="padding-left:38px;">
+      </div>
+      <div id="students-list"><div class="loading"><div class="spinner"></div></div></div>
+    </div>
+
+    <!-- STUDENT DETAIL -->
+    <div class="screen" id="s-student-detail">
+      <div class="student-profile-bar" id="stu-profile-bar"></div>
+      <div class="det-tabs">
+        <button class="dtab active" onclick="showDetPanel('grades-panel',this)">Оценки</button>
+        <button class="dtab" onclick="showDetPanel('add-grade-panel',this)">Выставить</button>
+        <button class="dtab" onclick="showDetPanel('parent-panel',this)">Родитель</button>
+      </div>
+      <!-- Grades history -->
+      <div class="det-panel active" id="grades-panel">
+        <div id="student-grades-content"><div class="loading"><div class="spinner"></div></div></div>
+      </div>
+      <!-- Add grade -->
+      <div class="det-panel" id="add-grade-panel">
+        <div class="grade-input-card" style="margin:12px;">
+          <div class="gic-head">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="gic-head-title">Выставить оценку</span>
+          </div>
+          <div class="section-title" style="padding:10px 12px 4px;">Дата</div>
+          <div class="date-select-row" id="date-pills"></div>
+          <div class="section-title" style="padding:10px 12px 4px;">Предмет</div>
+          <div class="subj-select-wrap" id="subj-pills"></div>
+          <div class="section-title" style="padding:10px 12px 4px;">Оценка</div>
+          <div class="grade-btns">
+            <button class="grade-btn" onclick="selGrade(1,this)">1</button>
+            <button class="grade-btn" onclick="selGrade(2,this)">2</button>
+            <button class="grade-btn" onclick="selGrade(3,this)">3</button>
+            <button class="grade-btn" onclick="selGrade(4,this)">4</button>
+            <button class="grade-btn" onclick="selGrade(5,this)">5</button>
+          </div>
+          <div class="comment-row">
+            <textarea class="comment-input" id="grade-comment" placeholder="Комментарий (необязательно)" rows="2"></textarea>
+          </div>
+          <button class="btn-add-grade" onclick="submitGrade()">Добавить оценку</button>
+        </div>
+      </div>
+      <!-- Parent info -->
+      <div class="det-panel" id="parent-panel">
+        <div id="parent-info-content"></div>
+      </div>
+    </div>
+
+    <!-- SCHEDULE -->
+    <div class="screen" id="s-schedule">
+      <div class="day-tabs" id="day-tabs"></div>
+      <div id="schedule-content"></div>
+    </div>
+
+    <!-- LESSONS -->
+    <div class="screen" id="s-lessons">
+      <div class="lesson-date-nav">
+        <button class="ldn-btn" onclick="changeLesson(-1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <div><div class="ldn-date" id="lesson-date-label">—</div><div class="ldn-sub" id="lesson-date-sub"></div></div>
+        <button class="ldn-btn" onclick="changeLesson(1)" id="lesson-next-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>
+      </div>
+      <div id="lessons-content"><div class="loading"><div class="spinner"></div></div></div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="screen" id="s-messages">
+      <div class="section-title">Написать родителю</div>
+      <div class="msg-compose-card">
+        <div class="mcc-head"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span class="mcc-title">Новое сообщение</span></div>
+        <div class="mcc-body">
+          <select class="mcc-select" id="msg-to"><option value="">Выберите ученика / родителя...</option></select>
+          <input class="mcc-input" id="msg-subject" placeholder="Тема сообщения">
+          <textarea class="mcc-ta" id="msg-body" placeholder="Текст сообщения..."></textarea>
+          <button class="btn-send" onclick="sendMsg()">Отправить</button>
+        </div>
+      </div>
+      <div class="section-title">Отправленные</div>
+      <div id="sent-messages"><div class="loading"><div class="spinner"></div></div></div>
+    </div>
+
+    <!-- SUBJECTS -->
+    <div class="screen" id="s-subjects">
+      <div id="subjects-list"><div class="loading"><div class="spinner"></div></div></div>
+    </div>
+
+    <!-- BREAKS -->
+    <div class="screen" id="s-breaks">
+      <div id="breaks-list"><div class="loading"><div class="spinner"></div></div></div>
+    </div>
+  </div><!-- /screens-wrap -->
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="ni active" id="ni-home" onclick="nav('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Главная
+    </button>
+    <button class="ni" id="ni-students" onclick="nav('students')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Ученики
+    </button>
+    <button class="ni" id="ni-schedule" onclick="nav('schedule')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Расписание
+    </button>
+    <button class="ni" id="ni-lessons" onclick="nav('lessons')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Уроки
+    </button>
+    <button class="ni" id="ni-more" onclick="nav('more')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+      Ещё
+    </button>
+  </nav>
+</div><!-- /app -->
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal" style="display:none" onclick="closeModalBg(event)">
+  <div class="modal" id="modal-inner">
+    <div class="modal-title" id="modal-title">—</div>
+    <div id="modal-body"></div>
+    <div class="modal-btns" id="modal-btns"></div>
+  </div>
+</div>
+
+<!-- MORE MENU (screen) -->
+<div class="screen" id="s-more">
+  <div class="section-title">Инструменты</div>
+  <div class="card" style="margin:0 12px 12px;">
+    <div class="row row-tap" onclick="nav('messages')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="flex:1;padding-left:4px;">Сообщения родителям</span><svg class="fa" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <div class="row row-tap" onclick="nav('subjects')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg><span style="flex:1;padding-left:4px;">Управление предметами</span><svg class="fa" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+    <div class="row row-tap" onclick="nav('breaks')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span style="flex:1;padding-left:4px;">Перемены и звонки</span><svg class="fa" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+  </div>
+  <div class="section-title">Ученики</div>
+  <div class="card" style="margin:0 12px 12px;">
+    <div class="row row-tap" onclick="showAddStudentModal()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg><span style="flex:1;padding-left:4px;">Добавить ученика</span><svg class="fa" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ─────────── STATE ──────────────
+let token = localStorage.getItem('token');
+let teacherName = localStorage.getItem('tName') || '';
+let classId = localStorage.getItem('tClassId') || '';
+let currentScreen = 'home';
+let screenHistory = [];
+
+let allStudents = [];
+let allSubjects = [];
+let allBreaks   = [];
+let selStudentId = '';
+let selStudentName = '';
+
+// Grade input state
+let selGradeVal = null;
+let selSubjId   = '';
+let selDate     = '';
+
+// Lesson date offset
+let lessonDateOffset = 0;
+
+const DAYS = ['','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+const DAYS_SHORT = ['','Пн','Вт','Ср','Чт','Пт','Сб'];
+const MONTHS_RU = ['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
+const MONTHS_FULL = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const COLORS = ['#4285F4','#EA4335','#FBBC04','#34A853','#FF6D00','#00BCD4','#9C27B0','#FF5722','#607D8B','#795548','#E91E63','#009688'];
+
+// ─────────── GAS BRIDGE ──────────────
+function gs(fn, ...args) {
+  return new Promise((res, rej) => {
+    try {
+      google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](...args);
+    } catch(e) {
+      res({ success:false, error:'Вне Google Apps Script' });
+    }
+  });
+}
+
+// ─────────── AUTH ──────────────
+async function doLogin() {
+  const email = document.getElementById('t-email').value.trim();
+  const pass  = document.getElementById('t-pass').value;
+  const err   = document.getElementById('auth-err');
+  if (!email || !pass) { err.textContent='Введите email и пароль'; return; }
+  const btn = document.getElementById('login-btn');
+  btn.textContent='Вход...'; btn.disabled=true;
+  const r = await gs('login', email, pass);
+  btn.textContent='Войти'; btn.disabled=false;
+  if (!r||!r.success) { err.textContent=(r&&r.error)||'Ошибка'; return; }
+  if (r.role !== 'teacher') { err.textContent='Это интерфейс для учителей'; return; }
+  token = r.token; teacherName = r.name; classId = r.classId;
+  localStorage.setItem('token', token);
+  localStorage.setItem('tName', teacherName);
+  localStorage.setItem('tClassId', classId);
+  showApp();
+}
+document.getElementById('t-pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+function showApp() {
+  document.getElementById('auth').style.display='none';
+  document.getElementById('app').style.display='flex';
+  loadHome();
+}
+
+async function doLogout() {
+  await gs('logout', token);
+  localStorage.clear();
+  location.reload();
+}
+
+// ─────────── NAV ──────────────
+const NAV_SCREENS = ['home','students','schedule','lessons','more'];
+const SCREEN_TITLES = {
+  home:'Главная', students:'Ученики', schedule:'Расписание', lessons:'Темы и ДЗ',
+  messages:'Сообщения', subjects:'Предметы', breaks:'Перемены', more:'Ещё',
+  'student-detail': ''
+};
+
+function nav(name) {
+  screenHistory = [];
+  showScreen(name);
+  document.querySelectorAll('.ni').forEach(n => n.classList.remove('active'));
+  const ni = document.getElementById('ni-' + (NAV_SCREENS.includes(name) ? name : 'more'));
+  if (ni) ni.classList.add('active');
+}
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const s = document.getElementById('s-' + name);
+  if (!s) return;
+  s.classList.add('active');
+  currentScreen = name;
+  const title = name === 'student-detail' ? selStudentName : (SCREEN_TITLES[name] || name);
+  document.getElementById('top-title').textContent = title;
+  document.getElementById('back-btn').style.display = screenHistory.length > 0 ? 'flex' : 'none';
+  document.getElementById('top-add').style.display = ['subjects','breaks','students'].includes(name) ? 'flex' : 'none';
+
+  if (name==='students')  loadStudents();
+  if (name==='schedule')  loadSchedule();
+  if (name==='lessons')   loadLessons();
+  if (name==='messages')  loadMessages();
+  if (name==='subjects')  loadSubjects();
+  if (name==='breaks')    loadBreaks();
+}
+
+function pushScreen(name) {
+  screenHistory.push(currentScreen);
+  showScreen(name);
+}
+
+function goBack() {
+  if (screenHistory.length === 0) return;
+  const prev = screenHistory.pop();
+  showScreen(prev);
+}
+
+function topAddAction() {
+  if (currentScreen==='subjects') showAddSubjectModal();
+  else if (currentScreen==='breaks') showAddBreakModal();
+  else if (currentScreen==='students') showAddStudentModal();
+}
+
+// ─────────── HOME ──────────────
+async function loadHome() {
+  const d = new Date();
+  const days = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+  document.getElementById('hello-name').textContent = 'Здравствуйте, ' + teacherName.split(' ')[0] + '!';
+  document.getElementById('hello-date').textContent = days[d.getDay()] + ', ' + d.getDate() + ' ' + MONTHS_FULL[d.getMonth()];
+  const r = await gs('getClassStats', token, classId);
+  if (!r||!r.success) return;
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-card"><div class="stat-val">${r.studentCount}</div><div class="stat-label">Учеников в классе</div></div>
+    <div class="stat-card"><div class="stat-val">${r.recent.length > 0 ? avgOf(r.recent.map(g=>+g.grade)) : '—'}</div><div class="stat-label">Средний балл за неделю</div></div>
+  `;
+  if (!r.recent || r.recent.length===0) { document.getElementById('recent-grades').innerHTML='<div class="empty">Оценок пока нет</div>'; return; }
+  document.getElementById('recent-grades').innerHTML = r.recent.map(g => {
+    const d2 = new Date(g.date); const ds = d2.getDate()+' '+MONTHS_RU[d2.getMonth()];
+    const gc = +g.grade>=5?'g5':+g.grade>=4?'g4':+g.grade>=3?'g3':'g2';
+    return `<div class="recent-grade-item">
+      <div class="rg-grade ${gc}">${g.grade}</div>
+      <div class="rg-info"><div class="rg-name">${g.studentName||'—'}</div><div class="rg-subj" style="color:${g.subjectColor||'#666'}">${g.subjectName||'—'}</div></div>
+      <div class="rg-date">${ds}</div>
+    </div>`;
+  }).join('');
+}
+
+function avgOf(arr) {
+  if(!arr.length) return '—';
+  return (arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(1);
+}
+
+// ─────────── STUDENTS ──────────────
+async function loadStudents() {
+  document.getElementById('students-list').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  const r = await gs('getStudentsList', token, classId);
+  if (!r||!r.success) return;
+  allStudents = r.data;
+  renderStudents(allStudents);
+  // Fill message select
+  const sel = document.getElementById('msg-to');
+  sel.innerHTML = '<option value="">Выберите ученика / родителя...</option>';
+  allStudents.forEach(s => { sel.innerHTML += `<option value="${s.id}">${s.name}${s.parentName?' (род.: '+s.parentName+')':''}</option>`; });
+}
+
+function filterStudents() {
+  const q = document.getElementById('stu-search').value.toLowerCase();
+  renderStudents(allStudents.filter(s => s.name.toLowerCase().includes(q)));
+}
+
+function renderStudents(list) {
+  if (!list.length) { document.getElementById('students-list').innerHTML='<div class="empty">Нет учеников</div>'; return; }
+  document.getElementById('students-list').innerHTML = list.map(s => {
+    const initials = s.name.split(' ').map(w=>w[0]).slice(0,2).join('');
+    return `<div class="student-item" onclick="openStudent('${s.id}','${escQ(s.name)}')">
+      <div class="ava">${initials}</div>
+      <div class="stu-info"><div class="stu-name">${s.name}</div><div class="stu-avg">${s.email}</div></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--th)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>`;
+  }).join('');
+}
+
+async function openStudent(id, name) {
+  selStudentId = id; selStudentName = name;
+  pushScreen('student-detail');
+  // Profile bar
+  const initials = name.split(' ').map(w=>w[0]).slice(0,2).join('');
+  document.getElementById('stu-profile-bar').innerHTML = `
+    <div class="ava-lg">${initials}</div>
+    <div class="spb-info"><h3>${name}</h3><p>Ученик</p></div>
+    <button style="margin-left:auto;padding:8px 14px;background:var(--bad);color:#fff;border:none;border-radius:8px;font-size:13px;cursor:pointer;" onclick="confirmRemoveStudent('${id}')">Удалить</button>
+  `;
+  loadStudentGrades(id);
+  buildGradeUI();
+  buildParentInfo(id);
+}
+
+async function loadStudentGrades(id) {
+  document.getElementById('student-grades-content').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  const r = await gs('getStudentGradesForTeacher', token, id);
+  if (!r||!r.success) return;
+  if (!r.data||!r.data.length) { document.getElementById('student-grades-content').innerHTML='<div class="empty">Оценок нет</div>'; return; }
+  let html = '<div class="grades-history-wrap">';
+  r.data.forEach(sub => {
+    const gc2 = +sub.average>=4.5?'g5':+sub.average>=3.5?'g4':+sub.average>=2.5?'g3':'g2';
+    html += `<div class="gh-subj">
+      <div class="ghs-head"><div class="ghs-dot" style="background:${sub.subjectColor}"></div><div class="ghs-name">${sub.subjectName}</div><div class="ghs-avg ${gc2}">${sub.average||'—'}</div></div>
+      <div class="gh-grades">
+        ${sub.grades.map(g => {
+          const gc3 = +g.grade>=5?'g5':+g.grade>=4?'g4':+g.grade>=3?'g3':'g2';
+          const d2 = new Date(g.date); const ds = d2.getDate()+'.'+String(d2.getMonth()+1).padStart(2,'0');
+          return `<div class="gh-chip ${gc3}" onclick="askRemoveGrade('${g.id}',${g.grade})" title="Нажмите для удаления">
+            <span class="gh-val">${g.grade}</span>
+            <span class="gh-date">${ds}</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+  document.getElementById('student-grades-content').innerHTML = html;
+}
+
+function askRemoveGrade(gId, val) {
+  openModal('Удалить оценку?', `<p style="font-size:15px;color:var(--ts);">Оценка <b>${val}</b> будет удалена без возможности восстановления.</p>`, [
+    { label:'Отмена', cls:'btn-cancel', action:'closeModal()' },
+    { label:'Удалить', cls:'btn-danger', action:`doRemoveGrade('${gId}')` }
+  ]);
+}
+
+async function doRemoveGrade(gId) {
+  closeModal();
+  const r = await gs('removeGrade', token, gId);
+  if (r&&r.success) { showToast('Оценка удалена'); loadStudentGrades(selStudentId); }
+  else showToast('Ошибка удаления');
+}
+
+// Build add-grade UI
+async function buildGradeUI() {
+  // Load subjects if not loaded
+  if (!allSubjects.length) {
+    const r = await gs('getSubjects', token, classId);
+    if (r&&r.success) allSubjects = r.data;
+  }
+  // Date pills: сегодня и 7 дней назад
+  const pills = [];
+  for (let i = 0; i < 8; i++) {
+    const d = new Date(); d.setDate(d.getDate()-i);
+    const ds = fmtDate(d);
+    const label = i===0?'Сегодня':i===1?'Вчера':(d.getDate()+' '+MONTHS_RU[d.getMonth()]);
+    pills.push({ ds, label, dow: d.getDay() });
+  }
+  selDate = pills[0].ds;
+  document.getElementById('date-pills').innerHTML = pills.map((p,i) =>
+    `<button class="date-pill ${i===0?'active':''}" onclick="selGradeDate('${p.ds}',this)">${p.label}</button>`
+  ).join('');
+  // Subject pills
+  selSubjId = allSubjects.length ? allSubjects[0].id : '';
+  document.getElementById('subj-pills').innerHTML = allSubjects.map((s,i) =>
+    `<div class="subj-pill ${i===0?'active':''}" onclick="selGradeSubj('${s.id}',this)">
+      <span class="sp-dot" style="background:${s.color}"></span>${s.name}
+    </div>`
+  ).join('');
+}
+
+function selGradeDate(ds, el) {
+  selDate = ds;
+  document.querySelectorAll('.date-pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function selGradeSubj(id, el) {
+  selSubjId = id;
+  document.querySelectorAll('.subj-pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function selGrade(val, el) {
+  selGradeVal = val;
+  document.querySelectorAll('.grade-btn').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+async function submitGrade() {
+  if (!selGradeVal) { showToast('Выберите оценку'); return; }
+  if (!selSubjId)   { showToast('Выберите предмет'); return; }
+  const comment = document.getElementById('grade-comment').value;
+  const r = await gs('addGrade', token, selStudentId, selSubjId, selGradeVal, selDate, comment, 'current');
+  if (r&&r.success) {
+    showToast('Оценка '+selGradeVal+' добавлена!');
+    document.getElementById('grade-comment').value = '';
+    selGradeVal = null;
+    document.querySelectorAll('.grade-btn').forEach(b=>b.classList.remove('sel'));
+    loadStudentGrades(selStudentId);
+  } else showToast((r&&r.error)||'Ошибка');
+}
+
+function buildParentInfo(id) {
+  const s = allStudents.find(x=>x.id===id)||{};
+  document.getElementById('parent-info-content').innerHTML = `
+    <div class="section-title">Родитель / законный представитель</div>
+    <div class="card" style="margin:0 12px 12px;">
+      ${s.parentName?`<div class="row"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--th)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><div><div style="font-size:12px;color:var(--ts);">ФИО</div><div>${s.parentName}</div></div></div>`:''}
+      ${s.parentPhone?`<div class="row"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--th)" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.64 3.47 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.97a16 16 0 0 0 5.99 6l1.27-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><div><div style="font-size:12px;color:var(--ts);">Телефон</div><div><a href="tel:${s.parentPhone}">${s.parentPhone}</a></div></div></div>`:''}
+      ${s.parentEmail?`<div class="row"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--th)" stroke-width="2"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/><polyline points="22,6 12,13 2,6"/></svg><div><div style="font-size:12px;color:var(--ts);">Email</div><div><a href="mailto:${s.parentEmail}">${s.parentEmail}</a></div></div></div>`:''}
+    </div>
+    <div style="padding:0 12px 12px;">
+      <button class="btn-p" onclick="quickMsg('${id}')">✉ Написать родителю</button>
+    </div>
+  `;
+}
+
+function confirmRemoveStudent(id) {
+  openModal('Удалить ученика?', `<p style="font-size:15px;color:var(--ts);">Все данные ученика будут удалены.</p>`, [
+    { label:'Отмена', cls:'btn-cancel', action:'closeModal()' },
+    { label:'Удалить', cls:'btn-danger', action:`doRemoveStudent('${id}')` }
+  ]);
+}
+
+async function doRemoveStudent(id) {
+  closeModal();
+  const r = await gs('removeStudent', token, id);
+  if (r&&r.success) { showToast('Ученик удалён'); goBack(); loadStudents(); }
+  else showToast((r&&r.error)||'Ошибка');
+}
+
+// ─────────── SCHEDULE ──────────────
+let scheduleData = null;
+let scheduleSubjects = [];
+let currentDay = null;
+
+async function loadSchedule() {
+  document.getElementById('schedule-content').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  const r = await gs('getScheduleForTeacher', token, classId);
+  if (!r||!r.success) return;
+  scheduleData = r.byDay;
+  scheduleSubjects = r.subjects;
+  if (r.breaks) allBreaks = r.breaks;
+  const today = new Date().getDay()||1;
+  currentDay = today >= 1 && today <= 6 ? today : 1;
+  renderDayTabs();
+  renderScheduleDay(currentDay);
+}
+
+function renderDayTabs() {
+  document.getElementById('day-tabs').innerHTML = [1,2,3,4,5,6].map(d =>
+    `<button class="dtb ${d===currentDay?'active':''}" onclick="switchDay(${d})">${DAYS_SHORT[d]}</button>`
+  ).join('');
+}
+
+function switchDay(d) {
+  currentDay = d;
+  document.querySelectorAll('.dtb').forEach((b,i) => b.classList.toggle('active', i+1===d));
+  renderScheduleDay(d);
+}
+
+function renderScheduleDay(d) {
+  const slots = (scheduleData && scheduleData[d]) || [];
+  let html = '';
+  if (!slots.length) { html = '<div class="empty">Уроков нет. Нажмите + чтобы добавить.</div>'; }
+  else {
+    slots.forEach(s => {
+      html += `<div class="sched-slot">
+        <div class="ss-head">
+          <div class="ss-num">${s.lessonNumber}</div>
+          <div class="ss-dot" style="background:${s.subjectColor||'#ccc'}"></div>
+          <div class="ss-subj">${s.subjectName}</div>
+          <div class="ss-time">${s.startTime}–${s.endTime}</div>
+          <div class="ss-actions">
+            <button class="ss-btn" onclick="editSlot('${s.id}',${d})" title="Редактировать"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+            <button class="ss-btn" style="color:var(--bad)" onclick="delSlot('${s.id}')" title="Удалить"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+          </div>
+        </div>
+        <div class="ss-room">Каб. ${s.room||'—'}</div>
+        ${s.active==='false'?'<div style="padding:0 12px 8px;font-size:12px;color:var(--bad);">⚠ Отключён</div>':''}
+      </div>`;
+      if (s.breakAfter) {
+        html += `<div class="break-badge" onclick="editBreak2('${s.breakAfter.id}')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          ${s.breakAfter.name} — ${s.breakAfter.durationMinutes} мин
+        </div>`;
+      }
+    });
+  }
+  html += `<button class="add-slot-btn" onclick="addSlotModal(${d})"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Добавить урок</button>`;
+  document.getElementById('schedule-content').innerHTML = html;
+}
+
+function editSlot(id, day) {
+  const slot = scheduleData[day].find(s=>s.id===id);
+  if (!slot) return;
+  const subjOpts = scheduleSubjects.map(s=>`<option value="${s.id}" ${s.id===slot.subjectId?'selected':''}>${s.name}</option>`).join('');
+  openModal('Редактировать урок', `
+    <div class="modal-field"><div class="modal-label">Предмет</div><select class="modal-select" id="me-subj">${subjOpts}</select></div>
+    <div class="modal-field"><div class="modal-label">Кабинет</div><input class="modal-input" id="me-room" value="${slot.room||''}"></div>
+    <div style="display:flex;gap:10px;">
+      <div class="modal-field" style="flex:1"><div class="modal-label">Начало</div><input class="modal-input" id="me-start" value="${slot.startTime}" placeholder="08:00"></div>
+      <div class="modal-field" style="flex:1"><div class="modal-label">Конец</div><input class="modal-input" id="me-end" value="${slot.endTime}" placeholder="08:45"></div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:14px;"><input type="checkbox" id="me-active" ${slot.active==='true'?'checked':''}> Активен</label>
+  `, [
+    { label:'Отмена', cls:'btn-cancel', action:'closeModal()' },
+    { label:'Сохранить', cls:'btn-ok', action:`saveSlot('${id}',${day})` }
+  ]);
+}
+
+async function saveSlot(id, day) {
+  const subjectId = document.getElementById('me-subj').value;
+  const room = document.getElementById('me-room').value;
+  const startTime = document.getElementById('me-start').value;
+  const endTime = document.getElementById('me-end').value;
+  const active = document.getElementById('me-active').checked ? 'true' : 'false';
+  closeModal();
+  const r = await gs('updateScheduleSlot', token, id, subjectId, room, startTime, endTime, active);
+  if (r&&r.success) { showToast('Сохранено'); loadSchedule(); }
+  else showToast('Ошибка');
+}
+
+function addSlotModal(day) {
+  const subjOpts = scheduleSubjects.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+  const slotCount = (scheduleData[day]||[]).length + 1;
+  openModal('Добавить урок', `
+    <div class="modal-field"><div class="modal-label">Предмет</div><select class="modal-select" id="as-subj">${subjOpts}</select></div>
+    <div class="modal-field"><div class="modal-label">Номер урока</div><input class="modal-input" id="as-num" value="${slotCount}" type="number" min="1" max="10"></div>
+    <div class="modal-field"><div class="modal-label">Кабинет</div><input class="modal-input" id="as-room" placeholder="101"></div>
+    <div style="display:flex;gap:10px;">
+      <div class="modal-field" style="flex:1"><div class="modal-label">Начало</div><input class="modal-input" id="as-start" placeholder="08:00"></div>
+      <div class="modal-field" style="flex:1"><div class="modal-label">Конец</div><input class="modal-input" id="as-end" placeholder="08:45"></div>
+    </div>
+  `, [
+    { label:'Отмена', cls:'btn-cancel', action:'closeModal()' },
+    { label:'Добавить', cls:'btn-ok', action:`doAddSlot(${day})` }
+  ]);
+}
+
+async function doAddSlot(day) {
+  const subjectId = document.getElementById('as-subj').value;
+  const lessonNum = document.getElementById('as-num').value;
+  const room = document.getElementById('as-room').value;
+  const st = document.getElementById('as-start').value;
+  const et = document.getElementById('as-end').value;
+  closeModal();
+  const r = await gs('addScheduleSlot', token, classId, day, lessonNum, subjectId, room, st, et);
+  if (r&&r.success) { showToast('Добавлено'); loadSchedule(); }
+  else showToast((r&&r.error)||'Ошибка');
+}
+
+async function delSlot(id) {
+  openModal('Удалить урок?', '<p style="font-size:15px;color:var(--ts);">Урок будет удалён из расписания.</p>', [
+    { label:'Отмена', cls:'btn-cancel', action:'closeModal()' },
+    { label:'Удалить', cls:'btn-danger', action:`doDelSlot('${id}')` }
+  ]);
+}
+
+async function doDelSlot(id) {
+  closeModal();
+  const r = await gs('deleteScheduleSlot', token, id);
+  if (r&&r.success) { showToast('Удалено'); loadSchedule(); }
+  else showToast('Ошибка');
+}
+
+// ─────────── LESSONS ──────────────
+function getLessonDate() {
+  const d = new Date();
+  d.setDate(d.getDate() + lessonDateOffset);
+  return d;
+}
+
+async function loadLessons() {
+  const d = getLessonDate();
+  const ds = fmtDate(d);
+  const dow = d.getDay();
+  document.getElementById('lesson-date-label').textContent = d.getDate()+' '+MONTHS_FULL[d.getMonth()]+' '+d.getFullYear();
+  document.getElementById('lesson-date-sub').textContent = dow===0||dow===6 ? 'Выходной' : (DAYS[dow]||'');
+  document.getElementById('lesson-next-btn').disabled = lessonDateOffset >= 0;
+  document.getElementById('lessons-content').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  const r = await gs('getLessonsForDate', token, ds, classId);
+  if (!r||!r.success) { document.getElementById('lessons-content').innerHTML='<div class="empty">Ошибка загрузки</div>'; return; }
+  if (!r.data||!r.data.length) { document.getElementById('lessons-content').innerHTML='<div class="empty">Уроков нет</div>'; return; }
+  let html = '';
+  r.data.forEach(l => {
+    html += `<div class="lesson-detail-card">
+      <div class="ldc-head">
+        <div class="ldc-dot" style="background:${l.subjectColor||'#ccc'}"></div>
+        <div class="ldc-name">${l.subjectName}</div>
+        <div class="ldc-time">${l.startTime}–${l.endTime}</div>
+      </div>
+      <div class="ldc-body">
+        <div class="ldc-label">Тема урока</div>
+        <textarea class="ldc-ta" id="topic-${l.scheduleId}" placeholder="Введите тему...">${l.topic||''}</textarea>
+        <div class="ldc-label" style="margin-top:10px;">Домашнее задание</div>
+        <textarea class="ldc-ta" id="hw-${l.scheduleId}" placeholder="Задание на дом...">${l.homework||''}</textarea>
+        <div style="display:flex;align-items:center;margin-top:8px;">
+          <button class="ldc-save" onclick="saveLesson('${l.scheduleId}','${ds}','${l.subjectId}')">Сохранить</button>
+          <span class="ldc-saved" id="saved-${l.scheduleId}" style="display:none">✓ Сохранено</span>
+        </div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('lessons-content').innerHTML = html;
+}
+
+function changeLesson(dir) {
+  lessonDateOffset += dir;
+  if (lessonDateOffset > 0) lessonDateOffset = 0;
+  loadLessons();
+}
+
+async function saveLesson(schedId, date, subjectId) {
+  const topic = document.getElementById('topic-'+schedId).value;
+  const hw    = document.getElementById('hw-'+schedId).value;
+  const r = await gs('saveLessonDetails', token, schedId, date, topic, hw, subjectId, classId);
+  if (r&&r.success) {
+    const el = document.getElementById('saved-'+schedId);
+    el.style.display='inline'; setTimeout(()=>el.style.display='none',2000);
+  } else showToast('Ошибка сохранения');
+}
+
+// ─────────── MESSAGES ──────────────
+async function loadMessages() {
+  document.getElementById('sent-messages').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  // Load students for selector
+  if (!allStudents.length) await loadStudents();
+  const r = await gs('getSentMessages', token);
+  if (!r||!r.success) return;
+  if (!r.data.length) { document.getElementById('sent-messages').innerHTML='<div class="empty">Нет отправленных сообщений</div>'; return; }
+  document.getElementById('sent-messages').innerHTML = r.data.map(m => {
+    const d2 = new Date(m.date); const ds = d2.getDate()+' '+MONTHS_FULL[d2.getMonth()];
+    return `<div class="sent-msg">
+      <div class="sm-header"><span class="sm-to">→ ${m.toName}</span><span class="sm-date">${ds}</span></div>
+      <div class="sm-subj">${m.subject}</div>
+      <div class="sm-body">${m.body}</div>
+    </div>`;
+  }).join('');
+}
+
+async function sendMsg() {
+  const toId    = document.getElementById('msg-to').value;
+  const subject = document.getElementById('msg-subject').value.trim();
+  const body    = document.getElementById('msg-body').value.trim();
+  if (!toId)    { showToast('Выберите получателя'); return; }
+  if (!subject) { showToast('Введите тему'); return; }
+  if (!body)    { showToast('Введите текст'); return; }
+  const r = await gs('sendMessage', token, toId, subject, body);
+  if (r&&r.success) {
+    showToast('Сообщение отправлено!');
+    document.getElementById('msg-subject').value='';
+    document.getElementById('msg-body').value='';
+    document.getElementById('msg-to').selectedIndex=0;
+    loadMessages();
+  } else showToast((r&&r.error)||'Ошибка');
+}
+
+function quickMsg(stuId) {
+  nav('messages');
+  setTimeout(() => {
+    const sel = document.getElementById('msg-to');
+    if (sel) { sel.value = stuId; sel.dispatchEvent(new Event('change')); }
+  }, 300);
+}
+
+// ─────────── SUBJECTS ──────────────
+async function loadSubjects() {
+  document.getElementById('subjects-list').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  const r = await gs('getSubjects', token, classId);
+  if (!r||!r.success) return;
+  allSubjects = r.data;
+  if (!allSubjects.length) { document.getElementById('subjects-list').innerHTML='<div class="empty">Предметов нет. Нажмите + для добавления.</div>'; return; }
+  document.getElementById('subjects-list').innerHTML = '<div class="card" style="margin:12px 12px 0;">' +
+    allSubjects.map(s => `<div class="subj-item">
+      <div class="si-dot" style="background:${s.color}"></div>
+      <div class="si-name">${s.name}</div>
+      <div class="si-actions">
+        <button style="padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;background:#fff;font-size:12px;cursor:pointer;" onclick="editSubjectModal('${s.id}','${escQ(s.name)}','${s.color}')">Изм.</button>
+        <button style="padding:6px 10px;border:none;border-radius:8px;background:var(--bad);color:#fff;font-size:12px;cursor:pointer;" onclick="confirmDelSubj('${s.id}')">✕</button>
+      </div>
+    </div>`).join('') + '</div>';
+}
+
+function showAddSubjectModal() {
+  openModal('Новый предмет', `
+    <div class="modal-field"><div class="modal-label">Название</div><input class="modal-input" id="ns-name" placeholder="Математика"></div>
+    <div class="modal-field"><div class="modal-label">Цвет</div><div class="color-grid">${COLORS.map(c=>`<div class="color-swatch" style="background:${c}" onclick="selColor('${c}',this)"></div>`).join('')}</div></div>
+    <input type="hidden" id="ns-color" value="${COLORS[0]}">
+  `, [
+    { label:'Отмена', cls:'btn-cancel', action:'closeModal()' },
+    { label:'Добавить', cls:'btn-ok', action:'doCreateSubj()' }
+  ]);
+  // Pre-select first color
+  setTimeout(()=>{ const sw=document.querySelector('.color-swatch'); if(sw) sw.classList.add('sel'); }, 50);
+}
+
+function editSubjectModal(id, name, color) {
+  openModal('Редактировать предмет', `
+    <div class="modal-field"><div class="modal-label">Название</div><input class="modal-input" id="es-name" value="${name}"></div>
+    <div class="modal-field"><div class="modal-label">Цвет</div><div class="color-grid">${COLORS.map(c=>`<div class="color-swatch ${c===color?'sel':''}" style="background:${c}" onclick="selColor('${c}',this)"></div>`).join('')}</div></div>
+    <input type="hidden" id="es-color" value="${color}">
+  `, [
+    { label:'Отмена', cls:'btn-cancel', action:'closeModal()' },
+    { label:'Сохранить', cls:'btn-ok', action:`doEditSubj('${id}')` }
+  ]);
+}
+
+function selColor(c, el) {
+  document.querySelectorAll('.color-swatch').forEach(s=>s.classList.remove('sel'));
+  el.classList.add('sel');
+  const inp = document.getElementById('ns-color')||document.getElementById('es-color');
+  if (inp) inp.value = c;
+}
+
+async function doCreateSubj() {
+  const name = document.getElementById('ns-name').value.trim();
+  const color = document.getElementById('ns-color').value;
+  if (!name) { showToast('Введите название'); return; }
+  closeModal();
+  const r = await gs('createSubject', token, name, color, classId);
+  if (r&&r.success) { showToast('Предмет создан'); loadSubjects(); }
+  else showToast((r&&r.error)||'Ошибка');
+}
+
+async function doEditSubj(id) {
+  const name = document.getElementById('es-name').value.trim();
+  const color = document.getElementById('es-color').value;
+  closeModal();
+  const r = await gs('updateSubject', token, id, name, color);
+  if (r&&r.success) { showToast('Сохранено'); loadSubjects(); }
+  else showToast('Ошибка');
+}
+
+function confirmDelSubj(id) {
+  openModal('Удалить предмет?', '<p style="font-size:15px;color:var(--ts);">Все оценки по этому предмету останутся, но предмет будет удалён из расписания.</p>', [
+    { label:'Отмена', cls:'btn-cancel', action:'closeModal()' },
+    { label:'Удалить', cls:'btn-danger', action:`doDelSubj('${id}')` }
+  ]);
+}
+
+async function doDelSubj(id) {
+  closeModal();
+  const r = await gs('deleteSubject', token, id);
+  if (r&&r.success) { showToast('Предмет удалён'); loadSubjects(); }
+  else showToast('Ошибка');
+}
+
+// ─────────── BREAKS ──────────────
+async function loadBreaks() {
+  document.getElementById('breaks-list').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  const r = await gs('getBreaks', token);
+  if (!r||!r.success) return;
+  allBreaks = r.data;
+  if (!allBreaks.length) { document.getElementById('breaks-list').innerHTML='<div class="empty">Перемен нет</div>'; return; }
+  document.getElementById('breaks-list').innerHTML = '<div class="card" style="margin:12px 12px 0;">' +
+    allBreaks.map(b => `<div class="break-item">
+      <div class="bi-after">После урока ${b.afterLesson}</div>
+      <div class="bi-name">${b.name}</div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <div class="bi-dur">${b.durationMinutes} мин</div>
+        <button style="padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;background:#fff;font-size:12px;cursor:pointer;" onclick="editBreakModal('${b.id}','${escQ(b.name)}',${b.durationMinutes})">Изм.</button>
+        <button style="padding:6px 10px;border:none;border-radius:8px;background:var(--bad);color:#fff;font-size:12px;cursor:pointer;" onclick="doDelBreak('${b.id}')">✕</button>
+      </div>
+    </div>`).join('') + '</div>';
+}
+
+function showAddBreakModal() {
+  openModal('Добавить перемену', `
+    <div class="modal-field"><div class="modal-label">После урока №</div><input class="modal-input" id="ab-after" type="number" min="1" max="10" placeholder="1"></div>
+    <div class="modal-field"><div class="modal-label">Длительность (мин)</div><input class="modal-input" id="ab-dur" type="number" min="5" max="60" value="10"></div>
+    <div class="modal-field"><div class="modal-label">Название</div><input class="modal-input" id="ab-name" value="Перемена"></div>
+  `, [
+    { label:'Отмена', cls:'btn-cancel', action:'closeModal()' },
+    { label:'Добавить', cls:'btn-ok', action:'doAddBreak()' }
+  ]);
+}
+
+function editBreakModal(id, name, dur) {
+  openModal('Изменить перемену', `
+    <div class="modal-field"><div class="modal-label">Длительность (мин)</div><input class="modal-input" id="eb-dur" type="number" value="${dur}"></div>
+    <div class="modal-field"><div class="modal-label">Название</div><input class="modal-input" id="eb-name" value="${name}"></div>
+  `, [
+    { label:'Отмена', cls:'btn-cancel', action:'closeModal()' },
+    { label:'Сохранить', cls:'btn-ok', action:`doUpdateBreak('${id}')` }
+  ]);
+}
+
+function editBreak2(id) {
+  const b = allBreaks.find(x=>x.id===id)||{};
+  editBreakModal(id, b.name||'Перемена', b.durationMinutes||10);
+}
+
+async function doAddBreak() {
+  const after = document.getElementById('ab-after').value;
+  const dur   = document.getElementById('ab-dur').value;
+  const name  = document.getElementById('ab-name').value;
+  closeModal();
+  const r = await gs('addBreak', token, after, dur, name);
+  if (r&&r.success) { showToast('Добавлено'); loadBreaks(); loadSchedule(); }
+  else showToast('Ошибка');
+}
+
+async function doUpdateBreak(id) {
+  const dur  = document.getElementById('eb-dur').value;
+  const name = document.getElementById('eb-name').value;
+  closeModal();
+  const r = await gs('updateBreak', token, id, dur, name);
+  if (r&&r.success) { showToast('Сохранено'); loadBreaks(); }
+  else showToast('Ошибка');
+}
+
+async function doDelBreak(id) {
+  const r = await gs('deleteBreak', token, id);
+  if (r&&r.success) { showToast('Удалено'); loadBreaks(); }
+  else showToast('Ошибка');
+}
+
+// ─────────── ADD STUDENT ──────────────
+function showAddStudentModal() {
+  openModal('Добавить ученика', `
+    <div class="modal-field"><div class="modal-label">ФИО ученика</div><input class="modal-input" id="ns-fio" placeholder="Иванов Иван Иванович"></div>
+    <div class="modal-field"><div class="modal-label">Email</div><input class="modal-input" id="ns-email" type="email" placeholder="student@school.ru" inputmode="email"></div>
+    <div class="modal-field"><div class="modal-label">Пароль</div><input class="modal-input" id="ns-pwd" type="password" placeholder="Пароль для входа"></div>
+    <div class="modal-field"><div class="modal-label">ФИО родителя</div><input class="modal-input" id="ns-pname" placeholder="Иванова Мария Петровна"></div>
+    <div class="modal-field"><div class="modal-label">Email родителя</div><input class="modal-input" id="ns-pemail" type="email" placeholder="parent@mail.ru" inputmode="email"></div>
+    <div class="modal-field"><div class="modal-label">Телефон родителя</div><input class="modal-input" id="ns-pphone" placeholder="+7-900-000-0000" inputmode="tel"></div>
+  `, [
+    { label:'Отмена', cls:'btn-cancel', action:'closeModal()' },
+    { label:'Добавить', cls:'btn-ok', action:'doAddStudent()' }
+  ]);
+}
+
+async function doAddStudent() {
+  const name  = document.getElementById('ns-fio').value.trim();
+  const email = document.getElementById('ns-email').value.trim();
+  const pwd   = document.getElementById('ns-pwd').value;
+  const pname = document.getElementById('ns-pname').value.trim();
+  const pemail= document.getElementById('ns-pemail').value.trim();
+  const pphone= document.getElementById('ns-pphone').value.trim();
+  if (!name||!email||!pwd) { showToast('Заполните ФИО, email и пароль'); return; }
+  closeModal();
+  const r = await gs('addStudent', token, name, email, pwd, classId, pname, pemail, pphone);
+  if (r&&r.success) { showToast('Ученик добавлен'); loadStudents(); }
+  else showToast((r&&r.error)||'Ошибка');
+}
+
+// ─────────── DET TABS ──────────────
+function showDetPanel(id, el) {
+  document.querySelectorAll('.det-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.dtab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+
+// ─────────── MODAL ──────────────
+function openModal(title, bodyHtml, buttons) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = bodyHtml;
+  document.getElementById('modal-btns').innerHTML = buttons.map(b=>`<button class="${b.cls}" onclick="${b.action}">${b.label}</button>`).join('');
+  document.getElementById('modal').style.display='flex';
+}
+
+function closeModal() { document.getElementById('modal').style.display='none'; }
+function closeModalBg(e) { if(e.target===document.getElementById('modal')) closeModal(); }
+
+// ─────────── UTILS ──────────────
+function fmtDate(d) {
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function escQ(s) { return s.replace(/'/g,"&#39;"); }
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+// ─────────── INIT ──────────────
+if (token) showApp();
+</script>
 </body>
 </html>
